@@ -1,0 +1,262 @@
+{
+  "scene": "libby",
+  "fps": 12,
+  "stride": 30,
+  "center": [
+    0.002818778157234192,
+    -1.9813778400421143,
+    -0.0879397988319397
+  ],
+  "extent": 0.6553746151924134,
+  "format": "web-gaussian-v1",
+  "frames": [
+    {
+      "offset": 0,
+      "count": 20000,
+      "frame": 0
+    },
+    {
+      "offset": 600000,
+      "count": 20000,
+      "frame": 1
+    },
+    {
+      "offset": 1200000,
+      "count": 20000,
+      "frame": 2
+    },
+    {
+      "offset": 1800000,
+      "count": 20000,
+      "frame": 3
+    },
+    {
+      "offset": 2400000,
+      "count": 20000,
+      "frame": 4
+    },
+    {
+      "offset": 3000000,
+      "count": 20000,
+      "frame": 5
+    },
+    {
+      "offset": 3600000,
+      "count": 20000,
+      "frame": 6
+    },
+    {
+      "offset": 4200000,
+      "count": 20000,
+      "frame": 7
+    },
+    {
+      "offset": 4800000,
+      "count": 20000,
+      "frame": 8
+    },
+    {
+      "offset": 5400000,
+      "count": 20000,
+      "frame": 9
+    },
+    {
+      "offset": 6000000,
+      "count": 20000,
+      "frame": 10
+    },
+    {
+      "offset": 6600000,
+      "count": 20000,
+      "frame": 11
+    },
+    {
+      "offset": 7200000,
+      "count": 20000,
+      "frame": 12
+    },
+    {
+      "offset": 7800000,
+      "count": 20000,
+      "frame": 13
+    },
+    {
+      "offset": 8400000,
+      "count": 20000,
+      "frame": 14
+    },
+    {
+      "offset": 9000000,
+      "count": 20000,
+      "frame": 15
+    },
+    {
+      "offset": 9600000,
+      "count": 20000,
+      "frame": 16
+    },
+    {
+      "offset": 10200000,
+      "count": 20000,
+      "frame": 17
+    },
+    {
+      "offset": 10800000,
+      "count": 20000,
+      "frame": 18
+    },
+    {
+      "offset": 11400000,
+      "count": 20000,
+      "frame": 19
+    },
+    {
+      "offset": 12000000,
+      "count": 20000,
+      "frame": 20
+    },
+    {
+      "offset": 12600000,
+      "count": 20000,
+      "frame": 21
+    },
+    {
+      "offset": 13200000,
+      "count": 20000,
+      "frame": 22
+    },
+    {
+      "offset": 13800000,
+      "count": 20000,
+      "frame": 23
+    },
+    {
+      "offset": 14400000,
+      "count": 20000,
+      "frame": 24
+    },
+    {
+      "offset": 15000000,
+      "count": 20000,
+      "frame": 25
+    },
+    {
+      "offset": 15600000,
+      "count": 20000,
+      "frame": 26
+    },
+    {
+      "offset": 16200000,
+      "count": 20000,
+      "frame": 27
+    },
+    {
+      "offset": 16800000,
+      "count": 20000,
+      "frame": 28
+    },
+    {
+      "offset": 17400000,
+      "count": 20000,
+      "frame": 29
+    },
+    {
+      "offset": 18000000,
+      "count": 20000,
+      "frame": 30
+    },
+    {
+      "offset": 18600000,
+      "count": 19125,
+      "frame": 31
+    },
+    {
+      "offset": 19173750,
+      "count": 18587,
+      "frame": 32
+    },
+    {
+      "offset": 19731360,
+      "count": 18779,
+      "frame": 33
+    },
+    {
+      "offset": 20294730,
+      "count": 18391,
+      "frame": 34
+    },
+    {
+      "offset": 20846460,
+      "count": 18046,
+      "frame": 35
+    },
+    {
+      "offset": 21387840,
+      "count": 15853,
+      "frame": 36
+    },
+    {
+      "offset": 21863430,
+      "count": 14413,
+      "frame": 37
+    },
+    {
+      "offset": 22295820,
+      "count": 15923,
+      "frame": 38
+    },
+    {
+      "offset": 22773510,
+      "count": 14574,
+      "frame": 39
+    },
+    {
+      "offset": 23210730,
+      "count": 14490,
+      "frame": 40
+    },
+    {
+      "offset": 23645430,
+      "count": 13944,
+      "frame": 41
+    },
+    {
+      "offset": 24063750,
+      "count": 13111,
+      "frame": 42
+    },
+    {
+      "offset": 24457080,
+      "count": 13667,
+      "frame": 43
+    },
+    {
+      "offset": 24867090,
+      "count": 14102,
+      "frame": 44
+    },
+    {
+      "offset": 25290150,
+      "count": 13376,
+      "frame": 45
+    },
+    {
+      "offset": 25691430,
+      "count": 11509,
+      "frame": 46
+    },
+    {
+      "offset": 26036700,
+      "count": 10641,
+      "frame": 47
+    },
+    {
+      "offset": 26355930,
+      "count": 9116,
+      "frame": 48
+    }
+  ],
+  "source": "Foreground output",
+  "display": "Foreground",
+  "coordinateSystem": "z-up"
+}

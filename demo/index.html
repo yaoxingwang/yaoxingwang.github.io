@@ -1,150 +1,61 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
-<title>Full-scene 4D demo</title>
-<script>
-  if (location.protocol === 'file:') {
-    location.replace('https://yaoxingwang.github.io/demo/' + location.search);
-  }
-</script>
-<style>
-:root{color-scheme:dark;--bg:#0b0e12;--panel:rgba(22,25,30,.94);--line:#303842;--text:#e9edf2;--muted:#9ca7b3;--accent:#45a2ff;--cyan:#79d9ff}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f7f8fa;color:var(--text);font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{padding:0 0 18px}.viewer-shell{max-width:1440px;margin:0 auto}.stage{position:relative;min-height:620px;height:min(72vh,820px);background:#0b0e12;border-radius:12px;overflow:hidden;border:1px solid #1b222a;box-shadow:0 14px 42px rgba(10,18,28,.18)}canvas{display:block;width:100%;height:100%;touch-action:none}.panel{position:absolute;left:20px;top:20px;width:270px;background:var(--panel);border:1px solid rgba(110,125,140,.18);border-radius:12px;padding:15px 16px;box-shadow:0 12px 35px rgba(0,0,0,.24);backdrop-filter:blur(10px);z-index:5}.panel.minimized{width:54px;height:50px;padding:11px}.panel.minimized .panel-body{display:none}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head strong{font-size:18px;letter-spacing:.01em}.icon-button,.control-button{border:1px solid #3c4652;background:#252c35;color:var(--text);border-radius:8px;cursor:pointer}.icon-button{width:34px;height:30px;font-size:18px;line-height:1}.panel hr{border:0;border-top:1px solid #2c333c;margin:14px 0}.group{margin-top:13px}.group:first-child{margin-top:0}.group-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}.slider-row{display:grid;grid-template-columns:66px 1fr 30px;gap:8px;align-items:center;margin:8px 0}.slider-row label{color:#b6c0ca}.slider-row output{color:#cbd5df;text-align:right;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#1786f4}.play-row{text-align:center;margin:12px 0 4px}.play-row button{width:58px;height:42px;font-size:18px}.option{display:flex;align-items:center;gap:8px;margin:8px 0;color:#c6d0da;cursor:pointer}.option input{accent-color:#1786f4;width:16px;height:16px}#scene-mode{width:100%;height:34px;padding:0 9px;border:1px solid #3c4652;border-radius:6px;background:#20262e;color:var(--text);font:inherit}#scene-mode:focus-visible{outline:2px solid #45a2ff;outline-offset:1px}.stat{color:#8f9aa6;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-line;margin-top:13px}.stat.loading{color:#72bdff}.stage-hud{position:absolute;right:16px;top:16px;display:flex;align-items:center;gap:8px;color:#cdd6df;background:rgba(17,21,26,.78);border:1px solid rgba(130,145,160,.2);border-radius:8px;padding:7px 10px;font-size:12px;z-index:4}.stage-hud .sep{width:1px;height:14px;background:#4a545e}.input-video{position:absolute;left:20px;bottom:20px;width:225px;max-width:28%;border:1px solid rgba(230,240,250,.32);border-radius:9px;background:#111;box-shadow:0 8px 26px rgba(0,0,0,.45);z-index:4}.scene-bar{padding:14px 2px 0}.scene-bar-header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px;color:#29343f}.scene-bar-header strong{font-size:15px}.scene-bar-header span{font-size:12px;color:#6b7884}.scene-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}.scene-button{border:2px solid transparent;border-radius:7px;overflow:hidden;padding:0;background:#e2e7eb;cursor:pointer;min-width:0}.scene-button img{display:block;width:100%;height:66px;object-fit:cover}.scene-button span{display:block;color:#2c3741;background:#eef1f3;padding:4px 3px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scene-button:hover,.scene-button:focus-visible{border-color:#258cf0;outline:none}.scene-button.active{border-color:#258cf0;box-shadow:0 0 0 2px rgba(37,140,240,.22)}.viewer-note{margin:8px 2px 0;color:#6d7883;font-size:12px}.error{color:#ff9b91}
-@media(max-width:900px){.stage{min-height:540px;height:70vh}.panel{left:12px;top:12px;width:250px}.input-video{left:12px;bottom:12px;width:190px}.scene-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.scene-button img{height:70px}}
-@media(max-width:600px){.stage{min-height:460px;height:72vh;border-radius:8px}.panel{left:8px;top:8px;width:calc(100% - 16px);max-width:245px}.input-video{left:8px;bottom:8px;width:34%;max-width:150px}.scene-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.scene-button img{height:54px}.scene-button span{font-size:10px}.stage-hud{right:8px;top:8px;font-size:11px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore full-scene and foreground 4D demo outputs in an interactive viewer.">
+  <link rel="icon" href="data:,">
+  <title>4D Demo · Scene viewer</title>
+  <script>if(location.protocol==='file:')location.replace('https://yaoxingwang.github.io/demo/'+location.search);</script>
+  <link rel="stylesheet" href="./style.css?v=20261003-v2">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
 <body>
-<div class="viewer-shell">
-  <div class="stage" id="stage">
-    <canvas id="canvas" aria-label="Interactive full-scene 4D output viewer"></canvas>
-    <section class="panel" id="control-panel" aria-label="4D viewer controls">
-      <div class="panel-head"><strong>4D Demo</strong><button class="icon-button" id="panel-toggle" type="button" title="Minimize controls" aria-label="Minimize controls">−</button></div>
-      <div class="panel-body">
-        <hr>
-        <div class="group"><div class="group-label">Scene</div><div id="scene-label">horsejump-low</div><div class="demo-label">Full-scene output</div></div>
-        <div class="group"><div class="slider-row"><label for="frame">Timestep</label><input id="frame" type="range" min="0" max="0" value="0"><output id="frame-value">0</output></div><div class="play-row"><button class="control-button" id="play" type="button" title="Pause or play">▶</button></div><div class="slider-row"><label for="fps">FPS</label><input id="fps" type="range" min="1" max="30" value="12"><output id="fps-value">12</output></div></div>
-        <hr>
-        <div class="group"><div class="group-label">Options</div><label class="option"><input id="show-bg" type="checkbox" checked> Background</label><label class="option"><input id="bg-accum" type="checkbox" checked> Accumulate background over time</label><label class="option"><input id="show-frustum" type="checkbox" checked> Frustum</label><label class="option"><input id="show-output" type="checkbox" checked> Show output</label><label class="option"><input id="show-traj" type="checkbox" checked> Trajectories over time</label><label class="option"><input id="show-highlight" type="checkbox" checked> Object highlight</label></div>
-        <div class="stat" id="stat">loading horsejump-low…</div>
+  <main class="viewer-shell">
+    <header class="page-header">
+      <div class="identity"><span class="wordmark">4D<span> / </span>Demo</span><span class="page-subtitle">Scenes in motion</span></div>
+      <span class="header-note">Drag to orbit <span>·</span> Scroll to zoom</span>
+    </header>
+    <div class="stage" id="stage">
+      <canvas id="canvas" aria-label="Interactive 4D scene viewer"></canvas>
+      <section class="panel" id="control-panel" aria-label="View controls">
+        <div class="panel-head" id="panel-drag" title="Drag to move controls">
+          <span class="drag-mark" aria-hidden="true">⠿</span><strong>View controls</strong>
+          <button class="icon-button" id="panel-toggle" type="button" title="Collapse controls" aria-label="Collapse controls" aria-expanded="true">−</button>
+        </div>
+        <div class="panel-body">
+          <p class="group-label">Output</p>
+          <div class="mode-switch" role="group" aria-label="Output mode">
+            <button type="button" data-mode="full_scene" aria-pressed="true">Full scene</button>
+            <button type="button" data-mode="foreground" aria-pressed="false">Foreground</button>
+          </div>
+          <button class="reset-button" id="reset-view" type="button"><span aria-hidden="true">↺</span> Reset view <kbd>R</kbd></button>
+          <div class="zoom-row"><label for="zoom">Zoom</label><input id="zoom" type="range" min="60" max="180" value="100"><output id="zoom-value" for="zoom">100%</output></div>
+          <details id="view-options"><summary>Display options</summary>
+            <label class="option"><input id="show-source" type="checkbox" checked> Input preview</label>
+            <label class="option"><input id="light-bg" type="checkbox"> Light background</label>
+            <label class="option"><input id="show-output" type="checkbox" checked> Show output</label>
+          </details>
+          <p class="panel-hint">Drag the header to move.<br>Drag the corner to resize.</p>
+        </div>
+        <button class="panel-resize" id="panel-resize" type="button" aria-label="Resize controls with arrow keys or drag" title="Drag to resize controls"></button>
+      </section>
+      <div class="stage-caption"><span class="status-dot"></span><strong id="scene-label">Loading…</strong><span class="caption-divider"></span><span id="view-label">Full scene</span></div>
+      <figure class="source-preview" id="source-preview"><figcaption>Input <button id="hide-source" type="button" aria-label="Hide input preview">×</button></figcaption><video id="input-video" muted loop playsinline preload="metadata"></video></figure>
+      <div class="loading-indicator" id="loading-indicator" role="status"><span class="loading-spinner" aria-hidden="true"></span><span id="load-message">Loading scene…</span><button id="retry" type="button" hidden>Retry</button></div>
+      <div class="playback" aria-label="Playback controls">
+        <button class="play-button" id="play" type="button" aria-label="Play sequence" title="Play / pause (Space)" disabled>▶</button>
+        <span class="timeline-label">Frame</span><input id="frame" type="range" aria-label="Frame" min="0" max="0" value="0" disabled><output id="frame-value" for="frame">0 / 0</output>
+        <label class="fps-label" for="fps">Speed<select id="fps"><option value="6">6 fps</option><option value="12" selected>12 fps</option><option value="24">24 fps</option></select></label>
       </div>
+      <p class="stat" id="stat" aria-live="polite"></p>
+    </div>
+    <section class="scene-bar" aria-label="Choose a scene">
+      <div class="scene-bar-header"><h1>Explore a scene</h1><span>8 sequences <span class="small-divider">/</span> 2 output views</span></div>
+      <div class="scene-grid" id="scene-grid"></div>
     </section>
-    <div class="stage-hud"><span id="view-label">Full-scene output</span><span class="sep"></span><span id="zoom-label">100%</span></div>
-    <video class="input-video" id="input-video" muted loop autoplay playsinline preload="metadata"></video>
-  </div>
-  <div class="scene-bar"><div class="scene-bar-header"><strong>Full-scene outputs</strong><span>click a scene to load its sequence</span></div><div class="scene-grid" id="scene-grid"></div><p class="viewer-note">Explore the visible scene output frame by frame. Drag to orbit, scroll to zoom, and use Timestep/FPS to inspect the motion.</p></div>
-</div>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-const SCENES = ['bear','camel','cows','dog','horsejump-high','horsejump-low','libby','rhino'];
-const CAMERA_DISTANCE = {'horsejump-high':2.8};
-const DEFAULT_SCENE = new URLSearchParams(location.search).get('scene') || 'horsejump-low';
-const $ = (id) => document.getElementById(id);
-const canvas = $('canvas');
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(42, 1, 0.01, 100);
-camera.position.set(0, 0.05, 3.4);
-const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:false, powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-renderer.setClearColor(0x0b0e12, 1);
-const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true; controls.dampingFactor = 0.08; controls.target.set(0, 0, 0);
-
-const pointsMaterial = new THREE.ShaderMaterial({
-  transparent:true, depthWrite:false, blending:THREE.NormalBlending,
-  uniforms:{uZoom:{value:1},uHighlight:{value:1}},
-  vertexColors:false,
-  vertexShader:`attribute float aSize; attribute vec4 aColor; varying vec4 vColor; uniform float uZoom; void main(){vec4 mv=modelViewMatrix*vec4(position,1.0);float depth=max(.22,-mv.z);gl_PointSize=clamp((1.5+aSize*4.5)*uZoom*(3.2/depth),1.0,15.0);gl_Position=projectionMatrix*mv;vColor=aColor;}`,
-  fragmentShader:`varying vec4 vColor; uniform float uHighlight; void main(){vec2 p=gl_PointCoord*2.0-1.0;float r=dot(p,p);if(r>1.0)discard;float edge=smoothstep(1.0,.35,r);gl_FragColor=vec4(vColor.rgb*uHighlight,vColor.a*edge);}`
-});
-const pointCloud = new THREE.Points(new THREE.BufferGeometry(), pointsMaterial); pointCloud.frustumCulled = false; scene.add(pointCloud);
-const gaussianGeometry = new THREE.InstancedBufferGeometry();
-gaussianGeometry.setAttribute('position', new THREE.Float32BufferAttribute([
-  -1, -1, 0, 1, -1, 0, 1, 1, 0, -1, 1, 0,
-], 3));
-gaussianGeometry.setAttribute('uv', new THREE.Float32BufferAttribute([
-  -1, -1, 1, -1, 1, 1, -1, 1,
-], 2));
-gaussianGeometry.setIndex([0, 1, 2, 0, 2, 3]);
-const gaussianMaterial = new THREE.ShaderMaterial({
-  transparent:true, depthWrite:false, blending:THREE.NormalBlending,
-  uniforms:{uZoom:{value:1},uScaleMultiplier:{value:2.2},uExtent:{value:1},uMinRadius:{value:0.0016},uHighlight:{value:1}},
-  vertexShader:`attribute vec3 iPosition; attribute vec3 iScale; attribute vec4 iRotation; attribute vec4 iColor; varying vec2 vLocal; varying vec4 vColor; uniform float uZoom; uniform float uScaleMultiplier; uniform float uExtent; uniform float uMinRadius; vec3 qrot(vec4 q, vec3 v){return v+2.0*cross(q.xyz,cross(q.xyz,v)+q.w*v);} vec2 projectDelta(vec3 p, vec3 axis){vec4 c=projectionMatrix*modelViewMatrix*vec4(p,1.0);vec4 a=projectionMatrix*modelViewMatrix*vec4(p+axis,1.0);return a.xy/a.w-c.xy/c.w;} void main(){vec3 center=iPosition;vec4 clip=projectionMatrix*modelViewMatrix*vec4(center,1.0);vec3 ax=qrot(iRotation,vec3(1.0,0.0,0.0))*min(exp(iScale.x),0.012)/uExtent*uZoom;vec3 ay=qrot(iRotation,vec3(0.0,1.0,0.0))*min(exp(iScale.y),0.012)/uExtent*uZoom;vec3 az=qrot(iRotation,vec3(0.0,0.0,1.0))*min(exp(iScale.z),0.012)/uExtent*uZoom;vec2 dx=projectDelta(center,ax);vec2 dy=projectDelta(center,ay);vec2 dz=projectDelta(center,az);float aa=dot(dx,dx)+dot(dy,dy)+dot(dz,dz);float bb=dx.x*dx.y+dy.x*dy.y+dz.x*dz.y;float dd=dx.y*dx.y+dy.y*dy.y+dz.y*dz.y;float disc=sqrt(max(0.0,(aa-dd)*(aa-dd)+4.0*bb*bb));float l1=max(uMinRadius*uMinRadius,0.5*(aa+dd+disc));float l2=max(uMinRadius*uMinRadius,0.5*(aa+dd-disc));vec2 e1=length(vec2(bb,l1-aa))>1e-5?normalize(vec2(bb,l1-aa)):vec2(1.0,0.0);vec2 e2=vec2(-e1.y,e1.x);vec2 offset=(position.x*e1*sqrt(l1)+position.y*e2*sqrt(l2))*uScaleMultiplier;gl_Position=vec4(clip.xy+offset*clip.w,clip.z,clip.w);vLocal=position.xy;vColor=iColor;}`,
-  fragmentShader:`varying vec2 vLocal; varying vec4 vColor; uniform float uHighlight; void main(){float r=dot(vLocal,vLocal);if(r>1.0)discard;float a=exp(-2.8*r)*vColor.a*0.72;gl_FragColor=vec4(vColor.rgb*uHighlight,a);}`,
-});
-const gaussianCloud = new THREE.Mesh(gaussianGeometry, gaussianMaterial);
-gaussianCloud.frustumCulled = false; gaussianCloud.visible = false; scene.add(gaussianCloud);
-const diagnostic = new THREE.Group(); scene.add(diagnostic);
-const frustumMaterial = new THREE.LineBasicMaterial({color:0x79d9ff,transparent:true,opacity:.9});
-const frustum = new THREE.LineSegments(new THREE.BufferGeometry(), frustumMaterial); diagnostic.add(frustum);
-const trajectoryMaterial = new THREE.LineBasicMaterial({color:0xe98762,transparent:true,opacity:.55});
-const trajectory = new THREE.Line(new THREE.BufferGeometry(), trajectoryMaterial); diagnostic.add(trajectory);
-let current = {name:DEFAULT_SCENE, mode:'full_scene', meta:null, bytes:null, frame:0, playing:false, lastTick:0, loadSeq:0};
-let zoom = 1;
-
-function halfToFloat(h){const s=(h&0x8000)?-1:1,e=(h>>10)&31,f=h&1023;if(e===0)return s*Math.pow(2,-14)*(f/1024);if(e===31)return f?NaN:s*Infinity;return s*Math.pow(2,e-15)*(1+f/1024)}
-function updateFrame(){
-  if(!current.meta||!current.bytes)return;
-  const rec=current.meta.frames[current.frame], stride=current.meta.stride, count=rec.count, dv=new DataView(current.bytes,rec.offset,count*stride);
-  const gaussianV2=current.meta.format==='web-gaussian-v1';
-  const positions=new Float32Array(count*3), colors=new Uint8Array(count*4), sizes=new Float32Array(count);
-  const scales=gaussianV2?new Float32Array(count*3):null;
-  const rotations=gaussianV2?new Float32Array(count*4):null;
-  for(let i=0;i<count;i++){
-    const b=i*stride;
-    const positionBytes=gaussianV2?4:2, colorOffset=gaussianV2?12:6;
-    positions[i*3]=gaussianV2?dv.getFloat32(b,true):halfToFloat(dv.getUint16(b,true)); positions[i*3+1]=gaussianV2?dv.getFloat32(b+positionBytes,true):halfToFloat(dv.getUint16(b+2,true)); positions[i*3+2]=gaussianV2?dv.getFloat32(b+positionBytes*2,true):halfToFloat(dv.getUint16(b+4,true));
-    colors[i*4]=dv.getUint8(b+colorOffset); colors[i*4+1]=dv.getUint8(b+colorOffset+1); colors[i*4+2]=dv.getUint8(b+colorOffset+2); colors[i*4+3]=dv.getUint8(b+colorOffset+3);
-    if(gaussianV2){
-      const scaleOffset=colorOffset+4, rotationOffset=scaleOffset+6;
-      scales[i*3]=halfToFloat(dv.getUint16(b+scaleOffset,true)); scales[i*3+1]=halfToFloat(dv.getUint16(b+scaleOffset+2,true)); scales[i*3+2]=halfToFloat(dv.getUint16(b+scaleOffset+4,true));
-      rotations[i*4]=dv.getInt16(b+rotationOffset,true)/32767; rotations[i*4+1]=dv.getInt16(b+rotationOffset+2,true)/32767; rotations[i*4+2]=dv.getInt16(b+rotationOffset+4,true)/32767; rotations[i*4+3]=dv.getInt16(b+rotationOffset+6,true)/32767;
-    }else sizes[i]=dv.getUint8(b+10)/255;
-  }
-  if(gaussianV2){
-    gaussianGeometry.setAttribute('iPosition',new THREE.InstancedBufferAttribute(positions,3));
-    gaussianGeometry.setAttribute('iScale',new THREE.InstancedBufferAttribute(scales,3));
-    gaussianGeometry.setAttribute('iRotation',new THREE.InstancedBufferAttribute(rotations,4));
-    const colorFloats=new Float32Array(count*4); for(let i=0;i<count*4;i++) colorFloats[i]=colors[i]/255;
-    gaussianGeometry.setAttribute('iColor',new THREE.InstancedBufferAttribute(colorFloats,4));
-    gaussianGeometry.instanceCount=count; gaussianCloud.visible=$('show-output').checked; pointCloud.visible=false;
-  }else{
-    const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(positions,3));g.setAttribute('aColor',new THREE.BufferAttribute(colors,4,true));g.setAttribute('aSize',new THREE.BufferAttribute(sizes,1));pointCloud.geometry.dispose();pointCloud.geometry=g; pointCloud.visible=$('show-output').checked; gaussianCloud.visible=false;
-  }
-  $('frame-value').textContent=String(current.frame); $('scene-label').textContent=current.name;
-}
-function updateDiagnostics(){
-  diagnostic.visible=$('show-frustum').checked||$('show-traj').checked;
-  frustum.visible=$('show-frustum').checked; trajectory.visible=$('show-traj').checked;
-  const gaussianV2=current.meta?.format==='web-gaussian-v1';
-  pointCloud.visible=!gaussianV2&&$('show-output').checked; gaussianCloud.visible=gaussianV2&&$('show-output').checked;
-  pointsMaterial.uniforms.uHighlight.value=$('show-highlight').checked?1:.62; gaussianMaterial.uniforms.uHighlight.value=$('show-highlight').checked?1:.82;
-  renderer.setClearColor($('show-bg').checked?0x0b0e12:0x000000,1);
-}
-function updateFrustum(){const z=-.25,w=.33,h=.25;frustum.geometry.dispose();frustum.geometry=new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute([0,0,0,-w,-h,z,0,0,0,w,-h,z,0,0,0,w,h,z,0,0,0,-w,h,z,-w,-h,z,w,-h,z,w,-h,z,w,h,z,w,h,z,-w,h,z,-w,h,z,-w,-h,z],3));}
-function updateTrajectory(){const pts=[];for(let i=0;i<Math.max(2,current.meta?.frames?.length||2);i++){const t=i/(Math.max(1,(current.meta?.frames?.length||2)-1));pts.push((t-.5)*1.5,Math.sin(t*Math.PI*2)*.12,-.2)}trajectory.geometry.dispose();trajectory.geometry=new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(pts,3));}
-function resize(){const r=$('stage').getBoundingClientRect();renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix()}
-async function loadScene(name){if(!SCENES.includes(name))return;const seq=++current.loadSeq;current.name=name;current.meta=null;current.bytes=null;$('stat').className='stat loading';$('stat').textContent='loading '+name+'…';
-  document.querySelectorAll('.scene-button').forEach(b=>b.classList.toggle('active',b.dataset.scene===name));
-  try{const meta=await (await fetch('./assets/'+name+'/meta.json')).json();const bytes=await (await fetch('./assets/'+name+'/frames.bin')).arrayBuffer();if(seq!==current.loadSeq)return;current.meta=meta;current.bytes=bytes;current.frame=0;current.playing=false;$('play').textContent='▶';$('frame').max=String(meta.frames.length-1);$('frame').value='0';$('fps').value=String(meta.fps||12);$('fps-value').textContent=String(meta.fps||12);gaussianMaterial.uniforms.uExtent.value=meta.extent||1;camera.position.z=1.9;controls.target.set(0,0,0);controls.update();$('view-label').textContent='Full-scene output';$('input-video').src='./assets/'+name+'_input.mp4';$('input-video').play().catch(()=>{});updateFrame();updateFrustum();updateTrajectory();$('stat').className='stat';$('stat').textContent=name+'\n'+meta.frames[0].count.toLocaleString()+' splats · '+meta.frames.length+' frames\nload '+(bytes.byteLength/1048576).toFixed(1)+' MB';}catch(error){if(seq===current.loadSeq){$('stat').className='stat error';$('stat').textContent='Unable to load demo output. Open this page from https://yaoxingwang.github.io/demo/';}}
-}
-function setZoom(next){zoom=Math.max(.65,Math.min(2.25,next));pointsMaterial.uniforms.uZoom.value=zoom;$('zoom-label').textContent=Math.round(zoom*100)+'%'}
-function buildSceneButtons(){const grid=$('scene-grid');SCENES.forEach(name=>{const b=document.createElement('button');b.type='button';b.className='scene-button';b.dataset.scene=name;b.title='Load '+name;b.innerHTML='<img loading="lazy" src="./thumbs/'+name+'.png" alt="'+name+' first frame"><span>'+name+'</span>';b.onclick=()=>loadScene(name);grid.appendChild(b)})}
-$('frame').oninput=()=>{current.playing=false;$('play').textContent='▶';current.frame=Number($('frame').value);updateFrame()};
-$('fps').oninput=()=>{$('fps-value').textContent=$('fps').value};
-$('play').onclick=()=>{current.playing=!current.playing;$('play').textContent=current.playing?'Ⅱ':'▶';};
-['show-bg','bg-accum','show-frustum','show-output','show-traj','show-highlight'].forEach(id=>$(id).onchange=updateDiagnostics);
-$('panel-toggle').onclick=()=>{$('control-panel').classList.toggle('minimized');$('panel-toggle').textContent=$('control-panel').classList.contains('minimized')?'＋':'−'};
-canvas.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoom*Math.exp(-e.deltaY*.001));},{passive:false});
-window.addEventListener('keydown',e=>{if(e.key===' '){e.preventDefault();$('play').click()}else if(e.key==='ArrowRight'&&current.meta){current.frame=(current.frame+1)%current.meta.frames.length;$('frame').value=String(current.frame);updateFrame()}else if(e.key==='ArrowLeft'&&current.meta){current.frame=(current.frame-1+current.meta.frames.length)%current.meta.frames.length;$('frame').value=String(current.frame);updateFrame()}else if(e.key==='0'){setZoom(1)}});
-function animate(now){requestAnimationFrame(animate);const fps=Number($('fps').value)||12;if(current.playing&&current.meta&&now-current.lastTick>=1000/fps){current.lastTick=now;current.frame=(current.frame+1)%current.meta.frames.length;$('frame').value=String(current.frame);updateFrame()}controls.update();renderer.render(scene,camera)}
-buildSceneButtons();updateDiagnostics();resize();window.addEventListener('resize',resize);loadScene(DEFAULT_SCENE);requestAnimationFrame(animate);
-</script>
+    <footer class="viewer-note"><span>Full scene includes the visible surroundings. Foreground isolates the subject.</span><span>Space <span class="key-note">play</span> <span class="small-divider">·</span> ← → <span class="key-note">step</span></span></footer>
+  </main>
+  <script type="module" src="./viewer.js?v=20261003-v2"></script>
 </body>
 </html>

@@ -2,41 +2,41 @@
   {
     "scene": "bear",
     "frames": 82,
-    "bytes": 49200000
+    "bytes": 73800000
   },
   {
     "scene": "camel",
     "frames": 90,
-    "bytes": 54000000
+    "bytes": 81000000
   },
   {
     "scene": "cows",
     "frames": 104,
-    "bytes": 62400000
+    "bytes": 93600000
   },
   {
     "scene": "dog",
     "frames": 60,
-    "bytes": 36000000
+    "bytes": 54000000
   },
   {
     "scene": "horsejump-high",
     "frames": 50,
-    "bytes": 30000000
+    "bytes": 45000000
   },
   {
     "scene": "horsejump-low",
     "frames": 60,
-    "bytes": 36000000
+    "bytes": 54000000
   },
   {
     "scene": "libby",
     "frames": 49,
-    "bytes": 29400000
+    "bytes": 44100000
   },
   {
     "scene": "rhino",
     "frames": 90,
-    "bytes": 54000000
+    "bytes": 81000000
   }
 ]
