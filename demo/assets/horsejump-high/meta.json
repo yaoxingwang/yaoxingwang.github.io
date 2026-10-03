@@ -1,0 +1,266 @@
+{
+  "scene": "horsejump-high",
+  "format": "web-gaussian-v1",
+  "fps": 12,
+  "frames": [
+    {
+      "offset": 0,
+      "count": 20000,
+      "frame": 0
+    },
+    {
+      "offset": 600000,
+      "count": 20000,
+      "frame": 1
+    },
+    {
+      "offset": 1200000,
+      "count": 20000,
+      "frame": 2
+    },
+    {
+      "offset": 1800000,
+      "count": 20000,
+      "frame": 3
+    },
+    {
+      "offset": 2400000,
+      "count": 20000,
+      "frame": 4
+    },
+    {
+      "offset": 3000000,
+      "count": 20000,
+      "frame": 5
+    },
+    {
+      "offset": 3600000,
+      "count": 20000,
+      "frame": 6
+    },
+    {
+      "offset": 4200000,
+      "count": 20000,
+      "frame": 7
+    },
+    {
+      "offset": 4800000,
+      "count": 20000,
+      "frame": 8
+    },
+    {
+      "offset": 5400000,
+      "count": 20000,
+      "frame": 9
+    },
+    {
+      "offset": 6000000,
+      "count": 20000,
+      "frame": 10
+    },
+    {
+      "offset": 6600000,
+      "count": 20000,
+      "frame": 11
+    },
+    {
+      "offset": 7200000,
+      "count": 20000,
+      "frame": 12
+    },
+    {
+      "offset": 7800000,
+      "count": 20000,
+      "frame": 13
+    },
+    {
+      "offset": 8400000,
+      "count": 20000,
+      "frame": 14
+    },
+    {
+      "offset": 9000000,
+      "count": 20000,
+      "frame": 15
+    },
+    {
+      "offset": 9600000,
+      "count": 20000,
+      "frame": 16
+    },
+    {
+      "offset": 10200000,
+      "count": 20000,
+      "frame": 17
+    },
+    {
+      "offset": 10800000,
+      "count": 20000,
+      "frame": 18
+    },
+    {
+      "offset": 11400000,
+      "count": 20000,
+      "frame": 19
+    },
+    {
+      "offset": 12000000,
+      "count": 20000,
+      "frame": 20
+    },
+    {
+      "offset": 12600000,
+      "count": 20000,
+      "frame": 21
+    },
+    {
+      "offset": 13200000,
+      "count": 20000,
+      "frame": 22
+    },
+    {
+      "offset": 13800000,
+      "count": 20000,
+      "frame": 23
+    },
+    {
+      "offset": 14400000,
+      "count": 20000,
+      "frame": 24
+    },
+    {
+      "offset": 15000000,
+      "count": 20000,
+      "frame": 25
+    },
+    {
+      "offset": 15600000,
+      "count": 20000,
+      "frame": 26
+    },
+    {
+      "offset": 16200000,
+      "count": 20000,
+      "frame": 27
+    },
+    {
+      "offset": 16800000,
+      "count": 20000,
+      "frame": 28
+    },
+    {
+      "offset": 17400000,
+      "count": 20000,
+      "frame": 29
+    },
+    {
+      "offset": 18000000,
+      "count": 20000,
+      "frame": 30
+    },
+    {
+      "offset": 18600000,
+      "count": 20000,
+      "frame": 31
+    },
+    {
+      "offset": 19200000,
+      "count": 20000,
+      "frame": 32
+    },
+    {
+      "offset": 19800000,
+      "count": 20000,
+      "frame": 33
+    },
+    {
+      "offset": 20400000,
+      "count": 20000,
+      "frame": 34
+    },
+    {
+      "offset": 21000000,
+      "count": 20000,
+      "frame": 35
+    },
+    {
+      "offset": 21600000,
+      "count": 20000,
+      "frame": 36
+    },
+    {
+      "offset": 22200000,
+      "count": 20000,
+      "frame": 37
+    },
+    {
+      "offset": 22800000,
+      "count": 20000,
+      "frame": 38
+    },
+    {
+      "offset": 23400000,
+      "count": 20000,
+      "frame": 39
+    },
+    {
+      "offset": 24000000,
+      "count": 20000,
+      "frame": 40
+    },
+    {
+      "offset": 24600000,
+      "count": 20000,
+      "frame": 41
+    },
+    {
+      "offset": 25200000,
+      "count": 20000,
+      "frame": 42
+    },
+    {
+      "offset": 25800000,
+      "count": 20000,
+      "frame": 43
+    },
+    {
+      "offset": 26400000,
+      "count": 20000,
+      "frame": 44
+    },
+    {
+      "offset": 27000000,
+      "count": 20000,
+      "frame": 45
+    },
+    {
+      "offset": 27600000,
+      "count": 20000,
+      "frame": 46
+    },
+    {
+      "offset": 28200000,
+      "count": 20000,
+      "frame": 47
+    },
+    {
+      "offset": 28800000,
+      "count": 20000,
+      "frame": 48
+    },
+    {
+      "offset": 29400000,
+      "count": 20000,
+      "frame": 49
+    }
+  ],
+  "stride": 30,
+  "center": [
+    -1.3157997131347656,
+    33.667423248291016,
+    -122.59129333496094
+  ],
+  "extent": 148.75256530761717,
+  "source": "Full-scene output",
+  "display": "Full-scene output demo"
+}
