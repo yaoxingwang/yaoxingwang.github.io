@@ -1,0 +1,588 @@
+{
+  "source": "https://geowind2plan.com/",
+  "license": "CC-BY-NC-4.0",
+  "files": [
+    {
+      "path": "index.html",
+      "url": "https://geowind2plan.com/",
+      "bytes": 26833,
+      "sha256": "45d3948750fcabc562cec0690a99b431a8981f56c8146e8519f504d687ff9b80"
+    },
+    {
+      "path": "style.css",
+      "url": "https://geowind2plan.com/style.css",
+      "bytes": 60516,
+      "sha256": "50623b11457d072c9a75ba6d7c883269d564f8e0a573b22c8578432d14c8ce9c"
+    },
+    {
+      "path": "src/main.js",
+      "url": "https://geowind2plan.com/src/main.js",
+      "bytes": 3179,
+      "sha256": "77069f09281ebfb2563a9eb9ec9f326f177e0713f0a80579e9bdbc2b87ae2457"
+    },
+    {
+      "path": "src/tutorial-entry.js",
+      "url": "https://geowind2plan.com/src/tutorial-entry.js",
+      "bytes": 64,
+      "sha256": "e17eacde9ea50e5a2dc9238fed5c5818e597862e74460c425de7ae043fd2ad1f"
+    },
+    {
+      "path": "src/tutorial-player.css",
+      "url": "https://geowind2plan.com/src/tutorial-player.css",
+      "bytes": 9904,
+      "sha256": "4b0c24b11f0c5d356f40826c1a3fc53ddc0f9681c03aeda9e0810db13a5ebb5b"
+    },
+    {
+      "path": "LICENSE",
+      "url": "https://geowind2plan.com/LICENSE",
+      "bytes": 497,
+      "sha256": "8ab1363652785829372ec6e96affb41f3c4bf50b96883a64cf5b18d1104b3694"
+    },
+    {
+      "path": "assets/model2d/metadata.json",
+      "url": "https://geowind2plan.com/assets/model2d/metadata.json",
+      "bytes": 9917,
+      "sha256": "8d9085b71058a0cd52759586be8977e7648e60bedc771c1e0e7ae4dec665a01f"
+    },
+    {
+      "path": "assets/cities/manifest.json",
+      "url": "https://geowind2plan.com/assets/cities/manifest.json",
+      "bytes": 3409,
+      "sha256": "644b1d9025d54bcbe903b444af81c60936048a39b042ca7ccef7819cc3f22d2b"
+    },
+    {
+      "path": "assets/fonts/Inter-LICENSE.txt",
+      "url": "https://geowind2plan.com/assets/fonts/Inter-LICENSE.txt",
+      "bytes": 4417,
+      "sha256": "d2980aaf435e639dc3b69b1a3de220da96c3dd3d580bcae2ba94f09c6a708f54"
+    },
+    {
+      "path": "src/shared/errors.js",
+      "url": "https://geowind2plan.com/src/shared/errors.js",
+      "bytes": 2228,
+      "sha256": "78291b6c279fcd6650056a7c5cf81a0b96ea15e470c5e6b23d15a3d75e1da155"
+    },
+    {
+      "path": "src/app/scene.js",
+      "url": "https://geowind2plan.com/src/app/scene.js",
+      "bytes": 1412,
+      "sha256": "74d327153a77c2d21f8e8babf9f0002a6bb39f9a34157b5ff30a438912fbc779"
+    },
+    {
+      "path": "src/app/folds.js",
+      "url": "https://geowind2plan.com/src/app/folds.js",
+      "bytes": 14743,
+      "sha256": "0665fb217d0d99ead17cb462aff1840c29e8e1c33a17cf3d51ee6d495f68bb1f"
+    },
+    {
+      "path": "src/app/layout.js",
+      "url": "https://geowind2plan.com/src/app/layout.js",
+      "bytes": 3357,
+      "sha256": "75ced1358e46be239a250dbb19c7038b4b4263da6dbfbb165501fe6862ffab1f"
+    },
+    {
+      "path": "src/app/legend.js",
+      "url": "https://geowind2plan.com/src/app/legend.js",
+      "bytes": 3742,
+      "sha256": "6b65522aaec3f791ab077c9cf4abdbdbbefd0fa8f7bbe579b0c034fa6846e190"
+    },
+    {
+      "path": "src/app/status.js",
+      "url": "https://geowind2plan.com/src/app/status.js",
+      "bytes": 7000,
+      "sha256": "d743b6db88b21d0e6dc8fadb6ab7aff75696415367db14705f142dce13320225"
+    },
+    {
+      "path": "src/app/results.js",
+      "url": "https://geowind2plan.com/src/app/results.js",
+      "bytes": 18525,
+      "sha256": "3041889291ed6d8d88b621c5b6f449bda1e58cf4a9f7869bdd96554807789a1c"
+    },
+    {
+      "path": "src/app/charts.js",
+      "url": "https://geowind2plan.com/src/app/charts.js",
+      "bytes": 11725,
+      "sha256": "a1e4212726c49d0639f07d906b7384a6797ce5e2b035a794e3aa3899c012b5fe"
+    },
+    {
+      "path": "src/app/planning.js",
+      "url": "https://geowind2plan.com/src/app/planning.js",
+      "bytes": 14465,
+      "sha256": "8e618c752aeb71ebe934993b5fa0df46c42ff2c09f1a1b459bedd25ab8465799"
+    },
+    {
+      "path": "src/app/gpu.js",
+      "url": "https://geowind2plan.com/src/app/gpu.js",
+      "bytes": 9682,
+      "sha256": "fe798b187eb5cda881ca62443e7095b125924ad0104cf52c2a34819cd59d8d36"
+    },
+    {
+      "path": "src/app/cities.js",
+      "url": "https://geowind2plan.com/src/app/cities.js",
+      "bytes": 12049,
+      "sha256": "d6678fa96e5198438773683bb58e592efcd923c684a3915a26c5aa96bfe59cb7"
+    },
+    {
+      "path": "src/app/controls.js",
+      "url": "https://geowind2plan.com/src/app/controls.js",
+      "bytes": 14791,
+      "sha256": "c4d9c22536e3d7b79721060a7cb7b773b690c4efbfc47457d04e1094c1f28c37"
+    },
+    {
+      "path": "src/app/wind_controls.js",
+      "url": "https://geowind2plan.com/src/app/wind_controls.js",
+      "bytes": 10755,
+      "sha256": "3190daba2ca95f94e5708e9c885b4c714bb7edb14b7123c2f4af86de86982d63"
+    },
+    {
+      "path": "src/app/intro.js",
+      "url": "https://geowind2plan.com/src/app/intro.js",
+      "bytes": 3227,
+      "sha256": "8e9a25df28e6366434eef06feda34286b2b89dd71f670fa8cba99f578b44bc23"
+    },
+    {
+      "path": "src/app/state.js",
+      "url": "https://geowind2plan.com/src/app/state.js",
+      "bytes": 7955,
+      "sha256": "79b17a66e80a148731270b1427cd2d2c29b00b26d24612394589e0e96ba190bc"
+    },
+    {
+      "path": "src/app/config.js",
+      "url": "https://geowind2plan.com/src/app/config.js",
+      "bytes": 6538,
+      "sha256": "3b435fd43bedb56c936480e4fe7ea98547db4585c4b93102f9ec61a3c8b02dd9"
+    },
+    {
+      "path": "src/tutorial.js",
+      "url": "https://geowind2plan.com/src/tutorial.js",
+      "bytes": 2847,
+      "sha256": "dae166f87e8516e635e479dd78d59441a401586628ad9ded3f4d61f4d2d8703c"
+    },
+    {
+      "path": "src/shared/units.js",
+      "url": "https://geowind2plan.com/src/shared/units.js",
+      "bytes": 2064,
+      "sha256": "75358c0bd4e61d6acba77469aeb0c6105862f04231e9e60a80b9ade90362635b"
+    },
+    {
+      "path": "src/shared/geometry.js",
+      "url": "https://geowind2plan.com/src/shared/geometry.js",
+      "bytes": 6124,
+      "sha256": "23f3fe21f26bd467c29916381269bafe03e956b44264ff6b5f17d2355f61f10e"
+    },
+    {
+      "path": "src/planner/mission.js",
+      "url": "https://geowind2plan.com/src/planner/mission.js",
+      "bytes": 9904,
+      "sha256": "e6ba40e21616d05168dfeaa79bf2d9299afed18a78714cea7e717edfa4bf3d4e"
+    },
+    {
+      "path": "src/view/viewer.js",
+      "url": "https://geowind2plan.com/src/view/viewer.js",
+      "bytes": 60360,
+      "sha256": "aa140aab557d99f99779ce87f85fb3cbd44247e3444a5280fe1169a429c14bad"
+    },
+    {
+      "path": "src/app/dom.js",
+      "url": "https://geowind2plan.com/src/app/dom.js",
+      "bytes": 4276,
+      "sha256": "d7260d15d34f58d7eabc1b9bfd071ad6c5f3d01713055a600fcf4058153d1e86"
+    },
+    {
+      "path": "src/app/picker.js",
+      "url": "https://geowind2plan.com/src/app/picker.js",
+      "bytes": 4569,
+      "sha256": "d038f0c25ee9e4027ac42dc5b2d0a179a2ded582f9a36eddb4d011230fbac367"
+    },
+    {
+      "path": "src/shared/colormap.js",
+      "url": "https://geowind2plan.com/src/shared/colormap.js",
+      "bytes": 2511,
+      "sha256": "8678a2af5ae3c288c43e05e8a14574bc5386237e6029ee8fa4fbee8f245605cb"
+    },
+    {
+      "path": "src/shared/style.js",
+      "url": "https://geowind2plan.com/src/shared/style.js",
+      "bytes": 3762,
+      "sha256": "5cfad8b59217b377e418ebcc02b099e1fdb57fdb074c2d5ba25b68fb1155b4d1"
+    },
+    {
+      "path": "src/app/cfd.js",
+      "url": "https://geowind2plan.com/src/app/cfd.js",
+      "bytes": 5270,
+      "sha256": "fbabdcf0a793ea1e78f9164689b80f8d0a02934b687cc4a8303dcfb8f7df36aa"
+    },
+    {
+      "path": "src/planner/clearance.js",
+      "url": "https://geowind2plan.com/src/planner/clearance.js",
+      "bytes": 4111,
+      "sha256": "d17cd0ab9284f56e51a03bec1b476d48a3a72f2cbe135455688b68753221af0c"
+    },
+    {
+      "path": "src/app/wind_display.js",
+      "url": "https://geowind2plan.com/src/app/wind_display.js",
+      "bytes": 13067,
+      "sha256": "ca933e61e34452e54a5766d66217901adc95b82d5684f2350273350dd48073c0"
+    },
+    {
+      "path": "src/planner/energy.js",
+      "url": "https://geowind2plan.com/src/planner/energy.js",
+      "bytes": 3758,
+      "sha256": "226039df81dcec0a1eba57df7ad36520191bfaaa25ce57000cf21056447b8645"
+    },
+    {
+      "path": "src/shared/platform.js",
+      "url": "https://geowind2plan.com/src/shared/platform.js",
+      "bytes": 584,
+      "sha256": "54377f98c60b325a3c7b53e779f29ab45a3817ca23f8f0f829994fb4bb22b92a"
+    },
+    {
+      "path": "src/wind/samplers.js",
+      "url": "https://geowind2plan.com/src/wind/samplers.js",
+      "bytes": 7786,
+      "sha256": "f10647e15cb5f9c147212c23f9a84c40e18bfaa7a9fa772765a84ae96094bcc7"
+    },
+    {
+      "path": "src/planner/lattice.js",
+      "url": "https://geowind2plan.com/src/planner/lattice.js",
+      "bytes": 24913,
+      "sha256": "ff23f686faf18f921173e1d69754ff1d508023be71185d17ae8f75abf899e2b8"
+    },
+    {
+      "path": "src/planner/plan_worker.js",
+      "url": "https://geowind2plan.com/src/planner/plan_worker.js",
+      "bytes": 3332,
+      "sha256": "c86ab7fd0131d4f38a712d831d97241240af9a9ce08480b3e075f845d2192a76"
+    },
+    {
+      "path": "src/shared/download.js",
+      "url": "https://geowind2plan.com/src/shared/download.js",
+      "bytes": 1980,
+      "sha256": "ea6f4fb57061f14adaaf7e4072d49f5d6e22be9b228e24125b0e601502bc372e"
+    },
+    {
+      "path": "src/city/city.js",
+      "url": "https://geowind2plan.com/src/city/city.js",
+      "bytes": 3599,
+      "sha256": "16f1d1918b11e0a67c70d3511d9a25ce7307ad5b95ed2b43044998419cde99fe"
+    },
+    {
+      "path": "src/gpu/context.js",
+      "url": "https://geowind2plan.com/src/gpu/context.js",
+      "bytes": 9267,
+      "sha256": "57182dfbc143ae010dff870ecfe3131fdaa50d28ab7984facfd0bc13c8fea37d"
+    },
+    {
+      "path": "src/gpu/predictor.js",
+      "url": "https://geowind2plan.com/src/gpu/predictor.js",
+      "bytes": 23718,
+      "sha256": "f86e274bda8a99f9e294e9cd77409f8fc432aee6355c0f9ef4b96ccb32ad7981"
+    },
+    {
+      "path": "src/app/particle_feed.js",
+      "url": "https://geowind2plan.com/src/app/particle_feed.js",
+      "bytes": 9540,
+      "sha256": "00ac9bd09a432d1cfaaf2fcea21e3737769de76e880764381889edf718eee782"
+    },
+    {
+      "path": "src/app/sweep.js",
+      "url": "https://geowind2plan.com/src/app/sweep.js",
+      "bytes": 3531,
+      "sha256": "d469d2dbdc9204e564f6f03fd378e4b12c084027cb8eeaa3a5b5c8991dd41dac"
+    },
+    {
+      "path": "src/app/pipeline.js",
+      "url": "https://geowind2plan.com/src/app/pipeline.js",
+      "bytes": 16819,
+      "sha256": "88385172d139c8dfcedac319b1ce9205790dc25bdd08e7d563bbd8964ab3fbcd"
+    },
+    {
+      "path": "src/app/dial.js",
+      "url": "https://geowind2plan.com/src/app/dial.js",
+      "bytes": 6802,
+      "sha256": "7d07caa41ef0ee45dbc9fdecb2064a7619d3cf5ebcd9c3409b5b9fbfd939b121"
+    },
+    {
+      "path": "src/tutorial-player.js",
+      "url": "https://geowind2plan.com/src/tutorial-player.js",
+      "bytes": 22495,
+      "sha256": "02b3a924b26c1f7b9632c728e32dd9cec5842d7b0dc9f66a14f80eb516df0ce8"
+    },
+    {
+      "path": "src/shared/numeric.js",
+      "url": "https://geowind2plan.com/src/shared/numeric.js",
+      "bytes": 2669,
+      "sha256": "a790a5b337ad47a58bf3cedcabbfc3d78d316a1b387b07d6df44667903c87d5e"
+    },
+    {
+      "path": "vendor/three.module.js",
+      "url": "https://geowind2plan.com/vendor/three.module.js",
+      "bytes": 1304820,
+      "sha256": "0a3368c165eea773490aec7b77c22de70e3eac288503409256fdbf4d12578416"
+    },
+    {
+      "path": "src/shared/turn.js",
+      "url": "https://geowind2plan.com/src/shared/turn.js",
+      "bytes": 630,
+      "sha256": "a9100407fdeadb42a4f17e216030eff69dc315500515914bbaf17796c358b241"
+    },
+    {
+      "path": "src/view/materials.js",
+      "url": "https://geowind2plan.com/src/view/materials.js",
+      "bytes": 10542,
+      "sha256": "2eb3ff5af0a4f12870db2735b4f218cabd791fc0cd7e169acf9d0aaa529e34ea"
+    },
+    {
+      "path": "src/view/wind_layers.js",
+      "url": "https://geowind2plan.com/src/view/wind_layers.js",
+      "bytes": 8626,
+      "sha256": "676b29e5e3aa5cad68453492cd232f344404db359692af2d4923698f1efaaa33"
+    },
+    {
+      "path": "src/view/buildings.js",
+      "url": "https://geowind2plan.com/src/view/buildings.js",
+      "bytes": 664,
+      "sha256": "a316265b21d4d2e2dbc033580f7995d5acd7d46a33a0e5ba900d6406d4be97ef"
+    },
+    {
+      "path": "src/view/pins.js",
+      "url": "https://geowind2plan.com/src/view/pins.js",
+      "bytes": 14328,
+      "sha256": "ae0ba71515d9284a190d6839f022095a99cff44a8b5eb745dd662d9dbdfe51b6"
+    },
+    {
+      "path": "src/view/routes.js",
+      "url": "https://geowind2plan.com/src/view/routes.js",
+      "bytes": 6212,
+      "sha256": "1f40f50107316301a31ec17107a6a63fb3a0b6b7eb4955f3452bb5f353bcc798"
+    },
+    {
+      "path": "src/view/drone.js",
+      "url": "https://geowind2plan.com/src/view/drone.js",
+      "bytes": 5219,
+      "sha256": "00719b669f8a59e823822e6e483b32acfafc7c6a36e60ff69806de4baed9a28e"
+    },
+    {
+      "path": "src/view/edge_labels.js",
+      "url": "https://geowind2plan.com/src/view/edge_labels.js",
+      "bytes": 7036,
+      "sha256": "3bb0786085f818d896ecec973e0584cb014938693b17dd1b88396df07ec39309"
+    },
+    {
+      "path": "src/view/interaction.js",
+      "url": "https://geowind2plan.com/src/view/interaction.js",
+      "bytes": 15541,
+      "sha256": "56329cb3dd76281e49d685e3df00a5ee6445fecbbdcd276e70a637ffa5039718"
+    },
+    {
+      "path": "src/view/projection.js",
+      "url": "https://geowind2plan.com/src/view/projection.js",
+      "bytes": 876,
+      "sha256": "f7cb07ad3ce32e62aec46c7b8a984251286c21f33471651432ad3956f665d04f"
+    },
+    {
+      "path": "src/wind/cfd.js",
+      "url": "https://geowind2plan.com/src/wind/cfd.js",
+      "bytes": 3691,
+      "sha256": "cf329574e3b4bd0a23d34bb71bfe9a5b331a90daf5426b5dd4e33b716a060983"
+    },
+    {
+      "path": "src/particles/slices.js",
+      "url": "https://geowind2plan.com/src/particles/slices.js",
+      "bytes": 2360,
+      "sha256": "0e4c21cafd23da1dd2fab9ad38d34518887e2443b7273fe7b9a0ce868f05cba0"
+    },
+    {
+      "path": "src/planner/heap.js",
+      "url": "https://geowind2plan.com/src/planner/heap.js",
+      "bytes": 2887,
+      "sha256": "cdc315c15f97d6066b2281ba04e65a1412374c83a9f6df24f014478c9eca452a"
+    },
+    {
+      "path": "src/planner/plan_core.js",
+      "url": "https://geowind2plan.com/src/planner/plan_core.js",
+      "bytes": 12733,
+      "sha256": "470e937d512d252d4afcbddb081251852d429da3912f20fdcb8997249af048ab"
+    },
+    {
+      "path": "src/planner/helper_pool.js",
+      "url": "https://geowind2plan.com/src/planner/helper_pool.js",
+      "bytes": 9694,
+      "sha256": "ecee43653875ba0e7c96522aef536dfcac27e399dc8c8b9bd69581bd277cad97"
+    },
+    {
+      "path": "src/planner/wind_grid.js",
+      "url": "https://geowind2plan.com/src/planner/wind_grid.js",
+      "bytes": 10757,
+      "sha256": "32f14bf5b5f46d53139240810eac95af414376c437784efe5a5e024521f14969"
+    },
+    {
+      "path": "src/city/height_map_worker.js",
+      "url": "https://geowind2plan.com/src/city/height_map_worker.js",
+      "bytes": 2420,
+      "sha256": "465d2e6605f23dd0b4aeabb56b26fff58d4a0783967d3cd2121b46a49c9c481e"
+    },
+    {
+      "path": "src/gpu/shared_ring.js",
+      "url": "https://geowind2plan.com/src/gpu/shared_ring.js",
+      "bytes": 841,
+      "sha256": "1fc2eeb2a1383c5fa9c717bc5babdfdf0f89048c9556f06c7afd883ab9da06fc"
+    },
+    {
+      "path": "src/gpu/mddf.js",
+      "url": "https://geowind2plan.com/src/gpu/mddf.js",
+      "bytes": 23843,
+      "sha256": "ab0eb3cc5357b393a4bc7c658546cb794e8f5042ae3c0edbcbbd6a1741dade16"
+    },
+    {
+      "path": "src/gpu/input_plan.js",
+      "url": "https://geowind2plan.com/src/gpu/input_plan.js",
+      "bytes": 2325,
+      "sha256": "0f7f1f675200564797b6221257a83c128fb0730260294ad0b43108b61026dd2c"
+    },
+    {
+      "path": "src/gpu/fno.js",
+      "url": "https://geowind2plan.com/src/gpu/fno.js",
+      "bytes": 13918,
+      "sha256": "6a96f7b0fcad5363fa61ea1d4dae387ba84bb1c24d2bd94f5e2cc95569221e9b"
+    },
+    {
+      "path": "src/gpu/predictor_shaders.js",
+      "url": "https://geowind2plan.com/src/gpu/predictor_shaders.js",
+      "bytes": 4288,
+      "sha256": "550b886e8558812de74d9f9021c3e444fad073ed318b26a8dc5d862cae1dea28"
+    },
+    {
+      "path": "src/gpu/tiling.js",
+      "url": "https://geowind2plan.com/src/gpu/tiling.js",
+      "bytes": 6045,
+      "sha256": "08dd91b5318dbcae26324fd8ef22dea9d0bfa07912f7f05acaa46f49384c9f3d"
+    },
+    {
+      "path": "src/gpu/field_post.js",
+      "url": "https://geowind2plan.com/src/gpu/field_post.js",
+      "bytes": 5075,
+      "sha256": "d88f9691c205dafa1b05bccd17d5f9f791d46654f8391766b771af57b0849e07"
+    },
+    {
+      "path": "src/gpu/field_worker.js",
+      "url": "https://geowind2plan.com/src/gpu/field_worker.js",
+      "bytes": 749,
+      "sha256": "961dcce0477600ec762156cb6ac7789fc7fceae043cc31037ace73ffe199f252"
+    },
+    {
+      "path": "src/app/city_worker.js",
+      "url": "https://geowind2plan.com/src/app/city_worker.js",
+      "bytes": 2125,
+      "sha256": "1e381a963ba589b0741fff2d4c8ac308c8ab028cfa42641df89f26a38eb9e3c2"
+    },
+    {
+      "path": "src/particles/worker.js",
+      "url": "https://geowind2plan.com/src/particles/worker.js",
+      "bytes": 5266,
+      "sha256": "6056eb6f09cd38864b0f353623bbeabb17cf615fbe2d721911f6e9fed3b831c6"
+    },
+    {
+      "path": "src/view/sweep_worker.js",
+      "url": "https://geowind2plan.com/src/view/sweep_worker.js",
+      "bytes": 3012,
+      "sha256": "46865f5f688e7c8b1f6ed7f46f09a1116ed9fe731bcb946eef4d8583c393b230"
+    },
+    {
+      "path": "src/particles/system.js",
+      "url": "https://geowind2plan.com/src/particles/system.js",
+      "bytes": 10353,
+      "sha256": "5343ddf4c5a55d2d84d9f514b677eebed52fdad77674de60dd5a8e9bc6e4296a"
+    },
+    {
+      "path": "src/view/half_float.js",
+      "url": "https://geowind2plan.com/src/view/half_float.js",
+      "bytes": 821,
+      "sha256": "69d724aab8207f70bc6eae9f823b93156227f463eb8a1c6e20b04e80fce367d0"
+    },
+    {
+      "path": "src/wind/cfd_worker.js",
+      "url": "https://geowind2plan.com/src/wind/cfd_worker.js",
+      "bytes": 1297,
+      "sha256": "568d913616c21c93806f1faccd94eb5071875c1a44991b91a152d21a5f9e6761"
+    },
+    {
+      "path": "src/city/cells.js",
+      "url": "https://geowind2plan.com/src/city/cells.js",
+      "bytes": 2084,
+      "sha256": "341b9f851898d5192888cc8654464e32f7d7bc800dec04631e7fd1582663fe0c"
+    },
+    {
+      "path": "src/planner/trajopt.js",
+      "url": "https://geowind2plan.com/src/planner/trajopt.js",
+      "bytes": 30091,
+      "sha256": "277fe651e935325e97a0c4b4c54c85ab70638e158d0377ce8e8648ebc1d5e469"
+    },
+    {
+      "path": "src/planner/spline3.js",
+      "url": "https://geowind2plan.com/src/planner/spline3.js",
+      "bytes": 9469,
+      "sha256": "bcd0edd56f5faac98ea7f3dfff94c0fa305e2807bb35180df74996b248fa5fec"
+    },
+    {
+      "path": "src/planner/plan_fields.js",
+      "url": "https://geowind2plan.com/src/planner/plan_fields.js",
+      "bytes": 3011,
+      "sha256": "47e5a7bebafc3598bb0cdc93b5478485eaede846740e5a1f68511d4b35e0cd42"
+    },
+    {
+      "path": "src/planner/pool_protocol.js",
+      "url": "https://geowind2plan.com/src/planner/pool_protocol.js",
+      "bytes": 2072,
+      "sha256": "ebddf93cba139742d299bb12d6b9c58c4e410bc31212cd1fa279ce1c4c543eb5"
+    },
+    {
+      "path": "src/planner/helper_worker.js",
+      "url": "https://geowind2plan.com/src/planner/helper_worker.js",
+      "bytes": 4636,
+      "sha256": "26329e3bb2bdb529953ac3a96f95d0827a65ece1def782306c9d56f0dbc0f216"
+    },
+    {
+      "path": "src/city/buildings.js",
+      "url": "https://geowind2plan.com/src/city/buildings.js",
+      "bytes": 5730,
+      "sha256": "5f0dc23a57d8b41d2d0188462125dc56390bc3be1a0c300f275e56f276e3bc92"
+    },
+    {
+      "path": "src/city/preview.js",
+      "url": "https://geowind2plan.com/src/city/preview.js",
+      "bytes": 1499,
+      "sha256": "1a90544bf0a21ac97f270fbc0a8fe67f070c2750d7fcb9077acda0bd9a6ba526"
+    },
+    {
+      "path": "src/gpu/mddf_shaders.js",
+      "url": "https://geowind2plan.com/src/gpu/mddf_shaders.js",
+      "bytes": 25116,
+      "sha256": "e33f3711bebd64765e4d5b9f5d9c7464932c6d538e7d719c0666a9b5b338d83d"
+    },
+    {
+      "path": "src/gpu/fno_shaders.js",
+      "url": "https://geowind2plan.com/src/gpu/fno_shaders.js",
+      "bytes": 16808,
+      "sha256": "e25745020e6e032d6be7c0e9aa9d896ef634d79e18c65284d5d60eeafebc7414"
+    },
+    {
+      "path": "src/particles/ribbons.js",
+      "url": "https://geowind2plan.com/src/particles/ribbons.js",
+      "bytes": 1370,
+      "sha256": "e93cd14d6706c27a5164d230e72e2f8074ee0fcef7118417c54df15fa526de07"
+    },
+    {
+      "path": "src/planner/hessian.js",
+      "url": "https://geowind2plan.com/src/planner/hessian.js",
+      "bytes": 7965,
+      "sha256": "f734f6538bebc9c4acdc2792592753751c974de8697d4045e1584d7633622aa6"
+    },
+    {
+      "path": "src/planner/linalg.js",
+      "url": "https://geowind2plan.com/src/planner/linalg.js",
+      "bytes": 2949,
+      "sha256": "9c2b26cbee39140c6ee0a8e775a68a85e357e8d34370be6cebafd5002f71f2b5"
+    }
+  ]
+}

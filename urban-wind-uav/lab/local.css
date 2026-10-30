@@ -1,0 +1,24 @@
+/* Local adaptation: instrument-blue canvas, compact provenance and independent check strip. */
+:root { --local-blue: #176b93; --local-surface: #edf5f8; }
+.local-provenance { margin: 5px 14px; color: #52606b; font-size: 11px; line-height: 1.5; }
+.local-provenance a { color: var(--local-blue); text-underline-offset: 2px; }
+.brand { letter-spacing: -.04em; }
+#local-validation { position: fixed; right: 18px; bottom: 16px; max-width: min(520px, calc(100vw - 36px));
+  display: grid; gap: 7px; padding: 12px 15px; border: 1px solid #c8dce6; border-radius: 10px;
+  background: rgb(246 250 252 / .96); color: #263f4c; box-shadow: 0 3px 16px rgb(32 60 78 / .08);
+  z-index: 12; font-size: 12px; line-height: 1.5; }
+#local-validation strong { font-size: 12px; color: var(--local-blue); }
+#local-validation-text { white-space: pre-line; }
+#local-validation[data-status="failed"] { border-color: #bc6b3e; }
+#local-validation[data-status="failed"] strong { color: #9a431e; }
+#local-export { justify-self: start; border: 1px solid #a9c8d8; background: #fff; color: #176b93;
+  border-radius: 5px; padding: 5px 9px; cursor: pointer; font: inherit; }
+#local-export:disabled { opacity: .5; cursor: default; }
+#local-export:focus-visible { outline: 3px solid #3a8cad; outline-offset: 2px; }
+#city-button { pointer-events: none; }
+#city-button svg { display: none; }
+@media (max-width: 760px) {
+  #local-validation { right: 10px; bottom: 10px; max-width: calc(100vw - 20px); font-size: 11px; padding: 8px 10px; }
+  #local-validation button { padding: 4px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { #local-validation { transition: none; } }

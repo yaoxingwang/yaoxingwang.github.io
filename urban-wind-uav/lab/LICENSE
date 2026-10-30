@@ -1,0 +1,11 @@
+GeoWind2Plan interactive web demo
+Copyright (c) 2026 GeoWind2Plan authors
+
+This web demo, including its source code, model weights and data, is licensed under the
+Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0).
+https://creativecommons.org/licenses/by-nc/4.0/legalcode
+
+Third-party components keep their own licenses:
+  three.js (vendor/three.module.js): MIT License.
+  Inter font (assets/fonts/): SIL Open Font License 1.1, see assets/fonts/Inter-LICENSE.txt.
+  coi-serviceworker (coi-serviceworker.js, added for static hosting): MIT License, see vendor/coi-serviceworker-LICENSE.txt.

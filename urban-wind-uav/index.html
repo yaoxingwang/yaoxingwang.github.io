@@ -127,6 +127,13 @@
   .demo-bar .sep{width:1px; height:20px; background:#2c3a5e; margin:0 4px}
   .demo-bar a{color:#9fd6e0; margin-left:auto; text-decoration:none}
   .scene-thumb{display:flex; gap:8px; align-items:center}
+  .topnav a.lab-nav{color:var(--violet); font-weight:600}
+  .lab-open{display:flex; flex-wrap:wrap; gap:12px 18px; align-items:center; background:#f4f0fb; border:1px solid #dccff3;
+       border-radius:12px; padding:14px 18px; margin:14px 0}
+  .lab-btn{display:inline-block; background:var(--violet); color:#fff; text-decoration:none; font-weight:600; font-size:15px;
+       border-radius:999px; padding:10px 22px; box-shadow:0 4px 14px rgba(109,63,192,.25); white-space:nowrap}
+  .lab-btn:hover{background:#5a2ca0}
+  .lab-open .lab-note{flex:1 1 420px; font-size:13px; color:var(--muted); line-height:1.6}
   .scene-thumb img{width:46px; height:26px; object-fit:cover; border-radius:4px}
   footer{margin-top:50px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); padding-top:14px;}
   .totop{position:fixed; right:18px; bottom:18px; background:#fff; border:1px solid var(--line); border-radius:999px;
@@ -141,11 +148,12 @@
   <a href="index.html" class="cur">汇总矩阵（本页）</a>
   <a href="../">主页</a>
   <a class="ext" href="#s6">4D 风场航线 Demo ↓</a>
+  <a class="lab-nav" href="lab/" target="_blank" rel="noopener">交互版 ↗</a>
 </div>
 
 <header class="hero">
   <h1>城市风场 × UAV 节能规划：论文 · 评测协议 · Baseline 矩阵 · 4D Demo</h1>
-  <p>范围：GeoWind2Plan（arXiv 2609.36056，作者声明 NeurIPS 2026 Spotlight）的复现与可信评测；风场重建、稀疏观测、风感知规划、LLM 程序搜索四类顶会顶刊 baseline 的部署与跑通状态；附我们的 4D 风场航线 demo（浏览器内实时预测风场并规划无人机航线）。</p>
+  <p>范围：GeoWind2Plan（arXiv 2609.36056，作者声明 NeurIPS 2026 Spotlight）的复现与可信评测；风场重建、稀疏观测、风感知规划、LLM 程序搜索四类顶会顶刊 baseline 的部署与跑通状态；附我们的 4D 风场航线 demo（浏览器内实时预测风场并规划无人机航线，可在线交互）。</p>
   <p>
     <span class="badge">2026-10-30</span>
     <span class="badge">数字来源：我们的实验结果文件</span>
@@ -174,7 +182,8 @@
   <a href="#s7">7 数据集清单</a>
   <a href="#s8">8 引用边界</a>
   <a href="#s9">9 创新点与行动清单</a>
-  <a href="#s10">10 链接总表</a>
+  <a href="#s10">10 东京与自由探索（调研）</a>
+  <a href="#s11">11 链接总表</a>
 </nav>
 
 <!-- ================================================================ -->
@@ -247,7 +256,9 @@
   <tr><td>顶会顶刊 baseline 部署</td><td class="ok">✅ 完成</td><td>23 个官方仓库（commit 和许可已入档）、2 个 Python 环境；WindSeer / PhySense / Senseiver / Transolver / FNO3D / GINO 6 个模型 GPU smoke 通过（§4 表 3）</td></tr>
   <tr><td>WindSeer 完整复现</td><td class="doing">🔄 数据就绪，训练按要求暂缓</td><td>官方数据 235.5 GB 下载完成并校验：10/10 文件 MD5 + SHA1 与 ETH LibDrive 发布值一致，6/6 个 HDF5 结构检查通过，7,285 个流场与官方 README 一致。官方没有发布权重，需从头训练（论文设置 3000 epoch）；训练与评测脚本已交付（§3.3、§7）</td></tr>
   <tr><td>LLM / 程序搜索方向</td><td class="doing">🔄 调研完成，代码就位</td><td>FunSearch、OpenEvolve、ShinkaEvolve、ReEvo、EoH、Eureka、LLM-SR、LLAMBO、VoxPoser、Zephyrus 共 10 个框架。定位：Qwen 做决策层或进化程序，不直接出轨迹（§4 表 4、§9.2）</td></tr>
-  <tr><td>4D 风场航线 demo（GeoWind Web Lab）</td><td class="ok">✅ 可运行</td><td>浏览器内 WebGPU 风场推理约 1.9 s，四条航线全部通过独立净空检查；默认任务预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%（§6）</td></tr>
+  <tr><td>4D 风场航线 demo（GeoWind Web Lab）</td><td class="ok">✅ 交互版已上线</td><td>浏览器内 WebGPU 风场推理约 1.9 s，四条航线全部通过独立净空检查；默认任务预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%。交互版放在本站，打开后在自己的电脑上运行（§6）</td></tr>
+  <tr><td>下游任务与数据核实</td><td class="ok">✅ 完成（10-30）</td><td>下游任务是“已知起终点的单次节能航线规划”，能耗在 CFD 风里按 Wh/km 计算（两套代码核实，§3）。数据只有 7 个独立 CFD 工况、来流方向相同，5 个街区的任务方向也相同（§7.1）。按顺风 / 逆风 / 侧风分组时 GW2P 回收率 86.6 / 86.3 / 80.0%，论文 87.9 / 85.7 / 75.0%（§5 R4b）</td></tr>
+  <tr><td>真实城市（东京）+ 自由探索 agent</td><td class="doing">🔄 调研完成，待讨论</td><td>东京建筑模型（PLATEAU）免费可商用，但公开数据里没有东京飞行高度的风场真值，需要自己算；列了现有数据能做的 5 个下游任务和到东京的 4 步路线（§10）</td></tr>
 </table>
 
 <div class="callout green">
@@ -446,6 +457,24 @@
 
 <!-- ================================================================ -->
 <h2 id="s3">3 · 评测协议 <span class="en">protocols we follow</span></h2>
+
+<h3>下游任务：两套代码核实的结果（10-30）</h3>
+<div class="callout blue">
+<b>结论：</b>现在的下游任务只有一种：<b>已知起终点的单次节能航线规划</b>。每种规划风（CFD / GeoWind2Plan 预测 / 高度剖面 / 不用风）各自规划并选出一条航线，再统一放进 CFD 风里算能耗。风场模型的好坏只看它选出的航线在 CFD 风里省不省电、是否满足约束。
+</div>
+<div class="tbl-scroll">
+<table>
+  <tr><th style="width:13%">项目</th><th>GeoWind2Plan（我们的主协议沿用）</th><th style="width:30%">WindSeer 仓库自带的规划基准</th></tr>
+  <tr><td>场景与任务</td><td>城市街区；起终点高度 75 m，飞行带 30–120 m；每个街区用同一个随机种子抽任务</td><td>自然地形上的起终点</td></tr>
+  <tr><td>规划</td><td>每种规划风 10 个 RRT 初值，每个初值做一次能耗最优的轨迹优化（CasADi + IPOPT）</td><td>OMPL RRT*，时间最优，空速 15 m/s</td></tr>
+  <tr><td>选线</td><td>每种方法只用自己的规划风，在 10 个候选里选能耗最低的一条（论文式 38）</td><td>—</td></tr>
+  <tr><td>约束</td><td>净空 10 m，空速 ≤ 20 m/s，加速度 ≤ 3 m/s²，推力 ≤ 100 N</td><td>—</td></tr>
+  <tr><td>评估</td><td>在 CFD 风中回放；能耗 Wh/km = 焦耳 ÷ 3600 ÷ 起终点直线距离（km）</td><td>执行是否有效；执行代价 ÷ 用参考风规划时的代价</td></tr>
+  <tr><td>分组与指标</td><td>按任务方向与来流的夹角 ψ 分组：顺风 ψ ≤ 45° 或 ≥ 315°，逆风 135–225°，其余为侧风。节能率 = (A − O) / A，回收率 = (A − O) / (A − G)；A、O、G 分别是不用风、方法、CFD 规划航线的能耗</td><td>有效率、归一化执行代价</td></tr>
+</table>
+</div>
+<p class="muted">我们的可信评测（3.1）只在这个任务上加了 GPU 修复和严格检查，任务定义不变。WindSeer 的规划基准是地形上的时间最优问题，和节能任务不同，只作参考。闭环测风、可飞空域判定、多点巡检等任务目前都没有现成协议，候选见 §10.1。</p>
+
 
 <h3>3.1 协议 A：官方规划矩阵 + 我们加的可信评测（主协议）</h3>
 <div class="svgbox">
@@ -803,7 +832,28 @@
   <tr><td>E (39)</td><td class="num">−7.55%</td><td class="num"><b>86.0%</b> / +1.13%</td><td class="num">84.0% / +1.33%</td><td class="num">81.8% / +1.62%</td><td class="num">73.4% / +2.23%</td></tr>
 </table>
 <figure style="max-width:860px"><a class="imglink" href="assets/figures/replan_recovery.png" target="_blank"><img src="assets/figures/replan_recovery.png" alt="replan recovery" loading="lazy"></a>
-<figcaption>各街区回收率。GW2P 77–86%，与论文报告的 75–88% 基本一致；UNet 在 C 上更高。</figcaption></figure>
+<figcaption>各街区回收率（焦耳求和口径）。GW2P 77–86%；论文的 75–88% 是按风向分组的数字，同口径对比见 R4b。UNet 在 C 上更高。</figcaption></figure>
+
+<h3>R4b · 按任务风向分组（与论文表格同口径）</h3>
+<p class="muted">A–E 合并，用 R4 的 231 个共同任务（严格检查后所有方法都有有效航线）。能耗是 CFD 风中回放的 Wh/km，先在组内取平均，再算节能率和回收率；括号里是论文报告值。由已有的 R4 结果文件重新汇总，没有重跑规划。</p>
+<div class="tbl-scroll">
+<table>
+  <tr><th>分组</th><th>任务数</th><th>平均能耗 Wh/km<br>CFD / GW2P / 不用风</th><th>CFD 节能率</th><th>GW2P 节能率<br>（论文）</th><th>GW2P 回收率<br>（论文）</th><th>UNet3D<br>回收率</th><th>FNO3D<br>回收率</th><th>剖面<br>回收率</th></tr>
+  <tr><td>顺风</td><td class="num">60</td><td class="num">9.28 / 9.40 / 10.18</td><td class="num">8.9%</td><td class="num">7.7%（6.9%）</td><td class="num"><b>86.6%</b>（87.9%）</td><td class="num">82.7%</td><td class="num">76.1%</td><td class="num">67.5%</td></tr>
+  <tr><td>逆风</td><td class="num">31</td><td class="num">13.94 / 14.31 / 16.61</td><td class="num">16.0%</td><td class="num">13.8%（12.7%）</td><td class="num"><b>86.3%</b>（85.7%）</td><td class="num">83.9%</td><td class="num">79.1%</td><td class="num">54.1%</td></tr>
+  <tr><td>侧风</td><td class="num">140</td><td class="num">12.01 / 12.18 / 12.88</td><td class="num">6.7%</td><td class="num">5.4%（4.5%）</td><td class="num"><b>80.0%</b>（75.0%）</td><td class="num">76.2%</td><td class="num">74.1%</td><td class="num">42.8%</td></tr>
+  <tr><td><b>合计</b></td><td class="num">231</td><td class="num">11.56 / 11.74 / 12.68</td><td class="num">8.8%</td><td class="num">7.4%</td><td class="num"><b>83.4%</b></td><td class="num">80.0%</td><td class="num">76.1%</td><td class="num">51.6%</td></tr>
+</table>
+</div>
+<div class="callout amber">
+<b>读法：</b>
+<ul>
+<li>GW2P 回收率与论文的差：顺风 −1.3、逆风 +0.6、侧风 +5.0 个百分点。节能率三组都比论文高约 1 个百分点，可能来自 GPU 修复或任务子集（每街区 64 个，论文 256 个），没有单独验证。</li>
+<li>逆风组能省得最多（CFD 节能 16.0%），但只剩 31 / 85 个任务：不用风在另外 54 个逆风任务里没有一条航线通过严格检查，所以逆风组偏向较容易的任务（§7.1、§8）。</li>
+<li>口径与 R4 不同：R4 在每个街区内把共同任务的能耗（焦耳）直接相加，长任务权重大；本表按 Wh/km 在组内取平均，与论文表格一致。全页其余地方的回收率仍按 R4 的定义。</li>
+</ul>
+</div>
+
 
 <h3>R5 · 稀疏观测（矩阵见 §4 表 2）</h3>
 <div class="grid">
@@ -866,6 +916,10 @@
 
 <!-- ================================================================ -->
 <h2 id="s6">6 · 我们的 4D Demo：城市风场 + 无人机航线 <span class="en">GeoWind Web Lab · in-browser wind prediction and route planning</span></h2>
+<div class="lab-open">
+  <a class="lab-btn" href="lab/" target="_blank" rel="noopener">在新窗口打开交互版 ↗</a>
+  <div class="lab-note">用桌面版 Chrome / Edge 打开（需要 WebGPU，并开启硬件加速）。首次打开会自动刷新一次，然后下载约 12 MB 数据；风场预测和航线规划都在你自己的电脑上运行。可以拖动起终点、改风向和风速、切换风场粒子和切片、让无人机沿航线飞。只含街区 A，只有 4 m/s、0° 有 CFD 对照。</div>
+</div>
 <div class="callout blue">
 <b>是什么：</b>GeoWind Web Lab 是我们在 GeoWind2Plan 官方网页演示基础上改的非商业衍生版。它在浏览器里用本机 GPU（WebGPU）实时预测城市三维风场，再用 CPU 后台线程同时规划四条节能航线，并在三维城市里显示风场粒子、风场切片和无人机飞行动画。场景是街区 A（香港，1.2 × 1.2 km）。
 <br><b>计算链：</b>建筑高度图 → MDDF 多方向距离特征 → 逐高度层的 2D FNO（作者发布的权重，约 431 KiB）→ 任务走廊内的三维风场。规划先用格点 Dijkstra 求初值，再做阻尼 Newton 轨迹优化，四种规划风（CFD / 预测风 / 高度剖面 / 不用风）各出一条航线，统一放进离线量化 CFD（4 m/s、0°）里评估能耗。
@@ -925,7 +979,9 @@
 <li>默认任务是上游挑选的演示任务，不代表随机任务的平均水平；只附带 4 m/s、0° 这一个 CFD 工况。</li>
 <li>净空检查是 0.25 m 采样下的下界，不是连续碰撞证明，也不是飞行安全认证。</li>
 <li>计时来自本机多次运行（Apple M4，headless Chrome），换设备会变化。</li>
-<li>代码、模型和数据沿用上游的 CC BY-NC 4.0，录屏只用于非商业展示。交互版依赖跨源隔离响应头，GitHub Pages 不支持，所以本页只放录屏；需要在线交互可以用作者的官方演示 <a href="https://geowind2plan.com/" target="_blank" rel="noopener">geowind2plan.com</a>。</li>
+<li>代码、模型和数据沿用上游的 CC BY-NC 4.0，录屏和交互版只用于非商业展示。作者的官方演示在 <a href="https://geowind2plan.com/" target="_blank" rel="noopener">geowind2plan.com</a>，含 5 个街区。</li>
+<li>规划器的多线程需要跨源隔离（COOP / COEP 响应头），GitHub Pages 不能设置这些响应头。交互版先注册一个 service worker（coi-serviceworker，MIT）补上，所以首次打开会刷新一次；浏览器不允许 service worker 时也能运行，只是规划改为单线程。</li>
+<li>交互版在本机 Chrome 上按 GitHub Pages 的条件测过（静态服务器，不带这些响应头）：刷新一次后进入跨源隔离，默认任务四条航线都通过独立净空检查，能耗与录屏相同，预测加规划约 2.3 s。</li>
 </ul>
 </div>
 
@@ -940,9 +996,10 @@
   <tr><td>AIJ Case D</td><td>风洞稀疏速度 / TKE，5 个文件</td><td>已下载（10-28 调研）</td><td>CC BY 4.0</td><td class="ok">✅ MD5</td><td>行人高度，小型物理观测验证</td></tr>
   <tr><td>urbanFlowGen 自生成</td><td>20 个场景 STL + 60 个 TOML 配置（4 族）</td><td>已生成（10-28）</td><td>MIT（工具）</td><td class="ok">✅ 重跑哈希一致</td><td>还没有 CFD 解；主线 ④ 的几何来源</td></tr>
   <tr><td>WinDiNet 作者样例</td><td>5 个 NPZ，每个 [112, 256, 256] 的 u、v + 建筑 mask</td><td>已下载（10-28）</td><td>Apache-2.0</td><td class="ok">✅</td><td>2D 时变，只作可视化对照</td></tr>
-  <tr><td rowspan="4"><b>可申请 / 待下载</b></td>
+  <tr><td rowspan="5"><b>可申请 / 待下载</b></td>
       <td>U3DWind</td><td>5 座城市 720 个 GPU LBM-LES 算例，10 m 分辨率 3D3C + TKE</td><td>20 m 版承诺审稿后开放；10 m 版 &gt;50 TB 需申请</td><td>待定</td><td class="no">❌</td><td>最理想的第二套城市 3D 数据</td></tr>
-  <tr><td>UrbanTALES</td><td>538 个布局 LES（224 理想 + 314 真实，62 座城市）</td><td>门户 metadata 已取，3D 速度数组未拿到</td><td>CC BY-NC 4.0</td><td class="doing">🔄</td><td>真实城市形态泛化</td></tr>
+  <tr><td>UrbanTALES</td><td>538 个布局 LES（224 理想 + 314 真实，62 座城市）</td><td>门户 metadata 已取；公开文件只有行人高度的 2D 场（东京 Kasumigaseki 样本已下载核实），3D 速度数组未拿到</td><td>CC BY-NC 4.0</td><td class="doing">🔄</td><td>真实城市形态泛化；含东京 5 个区域</td></tr>
+  <tr><td>PLATEAU 东京 23 区</td><td>国土交通省的城市建筑三维模型（CityGML v2，约 3.8 GB）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank" rel="noopener">G 空间信息中心</a>，可直接下载</td><td>免费，可商用</td><td class="muted">未下载</td><td>只有几何，没有风；到东京路线的第 1 步（§10.2）</td></tr>
   <tr><td>Rotterdam（4TU）</td><td>城市 CFD 结果压缩包，约 86 GB</td><td>直连超时</td><td>—</td><td class="no">❌</td><td>独立城市外部测试候选</td></tr>
   <tr><td>PhySense / Senseiver 原基准</td><td>各论文自带数据</td><td>Senseiver 在 Zenodo；PhySense 见仓库说明</td><td>—</td><td class="muted">未下载</td><td>只在需要复现原文数字时下载</td></tr>
   <tr><td rowspan="2"><b>暂不可得</b></td>
@@ -953,13 +1010,44 @@
 <figure style="max-width:900px"><a class="imglink" href="assets/figures/scene_gallery.png" target="_blank"><img src="assets/figures/scene_gallery.png" alt="urbanFlowGen scenes" loading="lazy"></a>
 <figcaption>urbanFlowGen 已生成场景中的 8 个布局（颜色为建筑高度）。用 GPU LBM 在这些场景上算 2–3 个风向 × 2–3 个风速，就是第二套 3D 数据的最快路径。</figcaption></figure>
 
+<h3>7.1 数据收紧：GeoWind2Plan 实际有多少独立信息（10-30 核实）</h3>
+<div class="grid">
+<table>
+  <tr><th>街区</th><th>城市</th><th>范围</th><th>最高建筑</th><th>CFD 工况</th></tr>
+  <tr><td>A</td><td>香港</td><td>1.2 × 1.2 km</td><td class="num">144 m</td><td>2 / 4 / 8 m/s</td></tr>
+  <tr><td>B</td><td>蒙特利尔</td><td>1.2 × 1.2 km</td><td class="num">202.5 m</td><td>4 m/s</td></tr>
+  <tr><td>C</td><td>墨尔本</td><td>1.2 × 1.2 km</td><td class="num">193.5 m</td><td>4 m/s</td></tr>
+  <tr><td>D</td><td>悉尼</td><td>1.2 × 1.2 km</td><td class="num">240 m</td><td>4 m/s</td></tr>
+  <tr><td>E</td><td>大阪</td><td>3 × 3 km</td><td class="num">169.5 m</td><td>4 m/s</td></tr>
+</table>
+<div class="callout amber" style="margin:10px 0">
+<ul>
+<li><b>只有 7 个独立 CFD 工况，</b>来流方向全部沿 +axis2。任务与风的夹角只靠任务方向变化，这份数据检验不了对新来流方向的泛化。</li>
+<li><b>5 个街区的任务方向相同：</b>每个街区用同一个随机种子抽 64 个任务，B / C / D 与 A 的方向相差 0.00°，E 相差 0.11°。所以每个街区都是 12 个顺风、17 个逆风、35 个侧风（A–E 合计 60 / 85 / 175），320 个任务不是 320 个独立方向。</li>
+<li><b>逆风最容易丢样本：</b>严格检查后，85 个逆风任务里不用风只有 31 个有有效航线，剖面 62 个，CFD 和三个学习型风场都是 85 个。所有方法都有效的共同任务是顺风 60、逆风 31、侧风 140，合计 231，也就是 R4 的 A 55 + B 46 + C 41 + D 50 + E 39。</li>
+<li><b>只有平均风：</b>没有湍动能和阵风，也没有时间变化。</li>
+</ul>
+</div>
+</div>
+
+<h3>7.2 哪些数据能直接做下游任务</h3>
+<table>
+  <tr><th style="width:20%">数据</th><th>能做</th><th style="width:26%">不能做</th></tr>
+  <tr><td><b>GeoWind2Plan</b></td><td>节能航线规划（§3 主协议）；稀疏测风后重排或重规划；留一街区的跨城市测试</td><td>新来流方向、时间变化、阵风风险</td></tr>
+  <tr><td>WindSeer（ETH）</td><td>山地上的稀疏测风重建；仓库自带的时间最优规划基准；预训练</td><td>城市建筑</td></tr>
+  <tr><td>WindSeer UAV 飞行数据</td><td>用 13 次真实飞行（EZG3 / EZG5 / EZG6，Chasseral、Gotthardpass、Oberalppass）检验测风和风场估计</td><td>城市；规划评测</td></tr>
+  <tr><td>AIJ Case D</td><td>验证我们自己的 CFD / LBM 求解器（低层街区中的一栋高层，来流 0 / 22.5 / 45°）</td><td>规划（行人高度、范围小）</td></tr>
+  <tr><td>UrbanTALES 东京 5 区</td><td>行人高度的风速对照</td><td>飞行高度的三维风</td></tr>
+  <tr><td>urbanFlowGen、WinDiNet 样例</td><td>几何来源；2D 可视化对照</td><td>没有三维流场</td></tr>
+</table>
+
 <!-- ================================================================ -->
 <h2 id="s8">8 · 引用边界 <span class="en">what we can and cannot claim</span></h2>
 <div class="callout green">
 <b>可以写：</b>
 <ul>
 <li>官方 GeoWind2Plan 规划器在三维风场下 IPOPT 几乎不收敛（GW2P / UNet / FNO 规划风下 0 / 3,199），原始输出严格通过只有 4.6–11.2%；统一的 GPU 修复把三维风场规划的通过率提到 89.7–98.1%，规划能耗中位数变化 0.05–0.63%（4 m/s）。</li>
-<li>在可信评测下，GeoWind2Plan 回收 CFD 规划节能的 76.8–86.0%，与论文报告的 75.0–87.9% 一致。</li>
+<li>在可信评测下，GeoWind2Plan 回收 CFD 规划节能的 76.8–86.0%（按街区，焦耳求和），与论文报告的范围 75.0–87.9% 相当；按论文的顺风 / 逆风 / 侧风分组、同口径计算是 86.6 / 86.3 / 80.0%，论文 87.9 / 85.7 / 75.0%（R4b）。</li>
 <li>只用 4 个街区训练（留一街区）的 UNet3D 场误差高 40–73%，完整重规划回收率 73.6–85.7%，与 GeoWind2Plan 大幅重叠：在这组数据上，场误差不足以预测决策质量。</li>
 <li>同一重建方法下，沿候选路线均匀放探针是唯一稳定有效的选点策略（A–E，K=32，regret −37%；A / 8 m/s −57%）；按最大误差选点有害（+44%）。</li>
 <li>街区 A、8 m/s 时，GeoWind2Plan 规划的 640 个候选修复后有 293 个（46%）在 CFD 风下超出空速或推力限制，CFD 规划为 0 个；通过严格检查的分别是 343 和 612 个。</li>
@@ -980,10 +1068,14 @@
 <li>GPU smoke 只验证安装和前向 / 反向，不代表任何精度。</li>
 <li>“作者声明”的会议（GeoWind2Plan NeurIPS 2026 Spotlight、WESPR IROS 2026）没有在出版方页面核实。</li>
 <li>4D demo 的数字来自网页版计算链（逐层 2D FNO + Dijkstra + 阻尼 Newton），不能和 §5 的 IPOPT 矩阵混比；默认任务是上游挑选的演示任务；自由风向下的能耗在预测风场中评估，不是独立评估。</li>
+<li>GeoWind2Plan 只有 7 个独立 CFD 工况、来流方向全部相同，5 个街区的 64 个任务方向也相同（§7.1）：不能写“对风向泛化”，统计时也不能按 320 个独立任务算。</li>
+<li>逆风组的共同任务只有 31 / 85 个（不用风在其余逆风任务里没有有效航线），逆风数字偏向较容易的任务。</li>
+<li>R4b 的分组数字（Wh/km 组内平均）和 R4 的 76.8–86.0%（焦耳求和）口径不同，不能放进同一列比较。</li>
+<li>§10 的东京部分只是调研，没有任何东京风场或航线的计算结果。</li>
 </ul>
 </div>
 <div class="callout blue">
-<b>度量约定（每个数字都要注明）：</b>能耗一律是 CFD 风回放的 Wh/km；“回收率”在共同任务上按能耗求和，不是逐任务平均；regret 和“与 CFD 差距”都是相对百分比；场 RMSE 是 SDF ≥ 10 m、步长 (4, 3, 4) 抽样的向量 RMSE；2 / 8 m/s 只有街区 A；稀疏实验 A–D 3 个 seed、E 2 个 seed；每张表注明口径：R1（官方原始，未门控）或 R2–R6（GPU 修复 + 严格检查）。
+<b>度量约定（每个数字都要注明）：</b>能耗一律是 CFD 风回放的 Wh/km；“回收率”在共同任务上按能耗求和，不是逐任务平均（R4b 例外：按 Wh/km 在组内取平均，与论文表格对齐）；regret 和“与 CFD 差距”都是相对百分比；场 RMSE 是 SDF ≥ 10 m、步长 (4, 3, 4) 抽样的向量 RMSE；2 / 8 m/s 只有街区 A；稀疏实验 A–D 3 个 seed、E 2 个 seed；每张表注明口径：R1（官方原始，未门控）或 R2–R6（GPU 修复 + 严格检查）。
 </div>
 
 <!-- ================================================================ -->
@@ -1053,7 +1145,67 @@
 <p class="muted">“粗估”是计划用的人工估计，不是测量值；GPU 与他人共享，启动前需要确认空卡。</p>
 
 <!-- ================================================================ -->
-<h2 id="s10">10 · 链接总表 <span class="en">links</span></h2>
+<h2 id="s10">10 · 真实城市（东京）与自由探索 agent <span class="en">survey only · decisions pending</span></h2>
+<div class="callout blue">
+<b>目标：</b>把风场预测用到真实城市（先选东京），让一个 agent 在城市里自由探索：自己决定去哪测风、走哪条航线、什么时候飞。
+<br><b>现状：</b>只做了调研，没有做任何东京的计算。最关键的发现是：公开数据里没有东京飞行高度（30–150 m）的三维风场真值。UrbanTALES 的东京区域只公开行人高度的 2D 场，iCFD 的东京风速图也在 1.5 m 高度。要在东京给航线打分，必须自己算 CFD / LBM。
+</div>
+
+<h3>10.1 用现有数据能做的下游任务</h3>
+<div class="tbl-scroll">
+<table>
+  <tr><th>#</th><th style="width:13%">任务</th><th>测什么</th><th>数据</th><th>指标</th><th style="width:16%">现在能做吗</th></tr>
+  <tr><td>1</td><td><b>边测边飞（闭环）</b></td><td>飞行中测风、更新风场、重新规划；把 §3.2 的“固定池重排”扩成闭环</td><td>GeoWind2Plan，探针读数从 CFD 取</td><td>总能耗（含测风绕行）、与 CFD 规划的差距</td><td class="ok">✅ 可以</td></tr>
+  <tr><td>2</td><td><b>可飞空域判定</b></td><td>按预测风判断哪些走廊和高度能飞：日本标准手册的 5 m/s 规则，加空速和推力限制</td><td>GeoWind2Plan；强风只有街区 A 的 8 m/s</td><td>不可飞区域的查准率 / 查全率（以 CFD 为准）</td><td class="ok">✅ 可以，但强风只有一个工况</td></tr>
+  <tr><td>3</td><td><b>电量内巡检</b></td><td>一块电池访问多个点，每段代价由风决定（带风的定向越野问题）</td><td>GeoWind2Plan</td><td>访问点数、剩余电量、约束违例率</td><td class="ok">✅ 可以，要新写任务生成</td></tr>
+  <tr><td>4</td><td><b>跨城市零样本</b></td><td>留一城市训练和测试；大阪（E）是唯一的日本城市，范围也最大（3 × 3 km），最适合当东京的替身</td><td>GeoWind2Plan 5 座城市</td><td>留出城市的回收率、违例率</td><td class="ok">✅ 可以（UNet / FNO 已按留一街区做过）</td></tr>
+  <tr><td>5</td><td><b>真实飞行测风</b></td><td>从飞行日志估计风，和 WindSeer 的预测对比</td><td>WindSeer 的 13 次 UAV 飞行</td><td>风速、风向误差</td><td class="warn">⚠️ 数据已在手，但是山地，不是城市</td></tr>
+</table>
+</div>
+<p class="muted">现有数据做不了：改变来流方向（7 个工况方向相同）、随时间变化的天气、湍动能和阵风风险（只有平均风）、在东京飞行高度上打分（没有真值）。</p>
+
+<h3>10.2 到东京的路线（建议，未开始）</h3>
+<div class="tbl-scroll">
+<table>
+  <tr><th style="width:14%">步骤</th><th>做什么</th><th style="width:24%">产出</th><th style="width:18%">需要什么</th></tr>
+  <tr><td>1 · 几何 + 零样本预测</td><td>PLATEAU 建筑模型 → 4 m 分辨率高度图（屋顶层数，每层 1.5 m，与 GeoWind2Plan 的编码一致）→ 用作者发布的 2D FNO 直接预测</td><td>东京飞行高度的预测风场；之后可以加进 §6 的交互版</td><td>不用训练；但没有真值，只能看图</td></tr>
+  <tr><td>2 · 自己算真值</td><td>GPU LBM：先在 AIJ Case D（风洞）上验证求解器，再算 3 块东京区域：霞关 Kasumigaseki（与 UrbanTALES 的 JP-Tok-V1 重叠，可做行人高度对照）、西新宿（超高层）、一块密集低层区；每块 4–8 个来流方向</td><td>东京的 CFD 真值：能给步骤 1 打分，也能测对新来流方向的泛化</td><td>空闲 GPU；求解器许可核对</td></tr>
+  <tr><td>3 · 加时间维度</td><td>接日本气象厅（JMA）逐小时的背景风：每小时取最近的来流方向，按风速缩放（与网页版的 U / 4 m/s 缩放同理）</td><td>随时间变化的城市风场</td><td>气象数据接入</td></tr>
+  <tr><td>4 · agent</td><td>把法规写成硬约束（150 m、机场周边、DID、5 m/s）；Qwen 做决策层（去哪测、何时飞、何时等），规划器出轨迹，检查器把关（与 §9.2 一致）</td><td>东京 demo：自然语言任务 → 测风 → 规划 → 飞行动画</td><td>步骤 1–3；“自由探索”的定义（10.5）</td></tr>
+</table>
+</div>
+
+<h3>10.3 相关工作与资料</h3>
+<div class="tbl-scroll">
+<table>
+  <tr><th style="width:22%">工作</th><th>做了什么</th><th style="width:34%">和我们的差别 / 用处</th></tr>
+  <tr><td><a href="https://www.mlit.go.jp/plateau/use-case/uc22-005/" target="_blank" rel="noopener">PLATEAU UC22-005</a>（丰川市）</td><td>在 LOD1 建筑上用 AcuSolve 算 1 m 网格的 CFD，把涡度风险映射到 10 m 体素，再用 Dijkstra 规划；实飞时绕行航线的机体倾角更小</td><td>“城市风场 → 航线 → 实飞”的完整链条；但调参要几天，超过 10 km² 难以计算，没有学习型预测</td></tr>
+  <tr><td>iCFD（<a href="https://icfd.co.jp/archives/1123" target="_blank" rel="noopener">东京风速图</a> · <a href="https://icfd.co.jp/archives/1143" target="_blank" rel="noopener">无人机航线研发</a> · <a href="https://icfd.co.jp/archives/3188" target="_blank" rel="noopener">WindMind City</a>）</td><td>东京 1.5 m 高度的风速图；面向无人机航线的城市风研发；网页风场展示</td><td>行人高度；企业项目，数据不公开</td></tr>
+  <tr><td><a href="https://openreview.net/pdf?id=PIZRXV3q6E" target="_blank" rel="noopener">OpenReview PIZRXV3q6E</a></td><td>Unity 里的曼哈顿场景，4 个风向 × 10 个风速的 CFD；PPO 策略 + LLM 选择飞行模式；报告时间 −16%、碰撞 −50%、能耗 −18%</td><td>和“城市风 + agent”最接近的已有工作，需要精读；单一场景，风场来自离散的 CFD 工况</td></tr>
+  <tr><td><a href="https://arxiv.org/abs/2508.00288" target="_blank" rel="noopener">UAV-ON</a> · <a href="https://arxiv.org/abs/2410.07087" target="_blank" rel="noopener">TRAVEL</a> · <a href="https://arxiv.org/abs/2511.11252" target="_blank" rel="noopener">UAVBench</a></td><td>无人机导航和 agent 基准</td><td>没找到建筑尺度的风场；投稿前要做完整的新颖性核查</td></tr>
+  <tr><td><a href="https://urbantales.vercel.app/" target="_blank" rel="noopener">UrbanTALES</a> 东京 5 区</td><td>PALM LES，水平 1 m、垂直 0.5 m；区域为 Takahashi、Kasumigaseki、Kotobashi、Toyama、Tomigaya</td><td>公开文件只有行人高度的 2D 场（Uped、TKEped 等，1152 × 624）；可做行人高度对照</td></tr>
+</table>
+</div>
+
+<h3>10.4 日本的飞行规则（国土交通省）</h3>
+<ul style="font-size:14px">
+<li>在 150 m 以上、机场周边、人口集中地区（DID）上空飞行需要许可（<a href="https://www.mlit.go.jp/koku/koku_tk10_000003.html" target="_blank" rel="noopener">国土交通省说明</a>）。东京 23 区大部分属于 DID，在那里飞基本都要先申请许可。</li>
+<li>标准飞行手册（2025 年 3 月修订）：风速 5 m/s 以上不飞，除非机型的制造商手册允许（<a href="https://www.mlit.go.jp/common/001521378.pdf" target="_blank" rel="noopener">手册 PDF</a> · <a href="https://dronesekai.jp/archives/1307/" target="_blank" rel="noopener">修订摘要</a>）。</li>
+<li>对我们的意义：5 m/s 落在 GeoWind2Plan 的 2–8 m/s 范围内，所以任务 2（可飞空域判定）有直接的法规依据；agent 的硬约束也可以直接取这几条。</li>
+</ul>
+
+<h3>10.5 待讨论</h3>
+<div class="callout amber">
+<ul>
+<li><b>“自由探索”指什么：</b>(a) 有目标的任务，agent 自己决定航线、高度和何时测风；(b) 没有固定目标，agent 主动测风、补全城市风场地图；(c) 自然语言任务，agent 调用工具完成。三者的评测指标不同，要先定一个。</li>
+<li><b>决策层：</b>Qwen 调用工具（与 §9.2 一致），还是 RL 策略（如上面 OpenReview 那篇的 PPO）。</li>
+<li><b>东京区域：</b>10.2 的 3 块是建议，可以换成导师关心的区域。</li>
+<li><b>GPU：</b>步骤 2 的 LBM 需要空闲 GPU，开始前要确认。</li>
+</ul>
+</div>
+
+<!-- ================================================================ -->
+<h2 id="s11">11 · 链接总表 <span class="en">links</span></h2>
 <div class="grid">
 <div>
 <table>
@@ -1072,23 +1224,25 @@
   <tr><td>FunSearch · AlphaEvolve</td><td><a href="https://www.nature.com/articles/s41586-023-06924-6" target="_blank">Nature</a> · <a href="https://arxiv.org/abs/2506.13131" target="_blank">arXiv:2506.13131</a></td></tr>
   <tr><td>ShinkaEvolve · ReEvo · EoH</td><td><a href="https://arxiv.org/abs/2509.19349" target="_blank">2509.19349</a> · <a href="https://arxiv.org/abs/2402.01145" target="_blank">2402.01145</a> · <a href="https://arxiv.org/abs/2401.02051" target="_blank">2401.02051</a></td></tr>
   <tr><td>Eureka · LLM-SR · LLAMBO</td><td><a href="https://arxiv.org/abs/2310.12931" target="_blank">2310.12931</a> · <a href="https://arxiv.org/abs/2404.18400" target="_blank">2404.18400</a> · <a href="https://arxiv.org/abs/2402.03921" target="_blank">2402.03921</a></td></tr>
+  <tr><td>城市风 × agent · 无人机基准</td><td><a href="https://openreview.net/pdf?id=PIZRXV3q6E" target="_blank">OpenReview PIZRXV3q6E</a> · <a href="https://arxiv.org/abs/2508.00288" target="_blank">UAV-ON</a> · <a href="https://arxiv.org/abs/2410.07087" target="_blank">TRAVEL</a> · <a href="https://arxiv.org/abs/2511.11252" target="_blank">UAVBench</a></td></tr>
   <tr><td>Zephyrus · VoxPoser · KnowNo</td><td><a href="https://arxiv.org/abs/2510.04017" target="_blank">2510.04017</a> · <a href="https://arxiv.org/abs/2307.05973" target="_blank">2307.05973</a> · <a href="https://arxiv.org/abs/2307.01928" target="_blank">2307.01928</a></td></tr>
 </table>
 </div>
 <div>
 <table>
   <tr><th colspan="2">代码 / 数据 / Demo</th></tr>
-  <tr><td>4D 风场航线 demo</td><td>本页 §6 为录屏；在线交互可用作者的官方演示 <a href="https://geowind2plan.com/" target="_blank">geowind2plan.com</a>（CC BY-NC 4.0）</td></tr>
+  <tr><td>4D 风场航线 demo</td><td><a href="lab/" target="_blank" rel="noopener">交互版（街区 A）</a>；§6 为录屏；作者的官方演示 <a href="https://geowind2plan.com/" target="_blank">geowind2plan.com</a>（5 个街区）；均为 CC BY-NC 4.0</td></tr>
   <tr><td>风场与规划代码</td><td><a href="https://github.com/DUAL-Xiao/GeoWind2Plan" target="_blank">GeoWind2Plan</a> · <a href="https://github.com/ethz-asl/WindSeer" target="_blank">WindSeer</a> · <a href="https://github.com/thuml/PhySense" target="_blank">PhySense</a> · <a href="https://github.com/OrchardLANL/Senseiver" target="_blank">Senseiver</a> · <a href="https://github.com/thuml/Transolver" target="_blank">Transolver</a> · <a href="https://github.com/neuraloperator/neuraloperator" target="_blank">neuraloperator</a> · <a href="https://github.com/fgiral000/genda_urban_flows" target="_blank">GenDA</a> · <a href="https://github.com/martenlienen/generative-turbulence" target="_blank">TurbDiff</a> · <a href="https://github.com/vivekoommen/Gen4Turbulence" target="_blank">Gen4Turbulence</a> · <a href="https://github.com/VinuesaLAB-AI/Diff-SPORT" target="_blank">Diff-SPORT</a> · <a href="https://github.com/rbischof/windinet" target="_blank">WinDiNet</a> · <a href="https://github.com/spencerfolk/wind_aware_ros" target="_blank">wind_aware_ros</a> · <a href="https://github.com/johnviljoen/jaxipm" target="_blank">jaxipm</a> · <a href="https://github.com/johnviljoen/spineax" target="_blank">spineax</a> · <a href="https://github.com/MarioRuettgers/urbanFlowGen" target="_blank">urbanFlowGen</a></td></tr>
   <tr><td>LLM / 程序搜索代码</td><td><a href="https://github.com/google-deepmind/funsearch" target="_blank">FunSearch</a> · <a href="https://github.com/codelion/openevolve" target="_blank">OpenEvolve</a> · <a href="https://github.com/SakanaAI/ShinkaEvolve" target="_blank">ShinkaEvolve</a> · <a href="https://github.com/ai4co/reevo" target="_blank">ReEvo</a> · <a href="https://github.com/FeiLiu36/EoH" target="_blank">EoH</a> · <a href="https://github.com/eureka-research/Eureka" target="_blank">Eureka</a> · <a href="https://github.com/deep-symbolic-mathematics/LLM-SR" target="_blank">LLM-SR</a> · <a href="https://github.com/tennisonliu/LLAMBO" target="_blank">LLAMBO</a> · <a href="https://github.com/huangwl18/VoxPoser" target="_blank">VoxPoser</a> · <a href="https://github.com/Rose-STL-Lab/Zephyrus" target="_blank">Zephyrus</a></td></tr>
-  <tr><td>数据</td><td><a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">WindSeer（ETH，CC BY 4.0）</a> · <a href="https://zenodo.org/records/18252581" target="_blank">Feilian-3D（Zenodo）</a> · <a href="https://arxiv.org/abs/2607.04495" target="_blank">U3DWind（论文）</a></td></tr>
+  <tr><td>数据</td><td><a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">WindSeer（ETH，CC BY 4.0）</a> · <a href="https://zenodo.org/records/18252581" target="_blank">Feilian-3D（Zenodo）</a> · <a href="https://arxiv.org/abs/2607.04495" target="_blank">U3DWind（论文）</a> · <a href="https://urbantales.vercel.app/" target="_blank">UrbanTALES</a></td></tr>
+  <tr><td>东京与法规（§10）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank">PLATEAU 东京 23 区</a> · <a href="https://www.mlit.go.jp/plateau/use-case/uc22-005/" target="_blank">PLATEAU UC22-005</a> · <a href="https://www.mlit.go.jp/koku/koku_tk10_000003.html" target="_blank">国土交通省飞行规则</a> · <a href="https://www.mlit.go.jp/common/001521378.pdf" target="_blank">标准飞行手册（PDF）</a> · <a href="https://icfd.co.jp/archives/1123" target="_blank">iCFD 东京风速图</a></td></tr>
 </table>
 </div>
 </div>
 
 <footer>
-生成于 2026-10-30。数字来自我们的实验结果文件；论文结果都是作者报告，没有混进我们的表。制作本页时没有运行任何训练或规划。<br>
-图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet 论文为 CC BY 4.0，Caltech 论文为 CC BY-NC-ND 4.0；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；§6 的 demo 录屏来自 GeoWind2Plan 网页演示的非商业衍生版，沿用 CC BY-NC 4.0；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。
+生成于 2026-10-30（当晚更新：下游任务核实、数据收紧、东京调研、交互版上线）。数字来自我们的实验结果文件；论文结果都是作者报告，只在 R4b 里用括号并列以便对照。制作本页时没有运行任何训练或规划实验。<br>
+图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet 论文为 CC BY 4.0，Caltech 论文为 CC BY-NC-ND 4.0；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；§6 的 demo 录屏和交互版（lab/）来自 GeoWind2Plan 网页演示的非商业衍生版，沿用 CC BY-NC 4.0（交互版的第三方组件许可见 <a href="lab/LICENSE">lab/LICENSE</a>）；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。
 </footer>
 </div>
 

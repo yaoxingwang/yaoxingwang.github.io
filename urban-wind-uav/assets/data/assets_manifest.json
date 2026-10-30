@@ -340,5 +340,12 @@
     "bytes": 88189,
     "origin": "poster frame of webdemo_views.mp4",
     "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "lab/",
+    "files": 111,
+    "bytes": 12008130,
+    "origin": "GeoWind Web Lab (Block A): our non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com); model weights, data and browser algorithms by the GeoWind2Plan authors",
+    "license": "CC BY-NC 4.0; three.js MIT, Inter OFL-1.1, coi-serviceworker MIT (see lab/LICENSE)"
   }
 ]

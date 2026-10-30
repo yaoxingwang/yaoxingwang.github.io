@@ -1,0 +1,695 @@
+{
+ "dtype": "float16",
+ "model": {
+  "modes": [
+   12,
+   12
+  ],
+  "width": 48,
+  "layers": 4,
+  "input_channels": 14,
+  "output_channels": 3,
+  "version": 2,
+  "norm": "instance",
+  "padding": 0
+ },
+ "tucker": {
+  "ranks": [
+   4,
+   22,
+   22,
+   6,
+   6
+  ],
+  "core_shape": [
+   4,
+   22,
+   22,
+   6,
+   6
+  ],
+  "core": "spectral.core",
+  "factors": [
+   {
+    "mode": 0,
+    "name": "spectral.factor0",
+    "shape": [
+     8,
+     4
+    ]
+   },
+   {
+    "mode": 1,
+    "name": "spectral.factor1",
+    "shape": [
+     48,
+     22
+    ]
+   },
+   {
+    "mode": 2,
+    "name": "spectral.factor2",
+    "shape": [
+     48,
+     22
+    ]
+   },
+   {
+    "mode": 3,
+    "name": "spectral.factor3",
+    "shape": [
+     12,
+     6
+    ]
+   },
+   {
+    "mode": 4,
+    "name": "spectral.factor4",
+    "shape": [
+     12,
+     6
+    ]
+   }
+  ],
+  "note": "full-rank modes folded into the core; apply the listed factors along their modes to rebuild [2L,in,out,my,mx]"
+ },
+ "features": {
+  "mddf_modes": [
+   2,
+   -1,
+   -1,
+   -1
+  ],
+  "include_mddf_dc": true,
+  "use_building_input": true,
+  "coords": "all",
+  "channel_names": [
+   "upper_distance_dc",
+   "upper_distance_re1",
+   "upper_distance_re2",
+   "upper_distance_im1",
+   "upper_distance_im2",
+   "solid",
+   "coord_y",
+   "coord_z",
+   "coord_x"
+  ],
+  "mddf_source_indices": [
+   0,
+   1,
+   2,
+   4,
+   5
+  ],
+  "mddf_center": [
+   1450.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mddf_scale": [
+   1380.0,
+   395.0,
+   208.0,
+   395.0,
+   208.0
+  ],
+  "mddf_imaginary_indices": [
+   3,
+   4
+  ]
+ },
+ "mddf": {
+  "angle_count": 180,
+  "distance_cutoff_m": 1600.0,
+  "modes_per_signal": 3,
+  "channels_per_signal": 7,
+  "signal_names": [
+   "upper_distance",
+   "upper_relative_height",
+   "lower_distance",
+   "lower_relative_height"
+  ],
+  "layout": "[DC, Re1..Re3, Im1..Im3] per signal, signal-major"
+ },
+ "grid": {
+  "horizontal_spacing_m": 4.0,
+  "vertical_spacing_m": 1.5
+ },
+ "wind": {
+  "reference_speed_m_s": 4.0,
+  "gradient_height_speed_m_s": 6.278,
+  "scaling": "u, v, w scale with U / 4 m/s"
+ },
+ "coordinates": {
+  "y_scale": 200.0,
+  "z_center": 70.0,
+  "z_scale": 70.0,
+  "x_center": 250.0,
+  "x_scale": 250.0
+ },
+ "target": {
+  "channel_names": [
+   "u",
+   "w",
+   "v"
+  ],
+  "center": [
+   4.0,
+   0.15,
+   0.0
+  ],
+  "scale": [
+   2.2,
+   0.4,
+   0.5
+  ],
+  "display_labels": [
+   "u",
+   "w",
+   "v"
+  ]
+ },
+ "inference": {
+  "patch": [
+   64,
+   64
+  ],
+  "overlap": 0.4,
+  "blend_window_minimum": 0.001
+ },
+ "tensors": {
+  "p.mlp1.weight": {
+   "offset": 0,
+   "shape": [
+    96,
+    14
+   ],
+   "count": 1344
+  },
+  "p.mlp1.bias": {
+   "offset": 2688,
+   "shape": [
+    96
+   ],
+   "count": 96
+  },
+  "p.mlp2.weight": {
+   "offset": 2880,
+   "shape": [
+    48,
+    96
+   ],
+   "count": 4608
+  },
+  "p.mlp2.bias": {
+   "offset": 12096,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "mlp_layers.0.mlp1.weight": {
+   "offset": 12192,
+   "shape": [
+    192,
+    48
+   ],
+   "count": 9216
+  },
+  "mlp_layers.0.mlp1.bias": {
+   "offset": 30624,
+   "shape": [
+    192
+   ],
+   "count": 192
+  },
+  "mlp_layers.0.mlp2.weight": {
+   "offset": 31008,
+   "shape": [
+    48,
+    96
+   ],
+   "count": 4608
+  },
+  "mlp_layers.0.mlp2.bias": {
+   "offset": 40224,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "mlp_layers.1.mlp1.weight": {
+   "offset": 40320,
+   "shape": [
+    192,
+    48
+   ],
+   "count": 9216
+  },
+  "mlp_layers.1.mlp1.bias": {
+   "offset": 58752,
+   "shape": [
+    192
+   ],
+   "count": 192
+  },
+  "mlp_layers.1.mlp2.weight": {
+   "offset": 59136,
+   "shape": [
+    48,
+    96
+   ],
+   "count": 4608
+  },
+  "mlp_layers.1.mlp2.bias": {
+   "offset": 68352,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "mlp_layers.2.mlp1.weight": {
+   "offset": 68448,
+   "shape": [
+    192,
+    48
+   ],
+   "count": 9216
+  },
+  "mlp_layers.2.mlp1.bias": {
+   "offset": 86880,
+   "shape": [
+    192
+   ],
+   "count": 192
+  },
+  "mlp_layers.2.mlp2.weight": {
+   "offset": 87264,
+   "shape": [
+    48,
+    96
+   ],
+   "count": 4608
+  },
+  "mlp_layers.2.mlp2.bias": {
+   "offset": 96480,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "mlp_layers.3.mlp1.weight": {
+   "offset": 96576,
+   "shape": [
+    192,
+    48
+   ],
+   "count": 9216
+  },
+  "mlp_layers.3.mlp1.bias": {
+   "offset": 115008,
+   "shape": [
+    192
+   ],
+   "count": 192
+  },
+  "mlp_layers.3.mlp2.weight": {
+   "offset": 115392,
+   "shape": [
+    48,
+    96
+   ],
+   "count": 4608
+  },
+  "mlp_layers.3.mlp2.bias": {
+   "offset": 124608,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "w_layers.0.weight": {
+   "offset": 124704,
+   "shape": [
+    48,
+    48
+   ],
+   "count": 2304
+  },
+  "w_layers.0.bias": {
+   "offset": 129312,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "w_layers.1.weight": {
+   "offset": 129408,
+   "shape": [
+    48,
+    48
+   ],
+   "count": 2304
+  },
+  "w_layers.1.bias": {
+   "offset": 134016,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "w_layers.2.weight": {
+   "offset": 134112,
+   "shape": [
+    48,
+    48
+   ],
+   "count": 2304
+  },
+  "w_layers.2.bias": {
+   "offset": 138720,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "w_layers.3.weight": {
+   "offset": 138816,
+   "shape": [
+    48,
+    48
+   ],
+   "count": 2304
+  },
+  "w_layers.3.bias": {
+   "offset": 143424,
+   "shape": [
+    48
+   ],
+   "count": 48
+  },
+  "q.mlp1.weight": {
+   "offset": 143520,
+   "shape": [
+    96,
+    48
+   ],
+   "count": 4608
+  },
+  "q.mlp1.bias": {
+   "offset": 152736,
+   "shape": [
+    96
+   ],
+   "count": 96
+  },
+  "q.mlp2.weight": {
+   "offset": 152928,
+   "shape": [
+    3,
+    96
+   ],
+   "count": 288
+  },
+  "q.mlp2.bias": {
+   "offset": 153504,
+   "shape": [
+    3
+   ],
+   "count": 3
+  },
+  "spectral.core.re": {
+   "offset": 153512,
+   "shape": [
+    4,
+    22,
+    22,
+    6,
+    6
+   ],
+   "count": 69696
+  },
+  "spectral.core.im": {
+   "offset": 292904,
+   "shape": [
+    4,
+    22,
+    22,
+    6,
+    6
+   ],
+   "count": 69696
+  },
+  "spectral.factor0.re": {
+   "offset": 432296,
+   "shape": [
+    8,
+    4
+   ],
+   "count": 32
+  },
+  "spectral.factor0.im": {
+   "offset": 432360,
+   "shape": [
+    8,
+    4
+   ],
+   "count": 32
+  },
+  "spectral.factor1.re": {
+   "offset": 432424,
+   "shape": [
+    48,
+    22
+   ],
+   "count": 1056
+  },
+  "spectral.factor1.im": {
+   "offset": 434536,
+   "shape": [
+    48,
+    22
+   ],
+   "count": 1056
+  },
+  "spectral.factor2.re": {
+   "offset": 436648,
+   "shape": [
+    48,
+    22
+   ],
+   "count": 1056
+  },
+  "spectral.factor2.im": {
+   "offset": 438760,
+   "shape": [
+    48,
+    22
+   ],
+   "count": 1056
+  },
+  "spectral.factor3.re": {
+   "offset": 440872,
+   "shape": [
+    12,
+    6
+   ],
+   "count": 72
+  },
+  "spectral.factor3.im": {
+   "offset": 441016,
+   "shape": [
+    12,
+    6
+   ],
+   "count": 72
+  },
+  "spectral.factor4.re": {
+   "offset": 441160,
+   "shape": [
+    12,
+    6
+   ],
+   "count": 72
+  },
+  "spectral.factor4.im": {
+   "offset": 441304,
+   "shape": [
+    12,
+    6
+   ],
+   "count": 72
+  }
+ },
+ "total_bytes": 441448,
+ "manifest_version": 3,
+ "inputs": [
+  {
+   "name": "upper_distance_dc",
+   "source": "r1",
+   "signal": 0,
+   "part": "dc",
+   "mode": 0,
+   "source_index": 0,
+   "center": 1450.0,
+   "scale": 1380.0,
+   "rotation": "none",
+   "mirror": "none"
+  },
+  {
+   "name": "upper_distance_re1",
+   "source": "r1",
+   "signal": 0,
+   "part": "re",
+   "mode": 1,
+   "source_index": 1,
+   "center": 0.0,
+   "scale": 395.0,
+   "rotation": "phase",
+   "mirror": "none"
+  },
+  {
+   "name": "upper_distance_re2",
+   "source": "r1",
+   "signal": 0,
+   "part": "re",
+   "mode": 2,
+   "source_index": 2,
+   "center": 0.0,
+   "scale": 208.0,
+   "rotation": "phase",
+   "mirror": "none"
+  },
+  {
+   "name": "upper_distance_im1",
+   "source": "r1",
+   "signal": 0,
+   "part": "im",
+   "mode": 1,
+   "source_index": 4,
+   "center": 0.0,
+   "scale": 395.0,
+   "rotation": "phase",
+   "mirror": "negate"
+  },
+  {
+   "name": "upper_distance_im2",
+   "source": "r1",
+   "signal": 0,
+   "part": "im",
+   "mode": 2,
+   "source_index": 5,
+   "center": 0.0,
+   "scale": 208.0,
+   "rotation": "phase",
+   "mirror": "negate"
+  },
+  {
+   "name": "hloc",
+   "source": "geo",
+   "index": 0,
+   "formula": "h / 100",
+   "storage": "float16",
+   "center": 0.0,
+   "scale": 0.56982421875,
+   "rotation": "none",
+   "mirror": "none"
+  },
+  {
+   "name": "hrel",
+   "source": "geo",
+   "index": 1,
+   "formula": "asinh((h - z) / 10)",
+   "storage": "float16",
+   "center": -3.0390625,
+   "scale": 2.81591796875,
+   "rotation": "none",
+   "mirror": "none"
+  },
+  {
+   "name": "up_UP_H",
+   "source": "up",
+   "index": 1,
+   "storage": "float16",
+   "center": 0.0,
+   "scale": 51.75,
+   "rotation": "none (recomputed along the wind)",
+   "mirror": "none"
+  },
+  {
+   "name": "up_LOW_D",
+   "source": "up",
+   "index": 2,
+   "storage": "float16",
+   "center": 530.0,
+   "scale": 1070.0,
+   "rotation": "none (recomputed along the wind)",
+   "mirror": "none"
+  },
+  {
+   "name": "up_LOW_H",
+   "source": "up",
+   "index": 3,
+   "storage": "float16",
+   "center": -80.25,
+   "scale": 133.5,
+   "rotation": "none (recomputed along the wind)",
+   "mirror": "none"
+  },
+  {
+   "name": "solid",
+   "source": "solid",
+   "rotation": "none",
+   "mirror": "none"
+  },
+  {
+   "name": "coord_y",
+   "source": "coord",
+   "axis": "y",
+   "center": "(ny - 1) / 2",
+   "scale": 200.0,
+   "rotation": "wind frame",
+   "mirror": "negate"
+  },
+  {
+   "name": "coord_z",
+   "source": "coord",
+   "axis": "z",
+   "center": 70.0,
+   "scale": 70.0,
+   "rotation": "none",
+   "mirror": "none"
+  },
+  {
+   "name": "coord_x",
+   "source": "coord",
+   "axis": "x",
+   "center": 250.0,
+   "scale": 250.0,
+   "rotation": "wind frame",
+   "mirror": "none"
+  }
+ ],
+ "outputs": [
+  {
+   "name": "u",
+   "center": 4.0,
+   "scale": 2.2,
+   "mirror": 1.0
+  },
+  {
+   "name": "w",
+   "center": 0.15,
+   "scale": 0.4,
+   "mirror": 1.0
+  },
+  {
+   "name": "v",
+   "center": 0.0,
+   "scale": 0.5,
+   "mirror": -1.0
+  }
+ ]
+}

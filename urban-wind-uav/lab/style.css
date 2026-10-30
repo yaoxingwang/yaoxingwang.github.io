@@ -1,0 +1,2064 @@
+/* GeoWind2Plan demo - the page's one stylesheet: tokens, then one section per component in the order of the page.
+   Light theme: a white model on a cool grey background, colour only for data.  One panel on the left (a grey sheet
+   of white cards: the mission, Background wind, Wind visualization, Results); the 3-D scene fills the page.
+   Short screens: 800 px and 740 px high (the cards get tighter); the sections also fold (app/folds.js), and where
+   that is not enough the panel scrolls.  The opened panel stands beside the scene or lies over it (app/layout.js
+   decides from the window's width: html[data-layout]).  The last sections: touch screens (larger targets), windows
+   narrower than the panel (compact rows), very narrow ones (labels above their controls). */
+
+/* lengths app/layout.js reads in px (registered: a calc() of them then computes to px): the free area's left edge
+   beside the panel, and where it is now (#stage) */
+@property --beside-inset {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+@property --left-inset {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/Inter-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ---------- tokens ---------- */
+/* --bg, --white, --ink, --muted, --faint, --track and --outline are also drawn on canvases: shared/style.js holds
+   the same values (the project's lint checks that they agree) */
+:root {
+  --bg: #f5f7f8;
+  --bg-rgb: 245 247 248;  /* --bg as channels */
+  --white: #ffffff;
+  --raised: #eef2f4;
+  --line: rgb(var(--ink-rgb) / 0.1);
+  --ink: #242b32;
+  --ink-rgb: 36 43 50;  /* --ink as channels, for its translucent tints: rgb(var(--ink-rgb) / alpha) */
+  --muted: #52606b;
+  --faint: #65717c;
+  --no-saving: #7a858f;  /* a result that saves nothing (large text: 3.4:1 on the headline strip, WCAG large 3:1) */
+  --warn: #b45309;
+  --shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.06), 0 12px 32px rgb(var(--ink-rgb) / 0.1);
+  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC",
+    system-ui, sans-serif;
+  --gutter: 16px;  /* the page's margin: around the panel, the picker and the free area of the scene */
+  --left-w: 360px;  /* the panel, at most: --panel-w, no wider than the window allows */
+  --panel-w: min(var(--left-w), calc(100% - 2 * var(--gutter)));  /* (100 %: the stage, where #panel uses it) */
+  /* the scene's free area, where the camera centres the city and the cards over the scene sit: --scene-inset from the
+     page's top and right edges (and its left one where the panel does not stand beside it), --scene-bottom from the
+     bottom edge, --beside-inset from the left edge beside the panel (app/layout.js freeArea reads them) */
+  --scene-inset: var(--gutter);
+  --scene-bottom: 48px;  /* the earlier page's value (its reason was not recorded) */
+  --beside-inset: calc(var(--left-w) + 2 * var(--gutter));
+  /* between the panel and what opens beside it: the city picker, the side hints (JS) */
+  --beside-gap: 12px;
+  /* control heights: the segmented bars, the city button and the outlined buttons; the mini bars, the random mission
+     buttons and the number fields (--ctl-h-mini).  Smaller on short screens, larger on touch screens (below) */
+  --ctl-h: 30px;
+  --ctl-h-mini: 28px;
+  /* motion: hover, press and chevron turns, the side hint's fade, the loading card's fade (0 with reduced motion) */
+  --quick: 0.15s;
+  --hint-fade: 0.2s;
+  --card-fade: 0.25s;
+  --track: #d8e0e5;  /* slider tracks */
+  --outline: #d8e0e5;  /* the picker previews' outline, the spinner's ring (= shared/style.js BASE_EDGE) */
+  --thumb-shadow: 0 0 0 1px rgb(var(--ink-rgb) / 0.2), 0 2px 6px rgb(var(--ink-rgb) / 0.2);  /* slider thumbs */
+  --tint: #f0f4f6;  /* the headline strip, the badge, hovered intro buttons */
+  --focus: rgb(41 137 218);  /* the keyboard focus ring (:focus-visible below); the Ours colour, app/config.js */
+  --panel-bg: rgb(238 242 244 / 0.96);  /* the panel (= --raised): its title bar, the seams between white bands */
+  --sheet: color-mix(in srgb, var(--white) 97%, transparent);  /* the city picker (the loading card: 96 %) */
+  --button-hover: #f3f6f8;  /* a white button under the pointer */
+  --primary-hover: #35414b;  /* an ink button under the pointer */
+  --corridor-ground: #ebf0f3;  /* the corridor's ground in the scene (= shared/style.js CORRIDOR_GROUND) */
+}
+/* the system's reduced-motion setting: no fades or turns (the spinner stands still: .spinner; the camera jumps:
+   view/viewer.js) */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --quick: 0s;
+    --hint-fade: 0s;
+    --card-fade: 0s;
+  }
+}
+
+/* ---------- page ---------- */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;  /* a drag on a touch screen does not pull or bounce the page */
+}
+/* the page's colours and type (body and everything else inherit them) */
+html {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 13px/1.45 var(--font);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 1, "cv11" 1;
+}
+button {
+  font: inherit;
+  color: inherit;
+}
+/* hidden always hides, also an element whose component rule sets a display */
+[hidden] {
+  display: none !important;
+}
+/* keyboard focus: one ring for every control except the number fields, whose border darkens instead (.input) */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+#stage {
+  position: relative;
+  /* below the tutorial video where it is docked at the top of the page (windows up to 720 px wide:
+     src/tutorial-player.js sets the height it takes) */
+  top: var(--tutorial-dock-height, 0px);
+  height: calc(100% - var(--tutorial-dock-height, 0px));
+  /* the scene's free area: right of the panel, and its centre (the cards over the scene) */
+  --left-inset: var(--beside-inset);
+  --free-centre: calc(var(--left-inset) + (100% - var(--left-inset) - var(--scene-inset)) / 2);
+  --free-middle: calc(var(--scene-inset) + (100% - var(--scene-inset) - var(--scene-bottom)) / 2);
+}
+/* the panel collapsed, or lying over the scene (html[data-layout="over"]): the free area is the whole window (the
+   same for the camera: app/controls.js sceneInsets) */
+#stage:has(> #panel.collapsed), :root[data-layout="over"] #stage {
+  --left-inset: var(--scene-inset);
+}
+#scene {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  touch-action: none;         /* fingers on the scene move the view (view/interaction.js), not the page */
+}
+#scene:focus-visible {
+  outline-offset: -3px;       /* the window's edge: the ring inside it */
+}
+
+/* ---------- the panel: a grey sheet with white cards ---------- */
+#panel {
+  position: absolute;
+  top: var(--gutter);
+  left: var(--gutter);
+  z-index: 2;
+  width: var(--panel-w);
+  max-height: calc(100% - 2 * var(--gutter));
+  overflow: hidden;         /* the folds make it fit (app/folds.js); where they cannot, it scrolls (below) */
+  padding: 0;               /* the sections are bands from edge to edge (.fold): no inset, no second frame */
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  --card-pad: 16px;         /* the bands' and the header's side padding: one content edge for the whole panel */
+  --band-gap: 8px;          /* the grey seam between two sections: the one boundary between them */
+  --row-h: 44px;
+  --label-w: 118px;
+  --row-gap: 10px;
+  /* a section's content (.fold-body): below the title's line, and under its last block */
+  --section-gap: 10px;
+  --section-end: 12px;
+  --dial: 96px;
+  --dial-w: calc(var(--dial) + 28px);  /* the dial canvas: the disc and room for its labels around it */
+  /* the Results section's height with the first routes (measured; checked by the project's tests): the panel is fitted
+     with this room kept until they are shown (app/folds.js fitPanel, #panel.results-reserved) */
+  --results-h: 350px;
+  transition: opacity var(--card-fade);
+}
+/* until the page has wired the panel (app/folds.js showPanel): not shown, then it fades in once, complete */
+#panel.booting {
+  visibility: hidden;
+  opacity: 0;
+}
+/* only within a fit (app/folds.js withResultsRoom; never drawn): an open Results waiting for results, with the room
+   they will take - before the first ones --results-h, later the height it last had (--results-room, set there) */
+#panel.results-reserved #results:not(.collapsed) {
+  min-height: var(--results-room, var(--results-h));
+}
+/* a window too small for the panel even with its sections folded (app/folds.js fitPanel): it scrolls (a thin bar,
+   as the introduction's), and while more of it is below, its bottom edge fades (a touch screen shows no bar) */
+#panel.scrolls {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink-rgb) / 0.28) transparent;
+  scroll-padding: 6px;        /* a focused control scrolled into view keeps its ring */
+}
+#panel.scrolls.more-below::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: 32px;
+  margin-top: -32px;
+  background: linear-gradient(to bottom, transparent, var(--white) 85%);
+  pointer-events: none;
+}
+@media (max-height: 800px) {
+  #panel {
+    --dial: 80px;
+    --card-pad: 14px;
+    --band-gap: 6px;
+    --row-h: 38px;
+    --row-gap: 8px;
+    --results-h: 322px;
+  }
+  :root {
+    --ctl-h: 28px;
+    --ctl-h-mini: 26px;
+  }
+}
+@media (max-height: 740px) {
+  #panel {
+    --row-h: 34px;
+    --row-gap: 6px;
+    --section-gap: 6px;
+    --section-end: 8px;
+    --results-h: 290px;
+  }
+  :root {
+    --ctl-h: 26px;
+    --ctl-h-mini: 24px;
+  }
+}
+
+/* header: the title with the introduction mark after it, the Tutorial capsule, the collapse button */
+.card-header {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  grid-template-areas: "brand mark . tut toggle";
+  align-items: center;
+  column-gap: 8px;
+  margin: 0;
+  padding: 14px var(--card-pad) 12px;   /* on the sheet's grey: the panel's title bar, not a section */
+}
+@media (max-height: 800px) {
+  .card-header {
+    padding-block: 12px 10px;
+  }
+}
+.brand {
+  grid-area: brand;
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+/* the introduction mark: a 14 px disc (the earlier page's size) on whole pixels, centred on the title's capitals,
+   its drawing 9 px after the last letter; a round shade of 26 px around it - light under the pointer, outlined while
+   the introduction is open (then a second press closes it) - 3 px clear of the title.  The 24 px box keeps the room
+   to press it. */
+#intro-mark {
+  grid-area: mark;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: -4px;          /* 8 px column gap + 5 px of the box before the drawing - 4 = 9 px */
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: rgb(var(--ink-rgb) / 0.45);
+  cursor: pointer;
+  transform: translateY(-1px);   /* centred on the capitals (measured) */
+  transition: color var(--quick);
+}
+#intro-mark svg {
+  position: relative;         /* above its shade */
+  width: 14px;
+  height: 14px;
+}
+#intro-mark::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgb(var(--ink-rgb) / 0.1);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--quick);
+}
+/* a pointer only: a touch screen would keep the shade after the tap that closes the introduction */
+@media (any-hover: hover) {
+  #intro-mark:hover {
+    color: var(--ink);
+  }
+  #intro-mark:hover::before {
+    opacity: 0.55;
+  }
+}
+/* the keyboard ring just inside the box (with the page's 2 px offset it would touch the title): 4 px clear */
+#intro-mark:focus-visible {
+  outline-offset: -2px;
+}
+#intro-mark[aria-pressed="true"] {
+  color: var(--ink);
+}
+#intro-mark[aria-pressed="true"]::before {
+  opacity: 1;
+  box-shadow: inset 0 0 0 1.5px rgb(var(--ink-rgb) / 0.3);   /* an outline: open, a second press closes it */
+}
+/* the Tutorial capsule: second only to the title in the row; a solid play disc in the Ours colour (--focus) */
+.tutorial-trigger {
+  grid-area: tut;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: calc(var(--ctl-h) - 2px);
+  margin: 0;
+  padding: 0 13px 0 5px;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(41 137 218 / 0.12);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--quick);
+}
+.tutorial-play {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--focus);
+  color: var(--white);
+}
+.tutorial-play svg {
+  width: 8px;
+  height: 8px;
+  margin-left: 1px;
+}
+@media (hover: hover) {
+  .tutorial-trigger:hover {
+    background: rgb(41 137 218 / 0.2);
+  }
+}
+/* the player open (a second press closes it, src/tutorial-player.js): pressed, as the introduction mark */
+.tutorial-trigger[aria-expanded="true"] {
+  background: rgb(41 137 218 / 0.2);
+  box-shadow: inset 0 0 0 1.5px rgb(41 137 218 / 0.45);
+}
+/* the outlined buttons: the city button (first card) and the picker's close button */
+#city-button, #picker-close {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(var(--ink-rgb) / 0.14);
+  border-radius: 10px;
+  background: var(--white);
+  cursor: pointer;
+}
+#city-button:hover, #picker-close:hover {
+  border-color: rgb(var(--ink-rgb) / 0.35);
+}
+#city-button svg, #panel-toggle svg, #picker-close svg {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+  transition: transform var(--quick);
+}
+#city-button {
+  justify-self: start;
+  height: var(--ctl-h);
+  gap: 4px;
+  padding: 0 6px 0 10px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+#city-button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+/* the collapse button: a quiet chevron, shaded under the pointer */
+#panel-toggle {
+  grid-area: toggle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ctl-h);
+  height: var(--ctl-h);
+  margin-left: -2px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color var(--quick);
+}
+@media (hover: hover) {
+  #panel-toggle:hover {
+    background: rgb(var(--ink-rgb) / 0.06);
+  }
+  #panel-toggle:hover svg {
+    color: var(--ink);
+  }
+}
+
+/* ---------- the collapsed panel: its title and the expand button only (app/folds.js setPanelCollapsed) ---------- */
+#panel.collapsed {
+  width: auto;
+  max-width: var(--panel-w);
+}
+#panel.collapsed > :not(#controls), #panel.collapsed #controls > :not(.card-header),
+#panel.collapsed .card-header > :not(.brand):not(.tutorial-trigger):not(#panel-toggle):not(#sum-panel) {
+  display: none;
+}
+#panel.collapsed .card-header {
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "brand . tut toggle";
+  margin: 0;
+}
+#panel.collapsed .tutorial-trigger {
+  margin-left: 12px;
+}
+/* the results line under the collapsed panel's title (Ground truth on; a failure card's title in either mode; empty
+   otherwise: app/folds.js), in the folded sections' line style (.fold-summary) */
+#sum-panel {
+  grid-area: sum;
+  /* one width while Ground truth is on (the usual line is 223 px; "Computing…" keeps it, the button stays in place),
+     within the window (the panel's paddings and border and the header's padding: 34 px at most) */
+  width: min(240px, calc(100vw - 2 * var(--gutter) - 34px));
+}
+.fold-summary.failed, #sum-panel.failed {
+  color: var(--warn);
+}
+#panel:not(.collapsed) #sum-panel, #sum-panel:empty {
+  display: none;
+}
+#panel.collapsed .card-header:has(> #sum-panel:not(:empty)) {
+  grid-template-areas: "brand . tut toggle" "sum sum sum sum";
+}
+#panel.collapsed #panel-toggle svg {
+  transform: rotate(180deg);
+}
+
+/* bands: the foldable sections and the introduction's groups.  White, from the panel's left edge to its right one,
+   no border, radius or shadow of their own; two bands are parted by a seam of the sheet's grey (--band-gap), the
+   title bar above the first is the sheet itself.  One frame (the panel), one boundary per section (the seam). */
+.fold, .intro-card {
+  margin: 0 0 var(--band-gap);
+  border: 0;
+  border-radius: 0;
+  background: var(--white);
+}
+.fold {
+  padding: 0 var(--card-pad);
+}
+#results {
+  margin-bottom: 0;
+}
+/* a section's title is a heading holding its fold button (the disclosure pattern): the heading adds nothing visible */
+.fold-heading {
+  margin: 0;
+  font: inherit;
+}
+.fold-head {
+  width: 100%;
+  height: var(--row-h);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+/* a focused section title rings its whole card (the ring follows the card's corners; on the title row alone it would
+   cross them); a browser without :has keeps the title's own ring */
+@supports selector(:has(*)) {
+  .fold-head:focus-visible {
+    outline: none;
+  }
+  .fold:has(> .fold-heading > .fold-head:focus-visible) {
+    outline: 2px solid var(--focus);
+    outline-offset: -2px;     /* inside the band (the panel clips at its edges) */
+  }
+}
+.fold:not(.collapsed) > .fold-heading > .fold-head {
+  border-bottom: 1px solid var(--line);
+}
+.fold-head:hover .fold-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.fold-head svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--muted);
+  transition: transform var(--quick);
+}
+/* the chevron points where the section goes when its title is pressed (as the panel's own button): up while open,
+   down while folded */
+.fold.collapsed .fold-head svg {
+  transform: rotate(180deg);
+}
+.fold-title {
+  margin-right: auto;       /* the summary (if shown) and the chevron at the right */
+  font-weight: 600;
+  white-space: nowrap;
+}
+.fold-summary, #sum-panel {
+  font-size: 12px;
+  color: var(--faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fold:not(.collapsed) .fold-summary:not(.open-only), .fold.collapsed .fold-summary.open-only {
+  display: none;
+}
+/* a section's content, one rule for all four: below the title's line --section-gap, between its blocks and rows
+   --row-gap, under the last one --section-end; no lines inside a section */
+.fold-body, .ctl-rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--row-gap);
+}
+.fold-body {
+  padding: var(--section-gap) 0 var(--section-end);
+}
+.fold.collapsed .fold-body {
+  display: none;
+}
+
+/* rows: label | control, every label in one column (--label-w), as tall as their control */
+.ctl-row {
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr);
+  align-items: center;
+  min-height: var(--ctl-h);
+}
+.ctl-label {
+  padding-right: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* controls: segmented switches, the random mission buttons, sliders, number fields */
+/* one column per shown button: equal where they fit, a button never narrower than its text and padding (a longer one
+   takes its width, the others share the rest): a text never overflows its button, so it stays in the middle */
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(max-content, 1fr);
+  gap: 2px;
+  height: var(--ctl-h);
+  padding: 2px;
+  border-radius: 10px;
+  background: var(--raised);
+}
+.segmented button {
+  padding: 0 6px;               /* as tall as the bar inside its padding (grid stretch) */
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.segmented button:hover {
+  color: var(--ink);
+}
+.segmented button[aria-pressed="true"] {
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.12), 0 1px 6px rgb(var(--ink-rgb) / 0.06);
+}
+/* a choice that cannot be made now (the Ground truth wind field before its download): faint text; pressed as well
+   (the choice kept from the last city), its pill stays and only the text is faint (more specific than the pressed
+   rule) */
+.segmented button[aria-pressed]:disabled {
+  color: var(--faint);
+  cursor: default;
+}
+.segmented.mini {
+  height: var(--ctl-h-mini);
+}
+.segmented.mini button {
+  font-size: 12px;
+}
+/* the random mission buttons share their row as the segments do (a text never wider than its button) */
+.draw-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(max-content, 1fr));
+  align-items: center;      /* the buttons (--ctl-h-mini) in the middle of the row */
+  gap: 4px;
+}
+#mission-kind {
+  height: 30px;
+}
+.draw-buttons button {
+  height: var(--ctl-h-mini);
+  padding: 0 3px;
+  border: 1px solid rgb(var(--ink-rgb) / 0.16);
+  border-radius: 8px;
+  background: var(--white);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--quick), background var(--quick);
+}
+.draw-buttons button:hover {
+  border-color: rgb(var(--ink-rgb) / 0.4);
+  background: var(--button-hover);
+}
+.draw-buttons button:active {
+  background: var(--raised);
+}
+.ctl-slider {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+  align-items: center;
+  column-gap: 10px;
+  cursor: default;
+}
+.ctl-slider output {
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  border-radius: 2px;
+  background: var(--track);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--thumb-shadow);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: var(--thumb-shadow);
+}
+.input {
+  display: inline-flex;
+  align-items: baseline;
+  height: var(--ctl-h-mini);
+  padding: 0 8px 0 4px;
+  border-radius: 8px;
+  background: var(--white);
+  border: 1px solid rgb(var(--ink-rgb) / 0.18);
+}
+.input:focus-within {
+  border-color: var(--ink);
+}
+.input input {
+  flex: 1;
+  min-width: 0;
+  height: calc(var(--ctl-h-mini) - 2px);     /* inside the box's two 1 px borders */
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  text-align: right;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.input input::-webkit-inner-spin-button, .input input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.input .unit {
+  margin-left: 4px;
+  min-width: 14px;
+}
+/* Ground truth on: the direction is fixed - plain text, not an input box */
+.input:has(input[readonly]) {
+  padding-left: 0;
+  border-color: transparent;
+}
+.input input[readonly] {
+  flex: none;
+  width: 1.3ch;
+  text-align: left;
+  cursor: default;
+}
+.input:has(input[readonly]) .unit {
+  margin-left: 0;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ---------- Background wind ---------- */
+.wind {
+  display: grid;
+  grid-template-columns: var(--dial-w) minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: center;
+}
+#dial {
+  width: var(--dial-w);
+  height: var(--dial);
+  cursor: grab;
+  touch-action: none;
+}
+#controls.evaluation #dial {
+  cursor: default;  /* Ground truth on: the direction is fixed */
+}
+.wind-fields {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);   /* one label column for both fields: the boxes start at one x */
+  column-gap: 10px;
+  row-gap: var(--row-gap);
+}
+.wind-fields .field {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.wind-fields .field > .input, #speed-choice-wrap {
+  justify-self: end;
+  width: 100%;
+  max-width: 120px;
+}
+#speed-single {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 32px;               /* the single speed's line (taller than the speed buttons, --ctl-h-mini) */
+}
+.speed-slider {
+  display: block;
+  padding: 2px 0 2px;
+}
+/* the speed slider's track is filled up to its value (--fill, set with the value) */
+.speed-slider input[type="range"] {
+  background: linear-gradient(to right, var(--ink) var(--fill, 33%), var(--track) var(--fill, 33%));
+}
+
+/* ---------- Wind visualization: the main choice, its rows, the colour scale ---------- */
+/* the legend: its title left of the bar; the tick labels and the range row under the bar */
+#legend {
+  --ticks-h: 16px;            /* the row under the bar: the ticks, or the placeholder's ends */
+  display: grid;
+  grid-template-columns: var(--label-w) minmax(0, 1fr);
+}
+#legend-title {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: start;
+  margin-top: -3px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#legend-bar {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+}
+/* the placeholder's low and high ends, at the bar's two ends: in the ticks' place and as tall (--ticks-h), so the
+   legend keeps its height when the ticks replace it */
+.range-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  grid-column: 2;
+  grid-row: 2;
+  height: var(--ticks-h);
+  padding-top: 2px;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+#legend-ticks {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  height: var(--ticks-h);
+  font-size: 11px;
+  color: var(--faint);
+  line-height: 1;
+}
+#legend-ticks span {
+  position: absolute;
+  top: 5px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+#legend-ticks span::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  width: 1px;
+  height: 4px;
+  background: rgb(var(--ink-rgb) / 0.4);
+}
+#legend-ticks span.first {
+  transform: none;
+}
+#legend-ticks span.first::before {
+  left: 0;
+}
+#legend-ticks span.last {
+  transform: translateX(-100%);
+}
+#legend-ticks span.last::before {
+  left: auto;
+  right: 0;
+}
+
+/* ---------- Results: the two numbers on a tinted strip, then the chart tabs and one chart ---------- */
+/* the strip and the drone button right of it (.fly below); gone while neither shows (Ground truth off, a failure) */
+#headline-row:not(:has(> :not([hidden]))) {
+  display: none;
+}
+#headline-row {
+  --kpi-value: 26px;          /* the numbers' size */
+  --kpi-label: 12px;          /* their texts' size (narrower rows below) */
+  --kpi-line: 15.6px;         /* and line height: 1.3 x 12 px at every text size, so the strip keeps its height */
+  --headline-pad: 6px;        /* above and below the numbers (the drone button is this much taller) */
+  display: flex;
+  column-gap: 12px;
+  container: headline / inline-size;
+}
+.headline {
+  flex: 1;
+  min-width: 0;
+  padding: var(--headline-pad) 0;   /* results are text on the band: no strip (a box is a control) */
+}
+@media (max-height: 740px) {
+  #headline-row {
+    --headline-pad: 4px;
+  }
+}
+.progress {
+  padding-top: 4px;
+}
+#progress-text {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+.progress-track {
+  display: block;
+  height: 4px;
+  margin-top: 12px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--corridor-ground);
+}
+.progress-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+.kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+.kpi b {
+  display: block;
+  font-size: var(--kpi-value);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+/* two lines each, broken where the text says (app/results.js) */
+.kpi span {
+  display: block;
+  margin: 3px 0 0;
+  font-size: var(--kpi-label);
+  line-height: var(--kpi-line);
+  color: var(--muted);
+  white-space: pre-line;
+}
+/* Narrower rows keep each text in its two lines (the longest, "more energy than", fits its column down to these
+   widths at these sizes); below them the two numbers stand one above the other, each with its text beside it (lines
+   of 1.3 x the text size); in the narrowest rows (windows below about 318 px) the texts take more lines where they
+   must, and the button keeps its size at the top */
+@container headline (max-width: 323.98px) {
+  .headline, .fly {
+    --kpi-label: 11px;
+  }
+}
+@container headline (max-width: 303.98px) {
+  .headline, .fly {
+    --kpi-label: 10px;
+  }
+}
+@container headline (max-width: 281.98px) {
+  .headline, .fly {
+    --kpi-value: 20px;
+    --kpi-line: calc(1.3 * var(--kpi-label));
+    --headline-pad: 6px;
+  }
+  .kpis {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+  .kpi {
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
+  }
+  .kpi span {
+    margin: 0;
+  }
+  #headline-row > .fly:not([hidden]) {
+    --fly-size: calc(4 * var(--kpi-line) + 6px + 2 * var(--headline-pad));
+  }
+}
+@container headline (max-width: 245.98px) {
+  .kpi span {
+    white-space: normal;
+  }
+}
+/* a result that saves nothing: grey, not emphasized */
+.kpi b.no-saving {
+  color: var(--no-saving);
+}
+@media (max-height: 800px) {
+  #headline-row {
+    --kpi-value: 22px;
+  }
+}
+@media (max-height: 740px) {
+  #headline-row {
+    --kpi-value: 20px;
+  }
+}
+/* The drone button: a square as tall as what stands left of it - the strip of the two numbers (a number and its two
+   lines of text, and the strip's padding) with Ground truth on, the chart tabs and the legend with it off
+   (#routes-block below); not shown until there are routes (app/results.js) */
+.fly:not([hidden]) {
+  --fly-size: calc(var(--kpi-value) * 1.05 + 3px + 2 * var(--kpi-line) + 2 * var(--headline-pad));
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: var(--fly-size);
+  height: var(--fly-size);
+  padding: 0;
+  border: 1px solid rgb(var(--ink-rgb) / 0.16);
+  border-radius: 10px;
+  background: var(--white);
+  /* raised as a chosen segment (.segmented button[aria-pressed="true"]) */
+  box-shadow: 0 1px 2px rgb(var(--ink-rgb) / 0.12), 0 1px 6px rgb(var(--ink-rgb) / 0.06);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color var(--quick), background var(--quick), box-shadow var(--quick);
+}
+/* the drone and the play / stop mark in one row above the word */
+.fly-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.fly-drone {
+  width: 22px;
+  height: 22px;
+}
+.fly-state {
+  width: 19px;
+  height: 19px;
+}
+.fly .fly-stop, .fly[aria-pressed="true"] .fly-play {
+  display: none;
+}
+.fly[aria-pressed="true"] .fly-stop {
+  display: inline;
+}
+/* as the random mission buttons */
+.fly:hover {
+  border-color: rgb(var(--ink-rgb) / 0.4);
+  background: var(--button-hover);
+}
+.fly:active {
+  background: var(--raised);
+}
+/* the selected route hidden: the drone cannot fly (app/results.js applyFlight) */
+.fly:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+/* flying: pressed in - the grey of the segmented controls' track, a shadow inside, not under it; the word: Stop */
+.fly[aria-pressed="true"] {
+  border-color: rgb(var(--ink-rgb) / 0.28);
+  background: var(--raised);
+  box-shadow: inset 0 1px 3px rgb(var(--ink-rgb) / 0.18);
+}
+.fly[aria-pressed="true"]:hover {
+  background: color-mix(in srgb, var(--raised) 94%, var(--ink));
+}
+/* Ground truth off: the tabs and the legend, the drone button right of both, the chart below */
+#routes-block:has(> .fly) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 10px;
+  container: routes / inline-size;
+}
+#routes-block:has(> .fly) > #profile-block:not([hidden]) {
+  display: contents;
+}
+#routes-block:has(> .fly) > .fly {
+  --fly-size: calc(var(--ctl-h-mini) + var(--row-gap) + 2 * var(--legend-row) + 2px);
+  grid-area: 1 / 2 / 3 / 3;
+}
+#routes-block:has(> .fly) #chart-legend {
+  grid-area: 2 / 1;
+}
+/* too narrow for the two-column legend beside the square button (measured: the legend needs about 205 px, the button
+   and its gap 112 px on a touch screen): the button as tall as the tabs, beside them, and the legend under both */
+@container routes (max-width: 314.98px) {
+  #routes-block:has(> .fly) > .fly {
+    flex-direction: row;
+    gap: 6px;
+    grid-area: 1 / 2 / 2 / 3;
+    width: auto;
+    height: var(--ctl-h-mini);
+    padding: 0 12px;
+  }
+  #routes-block:has(> .fly) .fly-drone {
+    width: 16px;
+    height: 16px;
+  }
+  #routes-block:has(> .fly) .fly-state {
+    width: 15px;
+    height: 15px;
+  }
+  #routes-block:has(> .fly) #chart-legend {
+    grid-column: 1 / -1;
+  }
+}
+#routes-block:has(> .fly) #chart {
+  grid-column: 1 / -1;
+}
+#chart-tabs {
+  --tab-fade: 28px;           /* the faded right edge while more tabs follow (app/controls.js keeps it clear) */
+  margin: 0 0 var(--row-gap);
+}
+/* all four tabs: each as wide as its title (where they do not fit, the bar scrolls) */
+#chart-tabs.fit {
+  grid-auto-columns: auto;
+}
+#chart-tabs.fit button {
+  min-width: max-content;
+}
+/* Ground truth on: the energy bars and the line chart in one place, the chosen tab's shown and the other invisible
+   (app/results.js applyTab), so the taller of the two sets Results' height and a tab change never moves anything:
+   the shorter one spreads - the bar rows grow evenly, the line chart grows */
+#routes-block:not(:has(> .fly)) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+#routes-block:not(:has(> .fly)) > #energy-chart, #routes-block:not(:has(> .fly)) > #profile-block {
+  grid-area: 2 / 1;
+}
+#routes-block .inactive {
+  visibility: hidden;
+}
+#profile-block {
+  display: flex;
+  flex-direction: column;
+}
+#energy-chart .bar-line[data-id] {
+  flex: 1 0 auto;
+}
+/* energy bars: a check box (the route drawn or not), then a button with the label and the bar (the value label right
+   of the bar's end) */
+#energy-chart {
+  display: flex;
+  flex-direction: column;
+  /* the check box column, the bar rows' columns (label, bar), their gap, their border and side padding, and so the
+     inset of their columns */
+  --bar-check: 22px;
+  --check-hit: var(--bar-check);
+  --bar-label: 92px;
+  --bar-gap: 8px;
+  --bar-inset: calc(var(--bar-border) + var(--bar-pad));
+  container: energy-chart / inline-size;  /* its rows as its width allows (below) */
+}
+.bar-line {
+  display: grid;
+  grid-template-columns: var(--bar-check) minmax(0, 1fr);
+  align-items: center;
+}
+.bar-row {
+  --c: var(--ink);
+  cursor: default;          /* the axis row; a route's row: pointer (below) */
+  display: grid;
+  grid-template-columns: var(--bar-label) 1fr;
+  align-items: center;
+  column-gap: var(--bar-gap);
+  padding: 3px var(--bar-pad);
+  border: var(--bar-border) solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+}
+@media (max-height: 740px) {
+  .bar-row {
+    padding: 2px var(--bar-pad);
+  }
+}
+/* a route's bar row is a button; the axis row under the bars only shares its grid (:where keeps the hover rule as
+   weak as the chosen state below, which follows it) */
+.bar-row:where(:not(.axis-row)) {
+  cursor: pointer;
+}
+.bar-row:where(:not(.axis-row)):hover {
+  background: rgb(var(--ink-rgb) / 0.03);
+}
+.bar-label {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-track {
+  position: relative;
+  height: 14px;
+  margin-right: 44px;
+}
+.bar {
+  position: absolute;
+  top: 2px;
+  height: 10px;
+  border-radius: 0 3px 3px 0;
+  background: var(--c);
+}
+.bar-value {
+  position: absolute;
+  top: -1px;
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 14px;
+}
+.bar-row.axis-row::before {
+  content: "";
+  grid-column: 1 / 2;
+}
+.bar-track.axis {
+  height: 18px;
+  border-top: 1px solid rgb(var(--ink-rgb) / 0.25);
+  container: energy-axis / inline-size;  /* its numbers as its width allows (below) */
+}
+.bar-track.axis .tick {
+  position: absolute;
+  top: 3px;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1;
+}
+.bar-track.axis .tick::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 1px;
+  height: 4px;
+  background: rgb(var(--ink-rgb) / 0.35);
+}
+/* a chart too narrow for a usable bar beside each label (a window below 304 px: the chart is the window less 56 px
+   there; the --results-h below 304 px follow from this): each route's bar under its key and label, the full width */
+@container energy-chart (max-width: 247.98px) {
+  .bar-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  .bar-row > .bar-track {
+    grid-column: 1 / -1;
+  }
+  .bar-row.axis-row::before {
+    display: none;
+  }
+  #energy-chart .axis-caption {    /* (more specific than its own rule below) */
+    padding-left: calc(var(--bar-check) + var(--bar-inset));
+  }
+}
+/* a narrow axis (a narrow window): every other number below 120 px (their ticks stay), only the first and the last
+   below 60 px */
+@container energy-axis (60px <= width < 120px) {
+  .bar-track.axis .tick:nth-child(even) {
+    color: transparent;
+  }
+}
+@container energy-axis (width < 60px) {
+  .bar-track.axis .tick:not(:first-child):not(:last-child) {
+    color: transparent;
+  }
+}
+/* the unit, from where the axis starts */
+.axis-caption {
+  margin: 2px 0 0;
+  padding-left: calc(var(--bar-check) + var(--bar-inset) + var(--bar-label) + var(--bar-gap));
+  font-size: 11px;
+  color: var(--faint);
+}
+@media (max-height: 740px) {
+  .axis-caption {
+    margin-top: 0;
+  }
+}
+/* a route's check box (drawn in the scene and the line chart, or not): a rounded square in the route's colour, filled
+   with a white tick while set; .check-hit around it is the part a click finds (as tall as the line, wider than the
+   box) */
+.check-hit {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--check-hit, 22px);
+  height: 100%;
+  cursor: pointer;
+}
+.route-check {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid var(--c);
+  border-radius: 4px;
+  background: var(--white);
+  cursor: pointer;
+}
+.route-check:checked {
+  /* the tick: an inline SVG (each line break inside the string escaped, so it is not part of it) */
+  background: var(--c) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E\
+%3Cpath d='M4 8.3 6.8 11 12 5.4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' \
+stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px no-repeat;
+}
+.route-check:focus-visible {
+  outline-offset: 2px;
+}
+/* a route not drawn: its bar grey and its texts faint (the selection keeps its border) */
+.bar-line.off .bar {
+  background: rgb(var(--ink-rgb) / 0.18);
+}
+.bar-line.off .bar-label, .bar-line.off .bar-value, .legend-item.off .route-key {
+  color: var(--faint);
+}
+/* line charts: the legend of the routes two by two (a check box and the name each), the plot */
+#routes-block {
+  /* the energy rows' and the legend's border and side padding (.bar-row, .route-key), and a legend line's height
+     (its text 15 px, padding 2 x 3 px, border 2 x 1.5 px: two of them beside the Fly button with Ground truth off) */
+  --bar-border: 1.5px;
+  --bar-pad: 8px;
+  --legend-row: 24px;
+}
+#chart-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(max-content, 1fr));   /* never narrower than a name: none is cut */
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;   /* down the first column, then the second: the energy bars' order */
+  column-gap: 8px;
+  margin-bottom: 2px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  height: var(--legend-row);
+}
+/* a route's name in the legend: as an energy bar's row (.bar-row): it fills its column, the same border, radius,
+   padding and text, so a chosen route is framed and tinted the same way in both */
+.route-key {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 3px var(--bar-pad);
+  border: var(--bar-border) solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 12px;          /* as .bar-label */
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+/* short screens: as the energy rows (after .route-key's own rule, which it changes) */
+@media (max-height: 740px) {
+  .route-key {
+    padding: 2px var(--bar-pad);
+  }
+  #routes-block {
+    --legend-row: 22px;
+  }
+}
+.route-key:hover {
+  background: rgb(var(--ink-rgb) / 0.03);
+}
+/* a chosen route, in the energy bars and the chart legend: its colour as the border, tinted */
+.bar-row[aria-pressed="true"], .route-key[aria-pressed="true"] {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 6%, var(--white));
+}
+/* the legend row clips at its height: the focus ring is drawn inside the item; on a chosen item in ink (its border
+   may be the focus blue: Ours) */
+.route-key:focus-visible {
+  outline-offset: -2px;
+}
+.route-key[aria-pressed="true"]:focus-visible {
+  outline-color: var(--ink);
+}
+#chart {
+  display: block;
+  flex: 1 0 auto;             /* taller where the energy bars are (#routes-block below) */
+  width: 100%;
+  height: 112px;
+  cursor: crosshair;
+  touch-action: pan-y;        /* a finger moved sideways reads the chart (app/controls.js); up or down scrolls */
+}
+@media (max-height: 800px) {
+  #chart {
+    height: 100px;
+  }
+}
+@media (max-height: 740px) {
+  #chart {
+    height: 96px;
+  }
+}
+#failure .warn {
+  display: block;
+  width: 20px;
+  height: 20px;
+  color: var(--warn);
+}
+#failure-title {
+  margin: 12px 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+#failure-body {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------- the ink buttons: the failure card's and the start-failure box's (#error) ---------- */
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--quick);
+}
+.primary:hover {
+  background: var(--primary-hover);
+}
+/* both sit 16 px under their text: the failure card's across the card, the start-failure box's on its own line */
+.failure-action, #error .primary {
+  margin-top: 16px;
+}
+.failure-action {
+  width: 100%;
+}
+#error .primary {
+  display: flex;
+}
+
+/* ---------- the introduction: it replaces the panel's content, in the panel's card style ---------- */
+#panel.intro #controls > :not(.card-header):not(#intro-box), #panel.intro #results {
+  display: none;
+}
+/* its height: its text's, at most what the window leaves under the title (it scrolls inside then), never lower
+   than 200 px (the panel scrolls then) -- whatever the sections it replaces */
+#panel.intro, #panel.intro #controls {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+#intro-box {
+  min-height: 200px;
+  overflow-y: scroll;
+  /* matters where scrollbars overlay the content (it keeps the cards clear of the scrollbar there); removing it
+     widens the cards by the scrollbar's width */
+  scrollbar-gutter: auto;    /* the bands reach the panel's edge; a scrollbar only while it scrolls */
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink-rgb) / 0.28) transparent;
+}
+/* the scrollbars where scrollbar-color is not supported (Safari; Chrome uses scrollbar-width and -color) */
+#intro-box::-webkit-scrollbar, #panel::-webkit-scrollbar {
+  width: 8px;
+}
+#intro-box::-webkit-scrollbar-track, #panel::-webkit-scrollbar-track {
+  background: rgb(var(--ink-rgb) / 0.04);
+  border-radius: 4px;
+}
+#intro-box::-webkit-scrollbar-thumb, #panel::-webkit-scrollbar-thumb {
+  background: rgb(var(--ink-rgb) / 0.26);
+  border-radius: 4px;
+}
+#intro-box::-webkit-scrollbar-thumb:hover, #panel::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--ink-rgb) / 0.4);
+}
+.intro-card {
+  padding: 14px var(--card-pad);
+}
+.intro-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--tint);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+.intro-title {
+  margin: 10px 0 6px;
+  font-size: 15px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+/* the authors under the title (the other paragraphs: .intro-lead, .intro-note, .intro-credit) */
+.intro-authors {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.intro-buttons {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+.intro-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px 0 9px;
+  border: 1px solid rgb(var(--ink-rgb) / 0.12);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--quick), border-color var(--quick);
+}
+.intro-button svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--muted);
+}
+.intro-button svg.external {
+  width: 10px;
+  height: 10px;
+  margin-left: -1px;
+  color: var(--faint);
+}
+.intro-button:hover {
+  background: var(--tint);
+  border-color: rgb(var(--ink-rgb) / 0.2);
+}
+.intro-lead {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.intro-note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.intro-facts {
+  margin: 0;
+}
+.intro-row {
+  display: grid;
+  grid-template-columns: 104px 1fr;
+  column-gap: 12px;
+  padding: 5px 0;             /* rows parted by space, no lines (lines only under the section titles) */
+}
+/* a facts list's first row starts at the list's top; the device list's one row keeps its space (it follows a note) */
+.intro-facts:not(.intro-device) > .intro-row:first-child {
+  padding-top: 0;
+}
+.intro-row:last-child {
+  padding-bottom: 0;
+}
+.intro-facts dt {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.intro-facts dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.intro-device {
+  margin-top: 6px;
+}
+/* the credit after the last band, on the panel's grey (as the title bar): not part of the introduction's text */
+.intro-credit {
+  margin: 0;
+  padding: 4px var(--card-pad) 10px;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--faint);
+}
+/* the licence line under the credit (owner 10-21): the same small grey type, its licence name linked */
+.intro-credit + .intro-credit {
+  margin-top: -8px;
+}
+/* a name, a lab or the licence never split across lines */
+.intro-credit a, .intro-names {
+  white-space: nowrap;
+}
+.intro-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------- the city picker: right of the panel, or over it where the panel lies over the scene ---------- */
+#city-picker {
+  scroll-padding: 6px;      /* a focused tile scrolled into view keeps its ring */
+  --picker-left: calc(var(--gutter) + var(--left-w) + var(--beside-gap));
+  position: absolute;
+  top: var(--gutter);
+  left: var(--picker-left);
+  z-index: 7;
+  /* inside the window: the large city's column moves under the others (.picker-grid wraps), then it scrolls */
+  max-width: calc(100% - var(--picker-left) - var(--gutter));
+  max-height: calc(100% - 2 * var(--gutter));
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--sheet);
+  box-shadow: 0 16px 48px rgb(var(--ink-rgb) / 0.18);
+}
+/* the panel lying over the scene (html[data-layout="over"]): the picker opens over it, from the page's margin, opaque
+   (the panel's text would show through the translucent sheet) */
+:root[data-layout="over"] #city-picker {
+  --picker-left: var(--gutter);
+  background: var(--white);
+}
+/* the title and the close button in one row */
+.picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+#picker-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+#picker-close {
+  justify-content: center;
+  width: var(--ctl-h);
+  height: var(--ctl-h);
+  padding: 0;
+}
+.picker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+/* the four 1.2 km cities two by two */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 12px;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 6px;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  text-align: left;         /* a button centres its text: a line that wraps would be centred */
+  white-space: nowrap;
+  cursor: pointer;
+}
+.tile:hover {
+  background: rgb(var(--ink-rgb) / 0.04);
+}
+.tile[aria-current="true"] {
+  border-color: var(--ink);
+}
+.tile canvas {
+  border-radius: 4px;
+  outline: 1px solid var(--outline);
+  background: var(--bg);
+}
+.tile-name {
+  font-weight: 600;
+  line-height: 1.2;
+}
+.tile-size {
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1.2;
+}
+
+/* ---------- over the scene: loading card, the message when the page cannot run, side hint, live region ---------- */
+#loading-card {
+  position: absolute;
+  top: var(--free-middle);
+  left: var(--free-centre);
+  z-index: 6;
+  width: min(460px, calc(100% - var(--left-inset) - var(--scene-inset) - 32px));  /* 16 px clear of the free area */
+  padding: 26px 32px 28px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--white) 96%, transparent);
+  box-shadow: 0 24px 64px rgb(var(--ink-rgb) / 0.18);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -46%);
+  /* hidden from screen readers too once it has faded out */
+  visibility: hidden;
+  transition: opacity var(--card-fade), transform var(--card-fade), visibility 0s var(--card-fade);
+}
+#loading-card.show {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  visibility: visible;
+  transition: opacity var(--card-fade), transform var(--card-fade);
+}
+/* the panel open over the scene: the card is not shown (it would cover the panel; the Results section says the same) */
+:root[data-layout="over"] #stage:has(> #panel:not(.collapsed):not(.booting)) #loading-card {
+  display: none;
+}
+/* a window lower than 500 px (a phone held sideways: app/layout.js SHORT_TOUCH_SCREEN_PX): the card shows the status
+   line alone (the paper's title is in the introduction), clear of a collapsed panel's results line above it */
+@media (max-height: 499.98px) {
+  #loading-intro {
+    display: none;
+  }
+}
+.loading-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.spinner {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--outline);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+/* no animation behind the faded card */
+#loading-card:not(.show) .spinner {
+  animation-play-state: paused;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+#loading-intro {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+#loading-title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+#error {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: rgb(var(--bg-rgb) / 0.7);
+}
+/* the page cannot run: the panel stays above the message's veil with a veil of its own (it looks as dimmed and takes
+   no clicks), and only its Tutorial capsule above that - the video still plays */
+#stage:has(> #error:not([hidden])) > #panel {
+  z-index: 7;
+}
+#stage:has(> #error:not([hidden])) > #panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(var(--bg-rgb) / 0.7);
+}
+#stage:has(> #error:not([hidden])) > #panel .tutorial-trigger {
+  position: relative;
+  z-index: 2;
+}
+#error div {
+  max-width: 520px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--white);
+  white-space: pre-wrap;
+  box-shadow: var(--shadow);
+}
+#side-hint {
+  position: fixed;
+  z-index: 20;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  font-size: 12.5px;
+  line-height: 1.4;
+  max-width: calc(100vw - 2 * var(--gutter));
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-4px, -50%);
+  /* hidden from screen readers too once it has faded out */
+  visibility: hidden;
+  transition: opacity var(--hint-fade), transform var(--hint-fade), visibility 0s var(--hint-fade);
+}
+#side-hint p {             /* one line of the note (showHint) */
+  margin: 0;
+  text-wrap: balance;       /* where the window is too narrow for it, in even halves */
+}
+#side-hint.show {
+  opacity: 1;
+  transform: translate(0, -50%);
+  visibility: visible;
+  transition: opacity var(--hint-fade), transform var(--hint-fade);
+}
+/* no room beside the panel: under the element it points at, or over it where the window's bottom is too close
+   (app/wind_controls.js showHint) */
+#side-hint[data-place="below"] {
+  transform: translate(0, -4px);
+}
+#side-hint[data-place="above"] {
+  transform: translate(0, 4px);
+}
+#side-hint[data-place="below"].show, #side-hint[data-place="above"].show {
+  transform: none;
+}
+#side-hint::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-left: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+  transform: translateY(-50%) rotate(45deg);
+}
+#side-hint[data-place="below"]::before, #side-hint[data-place="above"]::before {
+  left: var(--arrow-x);       /* at the element's middle (app/wind_controls.js showHint) */
+}
+#side-hint[data-place="below"]::before {
+  top: -5px;
+  transform: translateX(-50%) rotate(135deg);
+}
+#side-hint[data-place="above"]::before {
+  top: auto;
+  bottom: -5px;
+  transform: translateX(-50%) rotate(-45deg);
+}
+/* the screen readers' live region (#announce): in the page, never on screen */
+#announce {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- a touch screen (its main pointer a finger): larger targets ----------
+   Every control at least 30 px high (the buttons inside a segmented bar 26 px), sliders 32 px to press, the section
+   titles at least 40 px (WCAG 2.5.8 asks 24 px; the platforms' 44-48 px would leave a phone's panel no room for its
+   content), the introduction mark 32 px, the energy bars' rows 30 px; the number fields' text 16 px (iOS Safari
+   zooms the page into a field with smaller text and leaves it zoomed).  The first results then take more room
+   (--results-h, measured; checked by the project's tests).  After the rules it changes (the short screens' sizes
+   above). */
+@media (pointer: coarse) {
+  :root {
+    --ctl-h: 32px;
+    --ctl-h-mini: 30px;
+  }
+  #panel {
+    --results-h: 364px;
+  }
+  #intro-mark {
+    width: 32px;
+    height: 32px;
+    margin-left: -8px;        /* the drawing still 9 px after the title (9 px of the box before it) */
+  }
+  .bar-row, .route-key {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  /* the routes' check boxes: 30 px to press */
+  #energy-chart {
+    --bar-check: 30px;
+  }
+  #routes-block {
+    --legend-row: 30px;
+  }
+  .check-hit {
+    --check-hit: 30px;
+  }
+  .input input {
+    font-size: 16px;
+  }
+  /* sliders: 32 px to press (the 4 px track painted in the content box only; #panel: above the speed slider's own
+     background shorthand), a 24 px thumb */
+  #panel input[type="range"] {
+    height: 32px;
+    padding: 14px 0;
+    background-clip: content-box;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+}
+@media (pointer: coarse) and (max-height: 800px) {
+  #panel {
+    --row-h: 40px;            /* 38 and 34 px on short screens; tall ones keep 44 px */
+    --results-h: 344px;
+  }
+}
+@media (pointer: coarse) and (max-height: 740px) {
+  #panel {
+    --results-h: 324px;
+  }
+}
+/* a window below 304 px wide: the energy bars under their labels (the chart below 248 px, its container query) make
+   Results taller, and its numbers' line count varies with the width: the room kept is the largest measured from 280
+   to 303 px, with a mouse and then on a touch screen (it may fold a section more than needed there, never one when
+   the results appear) */
+@media (max-width: 303.98px) {
+  #panel {
+    --results-h: 424px;
+  }
+}
+@media (max-width: 303.98px) and (max-height: 800px) {
+  #panel {
+    --results-h: 412px;
+  }
+}
+@media (max-width: 303.98px) and (max-height: 740px) {
+  #panel {
+    --results-h: 382px;
+  }
+}
+@media (pointer: coarse) and (max-width: 303.98px) {
+  #panel {
+    --results-h: 456px;
+  }
+}
+@media (pointer: coarse) and (max-width: 303.98px) and (max-height: 800px) {
+  #panel {
+    --results-h: 448px;
+  }
+}
+@media (pointer: coarse) and (max-width: 303.98px) and (max-height: 740px) {
+  #panel {
+    --results-h: 434px;
+  }
+}
+
+/* ---------- a window narrower than the panel and its margins (--left-w + 2 x --gutter = 392 px: a phone) ----------
+   The panel as wide as the window allows, with compact rows: a narrower label column (labels may take two lines),
+   smaller paddings and dial, 1 px beside the random mission buttons' text; the chart tabs scroll sideways and their
+   right edge fades while more tabs follow (app/controls.js wireCharts).  After the rules it overrides
+   with the same specificity (the panel's short-screen paddings).  The width is checked against the tokens by lint. */
+@media (max-width: 391.98px) {
+  #panel {
+    --card-pad: 12px;
+    --label-w: 92px;
+    --dial: 80px;
+  }
+  .ctl-label {
+    white-space: normal;
+    line-height: 1.2;
+  }
+  .draw-buttons button {
+    padding: 0 1px;
+  }
+  #chart-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #chart-tabs.more-right {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--tab-fade)), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - var(--tab-fade)), transparent);
+  }
+}
+
+/* ---------- a very narrow window (below 360 px: the random mission buttons no longer fit beside their label) ---------
+   Each row's label above its control, the control the row's full width (the legend's title above its bar; the wind
+   dial above its fields); the Results title's time without its words. */
+@media (max-width: 359.98px) {
+  /* the title row in 260 px: tighter columns, the capsule without its play disc (the word stays) */
+  .card-header {
+    column-gap: 4px;
+  }
+  #intro-mark {
+    margin-left: -4px;        /* 4 px column gap + 9 px of the touch box before the drawing - 4 = 9 px */
+  }
+  .tutorial-trigger {
+    padding: 0 11px;
+  }
+  .tutorial-play {
+    display: none;
+  }
+  #panel-toggle {
+    margin-left: 0;
+  }
+  .ctl-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  #legend {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+  #legend-title {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0;
+  }
+  #legend-bar {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  #legend-ticks, .range-row {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .wind {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--row-gap);
+  }
+  #dial {
+    justify-self: center;
+  }
+  .timing-what {
+    font-size: 0;             /* not shown, still read (the title's description, index.html) */
+  }
+}

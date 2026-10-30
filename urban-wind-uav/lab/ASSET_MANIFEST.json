@@ -1,0 +1,54 @@
+{
+  "note": "Download-time hashes, not a signed upstream release.",
+  "files": [
+    {
+      "path": "assets/cities/city_20.png",
+      "url": "https://geowind2plan.com/assets/cities/city_20.png",
+      "bytes": 5359,
+      "sha256": "1894ece322bf2b23c5a4958d0239124506430d050d14f8f989477dfcf9336969",
+      "license": "CC-BY-NC-4.0"
+    },
+    {
+      "path": "assets/model2d/weights.bin",
+      "url": "https://geowind2plan.com/assets/model2d/weights.bin",
+      "bytes": 441448,
+      "sha256": "8b55c2d50dd4924ee119ab8e66c1111acfbb6d15ce56e73f065fb67836a32a1c",
+      "license": "CC-BY-NC-4.0"
+    },
+    {
+      "path": "assets/cfd/cfd_20_4ms.bin",
+      "url": "https://geowind2plan.com/assets/cfd/cfd_20_4ms.bin",
+      "bytes": 8370744,
+      "sha256": "27bba4c6fd3493d47e1a5d956b9a9b5734ace9c30ea70038a4902c12b3afb51b",
+      "license": "CC-BY-NC-4.0"
+    },
+    {
+      "path": "assets/fonts/Inter-Regular.otf",
+      "url": "https://geowind2plan.com/assets/fonts/Inter-Regular.otf",
+      "bytes": 254772,
+      "sha256": "5af3a022922efae64a3111e3f1c1c0fddee9f3594533de2781cdad0432180375",
+      "license": "OFL-1.1"
+    },
+    {
+      "path": "assets/fonts/Inter-Medium.otf",
+      "url": "https://geowind2plan.com/assets/fonts/Inter-Medium.otf",
+      "bytes": 264176,
+      "sha256": "47a20dda48e50c06ae42adc5dd19f6ddc1c06bcf9f84efd8832bc3717bdde974",
+      "license": "OFL-1.1"
+    },
+    {
+      "path": "assets/fonts/Inter-SemiBold.otf",
+      "url": "https://geowind2plan.com/assets/fonts/Inter-SemiBold.otf",
+      "bytes": 265000,
+      "sha256": "879569b5c29b7a3e15cf28d58762281fb1c339dbca8ffc598b736eb8bcf91514",
+      "license": "OFL-1.1"
+    },
+    {
+      "path": "assets/fonts/Inter-Bold.otf",
+      "url": "https://geowind2plan.com/assets/fonts/Inter-Bold.otf",
+      "bytes": 265580,
+      "sha256": "b00dfdf801497a6a2da65e486ed1fae0ef3608db2d15fbc9f2d22b217d209af2",
+      "license": "OFL-1.1"
+    }
+  ]
+}
