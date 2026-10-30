@@ -1,185 +1,5 @@
 [
   {
-    "file": "assets/demo4d/bear.jpg",
-    "bytes": 65796,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/bear_views.jpg",
-    "bytes": 57054,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/bear_views.mp4",
-    "bytes": 466744,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/camel.jpg",
-    "bytes": 58929,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/camel_views.jpg",
-    "bytes": 55672,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/camel_views.mp4",
-    "bytes": 645642,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/cows.jpg",
-    "bytes": 69869,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/cows_views.jpg",
-    "bytes": 61066,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/cows_views.mp4",
-    "bytes": 745386,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/davis_main.jpg",
-    "bytes": 395812,
-    "origin": "our TemDef4D comparison figure (DAVIS inputs and baseline renders)",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/davis_supp.jpg",
-    "bytes": 366503,
-    "origin": "our TemDef4D comparison figure (DAVIS inputs and baseline renders)",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/dog.jpg",
-    "bytes": 44284,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/dog_views.jpg",
-    "bytes": 42149,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/dog_views.mp4",
-    "bytes": 597472,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-high.jpg",
-    "bytes": 47607,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-high_views.jpg",
-    "bytes": 44162,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-high_views.mp4",
-    "bytes": 310468,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-low.jpg",
-    "bytes": 57905,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-low_views.jpg",
-    "bytes": 47646,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/horsejump-low_views.mp4",
-    "bytes": 445532,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/libby.jpg",
-    "bytes": 50709,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/libby_views.jpg",
-    "bytes": 39914,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/libby_views.mp4",
-    "bytes": 351047,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/rhino.jpg",
-    "bytes": 56935,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/rhino_views.jpg",
-    "bytes": 55659,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/rhino_views.mp4",
-    "bytes": 557991,
-    "origin": "our TemDef4D outputs with DAVIS input frames",
-    "license": "ours; DAVIS frames per DAVIS terms"
-  },
-  {
-    "file": "assets/demo4d/v63_camel_native.jpg",
-    "bytes": 62091,
-    "origin": "our TemDef4D leg-completion preview (V63)",
-    "license": "ours"
-  },
-  {
-    "file": "assets/demo4d/v63_camel_native.mp4",
-    "bytes": 468471,
-    "origin": "our TemDef4D leg-completion preview (V63)",
-    "license": "ours"
-  },
-  {
-    "file": "assets/demo4d/v63_horsejump-high_native.jpg",
-    "bytes": 45145,
-    "origin": "our TemDef4D leg-completion preview (V63)",
-    "license": "ours"
-  },
-  {
-    "file": "assets/demo4d/v63_horsejump-high_native.mp4",
-    "bytes": 206317,
-    "origin": "our TemDef4D leg-completion preview (V63)",
-    "license": "ours"
-  },
-  {
     "file": "assets/figures/field_error_summary.png",
     "bytes": 45796,
     "origin": "our baseline-suite figures (GeoWind2Plan data)",
@@ -236,13 +56,13 @@
   {
     "file": "assets/papers/diffsport_overview.jpg",
     "bytes": 319092,
-    "origin": "github.com/VinuesaLAB-AI/Diff-SPORT docs/fig1_overview.png",
+    "origin": "Diff-SPORT repository figure (github.com/VinuesaLAB-AI/Diff-SPORT)",
     "license": "MIT"
   },
   {
     "file": "assets/papers/eureka_overview.jpg",
     "bytes": 132656,
-    "origin": "github.com/eureka-research/Eureka images/eureka.png",
+    "origin": "Eureka repository figure (github.com/eureka-research/Eureka)",
     "license": "MIT"
   },
   {
@@ -260,25 +80,25 @@
   {
     "file": "assets/papers/llmsr_overview.jpg",
     "bytes": 181449,
-    "origin": "github.com/deep-symbolic-mathematics/LLM-SR images/LLMSR.jpg",
+    "origin": "LLM-SR repository figure (github.com/deep-symbolic-mathematics/LLM-SR)",
     "license": "MIT"
   },
   {
     "file": "assets/papers/openevolve_arch.jpg",
     "bytes": 179895,
-    "origin": "github.com/codelion/openevolve openevolve-architecture.png",
+    "origin": "OpenEvolve repository figure (github.com/codelion/openevolve)",
     "license": "Apache-2.0"
   },
   {
     "file": "assets/papers/physense_overview.jpg",
     "bytes": 58360,
-    "origin": "github.com/thuml/PhySense pic/overview.png",
+    "origin": "PhySense repository figure (github.com/thuml/PhySense)",
     "license": "MIT"
   },
   {
     "file": "assets/papers/physense_placement.jpg",
     "bytes": 48122,
-    "origin": "github.com/thuml/PhySense pic/placement.png",
+    "origin": "PhySense repository figure (github.com/thuml/PhySense)",
     "license": "MIT"
   },
   {
@@ -290,25 +110,25 @@
   {
     "file": "assets/papers/senseiver_arch.jpg",
     "bytes": 186187,
-    "origin": "github.com/OrchardLANL/Senseiver arq.png",
+    "origin": "Senseiver repository figure (github.com/OrchardLANL/Senseiver)",
     "license": "BSD-3-Clause"
   },
   {
     "file": "assets/papers/shinka_conceptual.jpg",
     "bytes": 92763,
-    "origin": "github.com/SakanaAI/ShinkaEvolve docs/media/conceptual.png",
+    "origin": "ShinkaEvolve repository figure (github.com/SakanaAI/ShinkaEvolve)",
     "license": "Apache-2.0"
   },
   {
     "file": "assets/papers/transolver_overview.jpg",
     "bytes": 91574,
-    "origin": "github.com/thuml/Transolver pic/Transolver.png",
+    "origin": "Transolver repository figure (github.com/thuml/Transolver)",
     "license": "MIT"
   },
   {
     "file": "assets/papers/turbdiff_sample.jpg",
     "bytes": 121042,
-    "origin": "github.com/martenlienen/generative-turbulence figures/generated-sample-curl-norm.png",
+    "origin": "generative-turbulence repository figure (github.com/martenlienen/generative-turbulence)",
     "license": "MIT"
   },
   {
@@ -338,13 +158,13 @@
   {
     "file": "assets/papers/zephyrus_overview.jpg",
     "bytes": 154081,
-    "origin": "github.com/Rose-STL-Lab/Zephyrus docs/figures/zephyrus_agent_overview.jpg",
+    "origin": "Zephyrus repository figure (github.com/Rose-STL-Lab/Zephyrus)",
     "license": "MIT"
   },
   {
     "file": "assets/videos/VoxPoser_teaser.mp4",
     "bytes": 3008177,
-    "origin": "github.com/huangwl18/VoxPoser media/teaser.gif (converted)",
+    "origin": "VoxPoser repository teaser animation (github.com/huangwl18/VoxPoser), converted to video",
     "license": "MIT"
   },
   {
@@ -404,7 +224,7 @@
   {
     "file": "assets/videos/jaxipm_quad_multi_swap.mp4",
     "bytes": 77729,
-    "origin": "github.com/johnviljoen/jaxipm assets/quad_multi_swap.gif (converted)",
+    "origin": "jaxipm repository example animation (github.com/johnviljoen/jaxipm), converted to video",
     "license": "MIT"
   },
   {
@@ -416,7 +236,7 @@
   {
     "file": "assets/videos/jaxipm_quad_nav_circle.mp4",
     "bytes": 80310,
-    "origin": "github.com/johnviljoen/jaxipm assets/quad_nav_circle.gif (converted)",
+    "origin": "jaxipm repository example animation (github.com/johnviljoen/jaxipm), converted to video",
     "license": "MIT"
   },
   {
@@ -428,7 +248,7 @@
   {
     "file": "assets/videos/jaxipm_quad_track_avoid.mp4",
     "bytes": 170846,
-    "origin": "github.com/johnviljoen/jaxipm assets/quad_track_avoid.gif (converted)",
+    "origin": "jaxipm repository example animation (github.com/johnviljoen/jaxipm), converted to video",
     "license": "MIT"
   },
   {
@@ -464,7 +284,7 @@
   {
     "file": "assets/videos/windseer_supplemental_540p.mp4",
     "bytes": 8105172,
-    "origin": "ETH WindSeer data release supplemental_video.mp4 (doi:10.3929/ethz-b-000658323), re-encoded 540p",
+    "origin": "WindSeer paper supplemental video from the ETH data release (doi:10.3929/ethz-b-000658323), re-encoded 540p",
     "license": "CC BY 4.0"
   },
   {
@@ -472,5 +292,53 @@
     "bytes": 42148,
     "origin": "frame of the WindSeer supplemental video",
     "license": "CC BY 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_d_slice_h_ours.jpg",
+    "bytes": 98382,
+    "origin": "our recording of GeoWind Web Lab, a non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com)",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_e_slice_h_cfd.jpg",
+    "bytes": 97811,
+    "origin": "our recording of GeoWind Web Lab, a non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com)",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_flight.mp4",
+    "bytes": 3934429,
+    "origin": "our recording of GeoWind Web Lab, a non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com)",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_flight_poster.jpg",
+    "bytes": 138417,
+    "origin": "poster frame of webdemo_flight.mp4",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_freewind.mp4",
+    "bytes": 1835410,
+    "origin": "our recording of GeoWind Web Lab, a non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com)",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_freewind_poster.jpg",
+    "bytes": 111856,
+    "origin": "poster frame of webdemo_freewind.mp4",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_views.mp4",
+    "bytes": 1242464,
+    "origin": "our recording of GeoWind Web Lab, a non-commercial derivative of the GeoWind2Plan web demo (geowind2plan.com)",
+    "license": "CC BY-NC 4.0"
+  },
+  {
+    "file": "assets/webdemo/webdemo_views_poster.jpg",
+    "bytes": 88189,
+    "origin": "poster frame of webdemo_views.mp4",
+    "license": "CC BY-NC 4.0"
   }
 ]

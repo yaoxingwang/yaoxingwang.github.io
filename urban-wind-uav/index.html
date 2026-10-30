@@ -140,16 +140,15 @@
   <b>城市风场 × UAV 规划 · 导师汇报</b>
   <a href="index.html" class="cur">汇总矩阵（本页）</a>
   <a href="../">主页</a>
-  <a class="ext" href="https://yaoxingwang.github.io/demo/" target="_blank" rel="noopener">4D Demo（在线）↗</a>
+  <a class="ext" href="#s6">4D 风场航线 Demo ↓</a>
 </div>
 
 <header class="hero">
   <h1>城市风场 × UAV 节能规划：论文 · 评测协议 · Baseline 矩阵 · 4D Demo</h1>
-  <p>范围：GeoWind2Plan（arXiv 2609.36056，作者声明 NeurIPS 2026 Spotlight）的复现与可信评测；风场重建、稀疏观测、风感知规划、LLM 程序搜索四类顶会顶刊 baseline 的部署与跑通状态；附我们已上线的 TemDef4D 交互式 4D demo。</p>
+  <p>范围：GeoWind2Plan（arXiv 2609.36056，作者声明 NeurIPS 2026 Spotlight）的复现与可信评测；风场重建、稀疏观测、风感知规划、LLM 程序搜索四类顶会顶刊 baseline 的部署与跑通状态；附我们的 4D 风场航线 demo（浏览器内实时预测风场并规划无人机航线）。</p>
   <p>
     <span class="badge">2026-10-30</span>
-    <span class="badge">服务器 4090-server · /data/wyx/26_code/ICCV</span>
-    <span class="badge">数字来源：baseline_suite_20261028/summary.json 等结果文件（见 §5 R8）</span>
+    <span class="badge">数字来源：我们的实验结果文件</span>
     <span class="badge">图片和视频均为相对路径，整个文件夹可直接打包</span>
   </p>
   <p style="margin-top:10px">故事线：在<b>可信评测</b>（GPU 修复 + 严格检查）下研究「风场信息 → 路线决策」。主线是<b>面向决策的风场学习 + 能收敛的 GPU 批量规划器</b>，支线是<b>面向路线排序的观测选点</b>和<b>高风速风险约束</b>。LLM（Qwen）只做决策层和程序搜索，不直接输出轨迹。</p>
@@ -162,7 +161,7 @@
   <div class="kpi"><b>−37%</b><span>沿路线均匀放探针 + IDW 的重排 regret（K=32，A–E）</span></div>
   <div class="kpi"><b>23 · 6</b><span>部署的官方仓库 · 通过 GPU smoke 的模型</span></div>
   <div class="kpi"><b>235.5 GB · 10/10</b><span>WindSeer 官方数据，MD5 + SHA1 与 ETH 发布值一致</span></div>
-  <div class="kpi"><b>8 个场景</b><span>TemDef4D 交互式 4D demo（DAVIS，已上线）</span></div>
+  <div class="kpi"><b>2.2–2.4 s</b><span>4D demo：浏览器内一次风场预测 + 四条航线规划（Apple M4）</span></div>
 </div>
 
 <nav class="toc">
@@ -248,8 +247,7 @@
   <tr><td>顶会顶刊 baseline 部署</td><td class="ok">✅ 完成</td><td>23 个官方仓库（commit 和许可已入档）、2 个 Python 环境；WindSeer / PhySense / Senseiver / Transolver / FNO3D / GINO 6 个模型 GPU smoke 通过（§4 表 3）</td></tr>
   <tr><td>WindSeer 完整复现</td><td class="doing">🔄 数据就绪，训练按要求暂缓</td><td>官方数据 235.5 GB 下载完成并校验：10/10 文件 MD5 + SHA1 与 ETH LibDrive 发布值一致，6/6 个 HDF5 结构检查通过，7,285 个流场与官方 README 一致。官方没有发布权重，需从头训练（论文设置 3000 epoch）；训练与评测脚本已交付（§3.3、§7）</td></tr>
   <tr><td>LLM / 程序搜索方向</td><td class="doing">🔄 调研完成，代码就位</td><td>FunSearch、OpenEvolve、ShinkaEvolve、ReEvo、EoH、Eureka、LLM-SR、LLAMBO、VoxPoser、Zephyrus 共 10 个框架。定位：Qwen 做决策层或进化程序，不直接出轨迹（§4 表 4、§9.2）</td></tr>
-  <tr><td>4D demo（TemDef4D）</td><td class="ok">✅ 已上线</td><td>8 个 DAVIS 场景的交互式查看器（完整场景 / 仅前景）；DAVIS CLIP 0.7585，7 种方法中第一；相对 Lift4D 底座，前景 EPE −22.1%（§6）</td></tr>
-  <tr><td>4D 补腿（camel、horsejump-high、horsejump-low）</td><td class="doing">🔄 进行中</td><td>V63（在官方模型内部只微调腿部）同一掩码下 IoU：.881→.911 / .791→.815 / .813→.826；视觉效果还在逐场景确认（§6.4）</td></tr>
+  <tr><td>4D 风场航线 demo（GeoWind Web Lab）</td><td class="ok">✅ 可运行</td><td>浏览器内 WebGPU 风场推理约 1.9 s，四条航线全部通过独立净空检查；默认任务预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%（§6）</td></tr>
 </table>
 
 <div class="callout green">
@@ -258,7 +256,7 @@
   <li><b>完整性：</b>10/10 个文件的字节数、MD5、SHA1 都与 ETH LibDrive WebDAV 发布的校验值一致（本地重新读取整份文件计算）。</li>
   <li><b>可读性：</b>6/6 个 HDF5 能用 h5py 打开。train 5,373 个样本全部是 96×91×91，8 个场通道和网格间距 ds 齐全；validation 6,708、test 4,764 个样本全部是 64³；随机抽读的样本全部是有限值。三个测风塔文件逐个数据集读完（Askervein 15,384、Bolund 4,080、Perdigão 949,232 个数据集）；其中 Askervein 有 13,260 个、Perdigão 有 282,560 个 NaN 值，文件与官方 MD5 一致，所以这是发布数据本身的缺测值，不是下载损坏。</li>
   <li><b>与官方说明一致：</b>train 5,373 + validation 1,118 + test 794 = 7,285 个不同流场，等于官方 README 的 7,285（7,361 次 CFD 中 92.9% 收敛，另加每个地形一个零风流场）。validation / test 每个流场有 6 个重采样版本。</li>
-  <li>校验结果存于服务器 <code>datasets/windseer/VERIFY_checksums.json</code>、<code>VERIFY_hdf5.json</code>；脚本 <code>wind_baselines/windseer_repro/verify_dataset.py</code>（只读）。</li>
+  <li>校验用的是只读脚本，校验结果和数据一起保存在实验服务器上。</li>
 </ul>
 </div>
 
@@ -293,9 +291,9 @@
   <div class="card paper sense">
     <h4>PhySense：Sensor Placement Optimization for Accurate Physics Sensing <span class="tag v">NeurIPS 2025 Oral</span></h4>
     <a class="imglink" href="assets/papers/physense_overview.jpg" target="_blank"><img src="assets/papers/physense_overview.jpg" alt="PhySense overview" loading="lazy"></a>
-    <div class="figcap">官方仓库 pic/overview.png：flow-based 生成式重建器 + 传感器布置优化器，二者协同</div>
+    <div class="figcap">官方仓库配图：flow-based 生成式重建器 + 传感器布置优化器，二者协同</div>
     <a class="imglink" href="assets/papers/physense_placement.jpg" target="_blank"><img src="assets/papers/physense_placement.jpg" alt="PhySense placement optimizer" loading="lazy"></a>
-    <div class="figcap">官方仓库 pic/placement.png（README Fig.1 右）：投影梯度下降在空间约束内移动传感器</div>
+    <div class="figcap">官方仓库配图（README Fig.1 右）：投影梯度下降在空间约束内移动传感器</div>
     <p><b>做了什么：</b>两阶段框架：先训练 flow-based 生成式重建模型，再用投影梯度下降在空间约束下优化传感器位置；作者证明两者的训练目标与经典方差最小化一致，并报告在三个基准上重建精度相对提升 49%。</p>
     <p><b>对我们：</b>唯一把“选点 + 重建”联合优化的顶会工作，正对 §9 主线 ②。差别在目标：PhySense 优化重建误差，我们要优化路线排序。代码、环境、GPU smoke（12.75M 参数）已就位，还没在 GeoWind 上训练。</p>
     <div class="links"><a href="https://arxiv.org/abs/2505.18190" target="_blank">arXiv:2505.18190</a><a href="https://github.com/thuml/PhySense" target="_blank">代码（MIT）</a><span class="tag b">P0 待训练</span></div>
@@ -303,7 +301,7 @@
   <div class="card paper sense">
     <h4>Senseiver：attention-based global field reconstruction from sparse observations <span class="tag v">Nature Machine Intelligence 2023</span></h4>
     <a class="imglink" href="assets/papers/senseiver_arch.jpg" target="_blank"><img src="assets/papers/senseiver_arch.jpg" alt="Senseiver architecture" loading="lazy"></a>
-    <div class="figcap">官方仓库 arq.png：注意力编码任意数量、任意位置的稀疏观测，在任意查询点解码</div>
+    <div class="figcap">官方仓库配图：注意力编码任意数量、任意位置的稀疏观测，在任意查询点解码</div>
     <p><b>做了什么：</b>Perceiver-IO 式编码器把稀疏传感器读数压到固定大小的隐变量，解码器按坐标查询全场，计算量与域大小解耦，可用于很大的 n 维场。仓库还带“differentiable walk”扩展，训练时用反向传播移动传感器位置（MLST 2024）。</p>
     <p><b>对我们：</b>按坐标查询的接口很适合“沿航线查询风”；参数量很小（smoke 0.05M）。作为选点 + 重建的第二个顶刊 baseline。</p>
     <div class="links"><a href="https://www.nature.com/articles/s42256-023-00746-x" target="_blank">Nat. Mach. Intell.</a><a href="https://iopscience.iop.org/article/10.1088/2632-2153/ad4e06" target="_blank">differentiable walk（MLST）</a><a href="https://github.com/OrchardLANL/Senseiver" target="_blank">代码（BSD-3）</a><span class="tag b">P1 待训练</span></div>
@@ -311,7 +309,7 @@
   <div class="card paper sense">
     <h4>Transolver：A Fast Transformer Solver for PDEs on General Geometries <span class="tag v">ICML 2024 Spotlight</span></h4>
     <a class="imglink" href="assets/papers/transolver_overview.jpg" target="_blank"><img src="assets/papers/transolver_overview.jpg" alt="Transolver" loading="lazy"></a>
-    <div class="figcap">官方仓库 pic/Transolver.png：Physics-Attention 把网格点软分配到少量“物理状态”切片，在切片之间做注意力</div>
+    <div class="figcap">官方仓库配图：Physics-Attention 把网格点软分配到少量“物理状态”切片，在切片之间做注意力</div>
     <p><b>做了什么：</b>复杂度随网格点数线性增长，适合一般几何上的大规模 PDE；在翼型、汽车气动等基准上是强 baseline。</p>
     <p><b>对我们：</b>“几何 → 风场”的 backbone 候选，可直接替换 FNO；3D 配置的 GPU smoke 已通过（0.48M 参数）。</p>
     <div class="links"><a href="https://arxiv.org/abs/2402.02366" target="_blank">arXiv:2402.02366</a><a href="https://github.com/thuml/Transolver" target="_blank">代码（MIT）</a><span class="tag b">P1 待训练</span></div>
@@ -354,7 +352,7 @@
       <video data-src="assets/videos/jaxipm_quad_multi_swap.mp4" poster="assets/videos/jaxipm_quad_multi_swap_poster.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/768;border-radius:8px;width:100%;background:#fff"></video>
       <video data-src="assets/videos/jaxipm_quad_track_avoid.mp4" poster="assets/videos/jaxipm_quad_track_avoid_poster.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/768;border-radius:8px;width:100%;background:#fff"></video>
     </div>
-    <div class="figcap">官方仓库 assets/*.gif（转成 mp4）：四旋翼导航、多机换位、跟踪避障的批量 NMPC 示例</div>
+    <div class="figcap">官方仓库示例动图（转成视频）：四旋翼导航、多机换位、跟踪避障的批量 NMPC 示例</div>
     <p><b>做了什么：</b>用 JAX 实现 IPOPT 风格的内点法，在 GPU 上同时解大量小规模 NLP；spineax 提供 cuDSS 稀疏线性求解。作者在四旋翼 NMPC 基准上报告吞吐最高为 IPOPT 的 32.85 倍。</p>
     <p><b>对我们：</b>P0。直接针对“预测风场下 IPOPT 0% 收敛 + CPU 吞吐瓶颈”；我们的问题正好是“任务 × 初值 × 风场”的大批量小 NLP。需要 JAX + cuDSS 环境（未建）。</p>
     <div class="links"><a href="https://arxiv.org/abs/2606.26341" target="_blank">arXiv:2606.26341</a><a href="https://github.com/johnviljoen/jaxipm" target="_blank">jaxipm（MIT）</a><a href="https://github.com/johnviljoen/spineax" target="_blank">spineax（MIT）</a><span class="tag b">P0</span></div>
@@ -373,7 +371,7 @@
       <tr><td>Folk et al. wind_aware_ros<br><span class="muted">RA-L 2024 / ICRA 2025</span></td><td>机载测风 → 局部风场 → MPPI 实时规划（ROS）</td><td class="ok">有（MIT）</td></tr>
     </table>
     <a class="imglink" href="assets/papers/diffsport_overview.jpg" target="_blank"><img src="assets/papers/diffsport_overview.jpg" alt="Diff-SPORT overview" loading="lazy"></a>
-    <div class="figcap">Diff-SPORT 官方仓库 docs/fig1_overview.png：城市环境中的扩散式传感器布置与重建</div>
+    <div class="figcap">Diff-SPORT 官方仓库配图：城市环境中的扩散式传感器布置与重建</div>
   </div>
 </div>
 
@@ -592,17 +590,17 @@
   <path d="M472 140 L496 140" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a5)"/>
   <rect x="650" y="32" width="300" height="40" rx="8" fill="#fbf1dc" stroke="#9a6b00"/><text x="662" y="50" font-weight="bold">① CFD 测试集（论文 Fig.2）</text><text x="662" y="65" font-size="11" fill="#4a5672">速度 / TKE 相对误差（作者视频：约 14.1–16.2%）</text>
   <rect x="650" y="80" width="300" height="40" rx="8" fill="#fbf1dc" stroke="#9a6b00"/><text x="662" y="98" font-weight="bold">② 测风塔（Fig.3–4）</text><text x="662" y="113" font-size="11" fill="#4a5672">Askervein n_256 · Bolund n_384 · Perdigão n_128</text>
-  <rect x="650" y="128" width="300" height="40" rx="8" fill="#fbf1dc" stroke="#9a6b00"/><text x="662" y="146" font-weight="bold">③ UAV 实飞</text><text x="662" y="161" font-size="11" fill="#4a5672">UAV_flight_data.zip（多机交叉验证）</text>
+  <rect x="650" y="128" width="300" height="40" rx="8" fill="#fbf1dc" stroke="#9a6b00"/><text x="662" y="146" font-weight="bold">③ UAV 实飞</text><text x="662" y="161" font-size="11" fill="#4a5672">UAV 飞行数据（多机交叉验证）</text>
   <path d="M622 140 L646 104" stroke="#4a5672" stroke-width="1.3" marker-end="url(#a5)"/>
-  <text x="20" y="200" font-size="11" fill="#5a6478">训练分辨率与评测分辨率不同：Bolund 的评测分辨率是训练时的 30 倍，Perdigão 是 2 倍（作者视频）。我们的脚本按论文分辨率逐个测风塔做 --benchmark。</text>
+  <text x="20" y="200" font-size="11" fill="#5a6478">训练分辨率与评测分辨率不同：Bolund 的评测分辨率是训练时的 30 倍，Perdigão 是 2 倍（作者视频）。我们的脚本按论文分辨率逐个测风塔评测。</text>
 </svg>
 </div>
 <table>
-  <tr><th>环节</th><th>论文设置</th><th>我们的脚本（<code>wind_baselines/windseer_repro/</code>）</th><th>状态</th></tr>
-  <tr><td>训练</td><td>Adam，lr 1e-5，每 700 epoch ×0.25，3000 epoch，scaled MSE；轨迹输入 3–500 格，噪声和偏置增强</td><td><code>train_paper.sh --gpu N</code>（可 <code>--epochs 300</code> 缩短、<code>--resume</code> 续训），显存上限 13 GB；网络深度 / 宽度和 batch 按仓库示例配置（论文未给，属假设）</td><td class="doing">🔄 未启动（按要求暂缓）</td></tr>
-  <tr><td>CFD 测试</td><td>test 集速度 / TKE 相对误差</td><td><code>eval_paper.py --parts cfd</code>（调用官方 <code>predict.py -cpe</code>）</td><td class="doing">🔄 脚本就绪；测试集 10-29 晚到齐，还没实跑</td></tr>
-  <tr><td>测风塔</td><td>Askervein / Bolund / Perdigão，遍历每个输入测风塔</td><td><code>eval_paper.py --parts askervein,bolund,perdigao</code>（调用 <code>predict_measurement_campaigns.py --benchmark</code>）</td><td class="ok">✅ 10-29 用随机权重试跑通过（未保留输出）</td></tr>
-  <tr><td>数据校验</td><td>—</td><td><code>verify_dataset.py --hash --hdf5</code>（只读）</td><td class="ok">✅ 10/10 + 6/6</td></tr>
+  <tr><th>环节</th><th>论文设置</th><th>我们的脚本</th><th>状态</th></tr>
+  <tr><td>训练</td><td>Adam，lr 1e-5，每 700 epoch ×0.25，3000 epoch，scaled MSE；轨迹输入 3–500 格，噪声和偏置增强</td><td>训练脚本：论文完整设置，可缩短 epoch、可断点续训，显存上限 13 GB；网络深度 / 宽度和 batch 按仓库示例配置（论文未给，属假设）</td><td class="doing">🔄 未启动（按要求暂缓）</td></tr>
+  <tr><td>CFD 测试</td><td>test 集速度 / TKE 相对误差</td><td>评测脚本调用官方的 CFD 测试集评估</td><td class="doing">🔄 脚本就绪；测试集 10-29 晚到齐，还没实跑</td></tr>
+  <tr><td>测风塔</td><td>Askervein / Bolund / Perdigão，遍历每个输入测风塔</td><td>评测脚本调用官方的测风塔评估，遍历每个输入测风塔</td><td class="ok">✅ 10-29 用随机权重试跑通过（未保留输出）</td></tr>
+  <tr><td>数据校验</td><td>—</td><td>只读校验脚本（MD5 / SHA1 + HDF5 结构）</td><td class="ok">✅ 10/10 + 6/6</td></tr>
 </table>
 
 <!-- ================================================================ -->
@@ -673,28 +671,28 @@
 </div>
 </div>
 
-<h3>表 3：顶会顶刊 baseline 可复现性矩阵（部署于 <code>/data/wyx/26_code/ICCV/wind_baselines</code>）</h3>
+<h3>表 3：顶会顶刊 baseline 可复现性矩阵（已部署到实验服务器）</h3>
 <div class="tbl-scroll">
 <table>
   <tr><th>方法</th><th>会议 / 期刊</th><th>任务</th><th>代码 @commit</th><th>许可</th><th>权重</th><th>数据</th><th>环境</th><th>GPU smoke</th><th>在我们协议上</th><th>优先级</th></tr>
-  <tr><td><b>WindSeer</b></td><td>Nat. Commun. 2024</td><td>稀疏测风 + 地形 → 3D 风 / TKE</td><td class="ok">✅ 45111de</td><td>BSD-3</td><td class="no">❌ 未发布</td><td class="ok">✅ 235.5 GB 已校验</td><td class="ok">✅ envs/windseer</td><td class="ok">✅ 5.54M</td><td class="doing">🔄 LOBO 核心版已跑；官方完整训练待启动</td><td><span class="tag r">P0</span></td></tr>
-  <tr><td><b>PhySense</b></td><td>NeurIPS 2025 Oral</td><td>传感器布置优化 + 生成式重建</td><td class="ok">✅ 69fa5cc</td><td>MIT</td><td class="muted">未核查</td><td class="muted">作者基准未下载</td><td class="ok">✅ envs/fieldbase</td><td class="ok">✅ 12.75M</td><td class="warn">❌ 未训练</td><td><span class="tag r">P0</span></td></tr>
-  <tr><td>Senseiver</td><td>Nat. Mach. Intell. 2023</td><td>稀疏观测 → 全场（注意力）</td><td class="ok">✅ e443eb0</td><td>BSD-3</td><td class="muted">—</td><td class="muted">Zenodo（未下载）</td><td class="ok">✅ fieldbase</td><td class="ok">✅ 0.05M</td><td class="warn">❌ 未训练</td><td><span class="tag a">P1</span></td></tr>
-  <tr><td>Transolver</td><td>ICML 2024 Spotlight</td><td>一般几何 PDE 求解</td><td class="ok">✅ 75e0f67</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✅ fieldbase</td><td class="ok">✅ 0.48M（3D）</td><td class="warn">❌ 未训练</td><td><span class="tag a">P1</span></td></tr>
-  <tr><td>FNO / GINO（neuraloperator）</td><td>ICLR 2021 / NeurIPS 2023</td><td>几何 → 场</td><td class="ok">✅ a6648ee</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✅ fieldbase</td><td class="ok">✅ 1.32M / 0.71M</td><td class="doing">🔄 自实现 FNO3D 已进主表；GINO 未训练</td><td><span class="tag a">P1</span></td></tr>
+  <tr><td><b>WindSeer</b></td><td>Nat. Commun. 2024</td><td>稀疏测风 + 地形 → 3D 风 / TKE</td><td class="ok">✅ 45111de</td><td>BSD-3</td><td class="no">❌ 未发布</td><td class="ok">✅ 235.5 GB 已校验</td><td class="ok">✅ 已建</td><td class="ok">✅ 5.54M</td><td class="doing">🔄 LOBO 核心版已跑；官方完整训练待启动</td><td><span class="tag r">P0</span></td></tr>
+  <tr><td><b>PhySense</b></td><td>NeurIPS 2025 Oral</td><td>传感器布置优化 + 生成式重建</td><td class="ok">✅ 69fa5cc</td><td>MIT</td><td class="muted">未核查</td><td class="muted">作者基准未下载</td><td class="ok">✅ 已建</td><td class="ok">✅ 12.75M</td><td class="warn">❌ 未训练</td><td><span class="tag r">P0</span></td></tr>
+  <tr><td>Senseiver</td><td>Nat. Mach. Intell. 2023</td><td>稀疏观测 → 全场（注意力）</td><td class="ok">✅ e443eb0</td><td>BSD-3</td><td class="muted">—</td><td class="muted">Zenodo（未下载）</td><td class="ok">✅ 已建</td><td class="ok">✅ 0.05M</td><td class="warn">❌ 未训练</td><td><span class="tag a">P1</span></td></tr>
+  <tr><td>Transolver</td><td>ICML 2024 Spotlight</td><td>一般几何 PDE 求解</td><td class="ok">✅ 75e0f67</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✅ 已建</td><td class="ok">✅ 0.48M（3D）</td><td class="warn">❌ 未训练</td><td><span class="tag a">P1</span></td></tr>
+  <tr><td>FNO / GINO（neuraloperator）</td><td>ICLR 2021 / NeurIPS 2023</td><td>几何 → 场</td><td class="ok">✅ a6648ee</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="ok">✅ 已建</td><td class="ok">✅ 1.32M / 0.71M</td><td class="doing">🔄 自实现 FNO3D 已进主表；GINO 未训练</td><td><span class="tag a">P1</span></td></tr>
   <tr><td>GenDA</td><td>ICML 2026</td><td>城市扩散同化</td><td class="ok">✅ 7bd691b</td><td class="no">无 LICENSE</td><td class="muted">—</td><td class="no">❌ 不公开</td><td class="no">❌ 需 JAX</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag g">P2</span></td></tr>
   <tr><td>TurbDiff（From Zero to Turbulence）</td><td>ICLR 2024</td><td>3D 湍流生成</td><td class="ok">✅ f1f88aa</td><td>MIT</td><td class="muted">未核查</td><td class="muted">未核查</td><td class="no">❌ 未建</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag g">P2</span></td></tr>
   <tr><td>Gen4Turbulence</td><td>Nat. Commun.（README 称已接收）</td><td>生成式超分 / 稀疏重建</td><td class="ok">✅ 8af0a7b</td><td>MIT</td><td class="muted">未核查</td><td class="ok">仓库自带 1.5 GB</td><td class="no">❌ 未建</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag g">P2</span></td></tr>
   <tr><td><b>jaxipm + spineax</b></td><td>arXiv 2606.26341</td><td>GPU 批量内点法 / cuDSS</td><td class="ok">✅ 3e6d2d2 / 97dae03</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="no">❌ 需 JAX + cuDSS</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag r">P0</span></td></tr>
-  <tr><td>Feilian-3D UNet3D<br><span class="muted">不在 wind_baselines 内</span></td><td>Zenodo 归档（无正式论文）</td><td>建筑 mask → 风速</td><td class="ok">✅</td><td class="muted">见归档</td><td class="no">❌</td><td class="no">❌ 539 样本未交付</td><td class="ok">✅ higs</td><td class="ok">✅ 1.36M</td><td class="ok">✅ 改三通道后 LOBO 进主表</td><td>—</td></tr>
+  <tr><td>Feilian-3D UNet3D<br><span class="muted">单独部署</span></td><td>Zenodo 归档（无正式论文）</td><td>建筑 mask → 风速</td><td class="ok">✅</td><td class="muted">见归档</td><td class="no">❌</td><td class="no">❌ 539 样本未交付</td><td class="ok">✅ 已建</td><td class="ok">✅ 1.36M</td><td class="ok">✅ 改三通道后 LOBO 进主表</td><td>—</td></tr>
   <tr><td>Diff-SPORT</td><td>arXiv 2506.00214</td><td>城市选点 + 扩散重建</td><td class="ok">✅ 6df1d1b</td><td>MIT</td><td class="muted">未核查</td><td class="muted">未核查</td><td class="no">❌</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag g">P2</span></td></tr>
   <tr><td>WinDiNet</td><td>arXiv 2603.21210</td><td>视频扩散做 2D 风</td><td class="ok">✅ cdc60ac</td><td>Apache-2.0</td><td class="warn">HF 约 9.9 GB 未下载</td><td class="ok">作者样例 5 个</td><td class="no">❌</td><td class="no">❌</td><td class="muted">2D 时变，不同题</td><td>—</td></tr>
   <tr><td>wind_aware_ros（Folk）</td><td>RA-L 2024 / ICRA 2025</td><td>机载测风 + MPPI</td><td class="ok">✅ 958fa9f</td><td>MIT</td><td class="muted">—</td><td class="muted">—</td><td class="no">❌ ROS</td><td class="no">❌</td><td class="no">❌</td><td><span class="tag g">P2 参考</span></td></tr>
 </table>
 </div>
-<p class="muted">所有仓库都是官方 GitHub 浅克隆，未修改上游代码，commit 与许可记录在 <code>REPOS_MANIFEST.json</code>。GPU smoke 只用随机张量验证安装和前向 / 反向，不代表精度。Caltech、WESPR、Sculpt、WindINR 没有公开代码，见 §2.3。</p>
+<p class="muted">所有仓库都是官方 GitHub 浅克隆，未修改上游代码，commit 与许可已逐个记录。GPU smoke 只用随机张量验证安装和前向 / 反向，不代表精度。Caltech、WESPR、Sculpt、WindINR 没有公开代码，见 §2.3。</p>
 
-<h3>表 4：LLM / 程序搜索框架（代码已部署于 <code>wind_baselines/repos/llm_search</code>）</h3>
+<h3>表 4：LLM / 程序搜索框架（代码已部署）</h3>
 <div class="tbl-scroll">
 <table>
   <tr><th>框架</th><th>会议</th><th>机制</th><th>在我们问题里做什么</th><th>代码 @commit</th><th>许可</th><th>状态</th></tr>
@@ -720,7 +718,7 @@
 
 <!-- ================================================================ -->
 <h2 id="s5">5 · 已跑结果全量汇总 <span class="en">all results from our runs, 2026-10-28 → 10-30</span></h2>
-<p class="muted">全部数字来自服务器结果文件（索引见 R8）。R1 是官方原始输出，没有门控；R2–R6 都建立在 GPU 修复 + 严格检查之后，两类口径不能逐格互比。</p>
+<p class="muted">全部数字来自我们的实验结果文件。R1 是官方原始输出，没有门控；R2–R6 都建立在 GPU 修复 + 严格检查之后，两类口径不能逐格互比。</p>
 
 <h3>R1 · 官方复现矩阵（7 配置 × 256 任务，全部 exit 0；原始输出，未门控）</h3>
 <div class="tbl-scroll">
@@ -861,131 +859,91 @@
 </div>
 <div class="vgrid" style="grid-template-columns:minmax(0,860px)">
   <div class="vcard" id="v-windseer"><video src="assets/videos/windseer_supplemental_540p.mp4" poster="assets/videos/windseer_supplemental_poster.jpg" controls preload="none" playsinline style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>WindSeer 官方论文视频（4 分 25 秒）</b><span class="ext-tag">作者发布 · CC BY 4.0</span><br><span>来自 ETH 数据发布包的 supplemental_video.mp4（MD5 已核对），我们转码为 540p。内容：CFD 数据生成、对未见 CFD 样本的预测、三个测风塔验证、阿尔卑斯三个试验场的多机实飞。</span></div></div>
+  <div class="cap"><b>WindSeer 官方论文视频（4 分 25 秒）</b><span class="ext-tag">作者发布 · CC BY 4.0</span><br><span>来自 ETH 数据发布包中的论文补充视频（MD5 已核对），我们转码为 540p。内容：CFD 数据生成、对未见 CFD 样本的预测、三个测风塔验证、阿尔卑斯三个试验场的多机实飞。</span></div></div>
 </div>
 <p class="muted">GeoWind2Plan 作者的官网教程视频（CC BY-NC 4.0）没有放进公开版，可在 <a href="https://geowind2plan.com/" target="_blank" rel="noopener">geowind2plan.com</a> 观看。</p>
 
-<h3>R8 · 结果文件索引</h3>
-<table>
-  <tr><th>位置</th><th>内容</th><th>口径</th></tr>
-  <tr><td><code>GeoWind2Plan/results/full_official_20261028_v1/</code></td><td>官方 7 配置 × 256 任务的原始规划输出</td><td>R1，未门控</td></tr>
-  <tr><td><code>GeoWind2Plan/results/baseline_suite_20261028/</code>（<code>code/ pools/ fields/ eval/ summary.json</code>）</td><td>候选池、GPU 修复、LOBO 训练的 UNet / FNO / WindSeer 核心、fields / replan / sparse 三阶段评测、决策 oracle</td><td>R2–R6，严格门控</td></tr>
-  <tr><td><code>wind_baselines/</code>（<code>README.md</code>、<code>REPOS_MANIFEST.json</code>、<code>smoke_*.json</code>）</td><td>23 个官方仓库、2 个环境、GPU smoke 结果</td><td>§4 表 3、表 4</td></tr>
-  <tr><td><code>wind_baselines/windseer_repro/</code></td><td>WindSeer 训练 / 评测 / 校验脚本与配置（<code>train_paper.sh</code>、<code>eval_paper.py</code>、<code>verify_dataset.py</code>、<code>USAGE.md</code>）</td><td>§3.3</td></tr>
-  <tr><td><code>datasets/windseer/</code>（<code>VERIFY_checksums.json</code>、<code>VERIFY_hdf5.json</code>）</td><td>WindSeer 官方数据 235.5 GB 及本次校验结果</td><td>§1、§7</td></tr>
-  <tr><td>本地 baseline 全量报告（未公开）</td><td>出图代码与 <code>data/summary.json</code></td><td>本页数字的直接来源</td></tr>
-  <tr><td><code>assets/data/assets_manifest.json</code></td><td>本页每个图片 / 视频的来源、许可与大小</td><td>—</td></tr>
-</table>
-<p class="muted">服务器路径省略了前缀 <code>/data/wyx/26_code/ICCV/</code>。</p>
 
 <!-- ================================================================ -->
-<h2 id="s6">6 · 我们的 4D Demo（TemDef4D） <span class="en">interactive 4D viewer · 8 DAVIS scenes</span></h2>
+<h2 id="s6">6 · 我们的 4D Demo：城市风场 + 无人机航线 <span class="en">GeoWind Web Lab · in-browser wind prediction and route planning</span></h2>
 <div class="callout blue">
-<b>是什么：</b>TemDef4D 从单目视频重建可自由换视角的动态 3D Gaussian 场景（4D）。下面的交互式查看器就是已上线的 <a href="https://yaoxingwang.github.io/demo/" target="_blank" rel="noopener">yaoxingwang.github.io/demo</a>：8 个 DAVIS 序列，可切换“完整场景 / 仅前景”，拖动旋转、滚轮缩放、空格播放。数据格式 web-gaussian-v1，每个场景完整版 44–94 MB、仅前景 27–62 MB，用 three.js 在浏览器里实时排序渲染。
-<br><b>和风场主线的关系：</b>两条线共用“动态三维场 + 新视角 / 新位置查询”的表示能力。4D 部分在本页作为已完成成果展示，不参与 §4 的风场矩阵。
+<b>是什么：</b>GeoWind Web Lab 是我们在 GeoWind2Plan 官方网页演示基础上改的非商业衍生版。它在浏览器里用本机 GPU（WebGPU）实时预测城市三维风场，再用 CPU 后台线程同时规划四条节能航线，并在三维城市里显示风场粒子、风场切片和无人机飞行动画。场景是街区 A（香港，1.2 × 1.2 km）。
+<br><b>计算链：</b>建筑高度图 → MDDF 多方向距离特征 → 逐高度层的 2D FNO（作者发布的权重，约 431 KiB）→ 任务走廊内的三维风场。规划先用格点 Dijkstra 求初值，再做阻尼 Newton 轨迹优化，四种规划风（CFD / 预测风 / 高度剖面 / 不用风）各出一条航线，统一放进离线量化 CFD（4 m/s、0°）里评估能耗。
+<br><b>我们加的部分：</b>独立净空检查（建筑按实体柱处理，沿线每 0.25 m 采样，要求 ≥ 10 m，不调用上游的净空函数）；规划净空从 10 m 加严到 14 m；没有可行航线或计算失败时明确报错，不拿预存路线顶替；航线与检查结果可导出。
 </div>
 
-<h3>6.1 交互式查看器（在线，点击加载）</h3>
-<div class="demo-wrap">
-  <div class="demo-stage" id="demo-stage">
-    <img class="demo-poster" id="demo-poster" src="assets/demo4d/horsejump-low.jpg" alt="4D demo poster">
-    <button class="demo-load" id="demo-load" type="button">▶ 加载交互式 4D 查看器<small id="demo-size">horsejump-low · 60 帧 · 约 54 MB · 需联网</small></button>
-  </div>
-  <div class="demo-bar" id="demo-bar">
-    <span>场景</span>
-    <button type="button" data-scene="bear" aria-pressed="false">bear</button>
-    <button type="button" data-scene="camel" aria-pressed="false">camel</button>
-    <button type="button" data-scene="cows" aria-pressed="false">cows</button>
-    <button type="button" data-scene="dog" aria-pressed="false">dog</button>
-    <button type="button" data-scene="horsejump-high" aria-pressed="false">horsejump-high</button>
-    <button type="button" data-scene="horsejump-low" aria-pressed="true">horsejump-low</button>
-    <button type="button" data-scene="libby" aria-pressed="false">libby</button>
-    <button type="button" data-scene="rhino" aria-pressed="false">rhino</button>
-    <span class="sep"></span>
-    <button type="button" data-viewmode="full_scene" aria-pressed="true">完整场景</button>
-    <button type="button" data-viewmode="foreground" aria-pressed="false">仅前景</button>
-    <a id="demo-open" href="https://yaoxingwang.github.io/demo/?scene=horsejump-low&amp;mode=full_scene" target="_blank" rel="noopener">在新窗口打开 ↗</a>
-  </div>
-</div>
-<p class="muted">查看器直接嵌入线上页面（iframe），每个场景要下载 27–94 MB；加载慢时可以先看下面的视频。</p>
-
-<h3>6.2 8 个场景：输入视频 + TemDef4D 三个新视角</h3>
-<p class="muted">每个视频是 2×2 拼接：左上为 DAVIS 输入，其余三格为 TemDef4D（v57）在方位角 90° / 180° / 270° 的渲染，按帧序号对齐，10 fps。bear、cows 的渲染帧数少于输入（74 / 82、100 / 104），视频按较短的一路截断。视频滚动到可见时自动播放。</p>
-<div class="vgrid two">
-  <div class="vcard"><video data-src="assets/demo4d/bear_views.mp4" poster="assets/demo4d/bear_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>bear</b> <span>· 交互版 82 帧 · 完整 73.8 MB / 前景 49.2 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=bear&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=bear&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/camel_views.mp4" poster="assets/demo4d/camel_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>camel</b> <span>· 交互版 90 帧 · 完整 81.0 MB / 前景 54.0 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=camel&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=camel&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/cows_views.mp4" poster="assets/demo4d/cows_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>cows</b> <span>· 交互版 104 帧 · 完整 93.6 MB / 前景 62.4 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=cows&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=cows&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/dog_views.mp4" poster="assets/demo4d/dog_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>dog</b> <span>· 交互版 60 帧 · 完整 54.0 MB / 前景 36.0 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=dog&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=dog&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/horsejump-high_views.mp4" poster="assets/demo4d/horsejump-high_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>horsejump-high</b> <span>· 交互版 50 帧 · 完整 45.0 MB / 前景 30.0 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=horsejump-high&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=horsejump-high&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/horsejump-low_views.mp4" poster="assets/demo4d/horsejump-low_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>horsejump-low</b> <span>· 交互版 60 帧 · 完整 54.0 MB / 前景 36.0 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=horsejump-low&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=horsejump-low&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/libby_views.mp4" poster="assets/demo4d/libby_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>libby</b> <span>· 交互版 49 帧 · 完整 44.1 MB / 前景 26.6 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=libby&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=libby&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/rhino_views.mp4" poster="assets/demo4d/rhino_views.jpg" muted loop playsinline preload="none" style="aspect-ratio:960/540;"></video>
-  <div class="cap"><b>rhino</b> <span>· 交互版 90 帧 · 完整 81.0 MB / 前景 54.0 MB</span><br><a href="https://yaoxingwang.github.io/demo/?scene=rhino&amp;mode=full_scene" target="_blank" rel="noopener">交互：完整场景 ↗</a><a href="https://yaoxingwang.github.io/demo/?scene=rhino&amp;mode=foreground" target="_blank" rel="noopener">仅前景 ↗</a></div></div>
+<div class="vgrid" style="grid-template-columns:minmax(0,1fr)">
+  <div class="vcard"><video data-src="assets/webdemo/webdemo_flight.mp4" poster="assets/webdemo/webdemo_flight_poster.jpg" muted loop playsinline preload="none" controls style="aspect-ratio:1280/720;"></video>
+  <div class="cap"><b>开场（30 秒）</b><span class="own-tag">本机录屏</span><br><span>加载 → 走廊内风场推理（扫描动画）→ 四条航线规划 → 视角跟随无人机沿预测风航线飞到终点 → 显示全部四条航线。左侧面板的数字是这次运行的实际结果。</span></div></div>
 </div>
 
-<h3>6.3 DAVIS 对比：主图与统一评测</h3>
-<figure><a class="imglink" href="assets/demo4d/davis_main.jpg" target="_blank"><img src="assets/demo4d/davis_main.jpg" alt="DAVIS main comparison" loading="lazy"></a>
-<figcaption>DAVIS 主图（bear / camel / cows / horsejump-high，每序列 2 个时刻）：Input / Ours（TemDef4D）/ Lift4D / DM4D / PAD3R / L4GM / V2M4。视角已按“与 Ours 参考视角同向”逐方法映射。</figcaption></figure>
-<figure><a class="imglink" href="assets/demo4d/davis_supp.jpg" target="_blank"><img src="assets/demo4d/davis_supp.jpg" alt="DAVIS supplementary comparison" loading="lazy"></a>
-<figcaption>补充图（dog / horsejump-low / libby / rhino），版式同上。</figcaption></figure>
 <div class="grid">
 <table>
-  <tr><th>DAVIS（同评估器、同协议）</th><th>CLIP ↑</th><th>CLIP-T ↑</th></tr>
-  <tr><td><b>TemDef4D（v57，ours）</b></td><td class="num"><b>0.7585</b></td><td class="num"><b>0.3037</b></td></tr>
-  <tr><td>Lift4D（底座，同口径重评）</td><td class="num">0.7577</td><td class="num">0.3009</td></tr>
-  <tr><td>L4GM</td><td class="num">0.6987</td><td class="num">0.2561</td></tr>
-  <tr><td>V2M4</td><td class="num">0.6763</td><td class="num">0.2815</td></tr>
-  <tr><td>PAD3R</td><td class="num">0.6531</td><td class="num">0.2659</td></tr>
-  <tr><td>DM4D</td><td class="num">0.6181</td><td class="num">0.2608</td></tr>
-  <tr><td>STAG4D（复现发散，可视化已撤下）</td><td class="num">0.5982</td><td class="num">0.2386</td></tr>
+  <tr><th colspan="3">默认任务：4 m/s、0°，起终点高度 75 m（录屏中的结果）</th></tr>
+  <tr><th>规划风</th><th>能耗（Wh/km，CFD 风中评估）</th><th>独立净空检查</th></tr>
+  <tr><td>CFD（参考）</td><td class="num">14.67</td><td class="ok">通过</td></tr>
+  <tr><td><b>预测风（GeoWind2Plan 模型）</b></td><td class="num"><b>14.96</b></td><td class="ok">通过</td></tr>
+  <tr><td>高度剖面</td><td class="num">15.38</td><td class="ok">通过</td></tr>
+  <tr><td>不用风</td><td class="num">15.97</td><td class="ok">通过</td></tr>
 </table>
-<div class="callout amber" style="margin:10px 0">
-<b>诚实口径：</b>
+<div class="callout green" style="margin:10px 0">
+<b>读法：</b>
 <ul>
-<li>相对 Lift4D 底座，外观指标基本持平（CLIP +0.07%）。</li>
-<li>真实增益在前景运动精度：前景 EPE 0.0140 → 0.0109（macro −22.1%，micro −14.45%），8/8 个序列都改善。</li>
-<li>Consistent4D 上 FVD 1077.9 → 951.2（−11.7%）；但 C4D 4 场景子集的外观指标处于中游（CLIP 4/7、LPIPS 5/7）。</li>
-<li>来源：<code>results/temdef4d_vs_sharp4dlift_davis_20261003/SUMMARY_REPORT.md</code>（统一评测 <code>davis_baselines_eval_20260920</code>）。</li>
+<li>预测风航线比不用风省 <b>6.3%</b>，收回 CFD 航线节能的 <b>77.9%</b>（CFD 航线比不用风省 8.1%）。</li>
+<li>3 次录屏中，一次风场推理 <b>1.87–1.98 s</b>，推理加四条航线规划共 <b>2.22–2.39 s</b>（Apple M4 GPU，Chrome，半精度）。</li>
+<li>改风向或拖动起终点会重新推理；只改风速时按 U / 4 m/s 线性缩放，不重新推理。</li>
 </ul>
 </div>
 </div>
 
-<h3>6.4 进行中：细腿补全（camel / horsejump-high / horsejump-low）</h3>
+<div class="vgrid two">
+  <div class="vcard"><video data-src="assets/webdemo/webdemo_views.mp4" poster="assets/webdemo/webdemo_views_poster.jpg" muted loop playsinline preload="none" controls style="aspect-ratio:1280/720;"></video>
+  <div class="cap"><b>风场视图（21 秒）</b><span class="own-tag">本机录屏</span><br><span>75 m 高度水平粒子 → 水平切片（预测风 / CFD 对照）→ 切片高度从 40 m 扫到 110 m → 竖直切片（预测风 / CFD）→ 走廊内三维粒子。</span></div></div>
+  <div class="vcard"><video data-src="assets/webdemo/webdemo_freewind.mp4" poster="assets/webdemo/webdemo_freewind_poster.jpg" muted loop playsinline preload="none" controls style="aspect-ratio:1280/720;"></video>
+  <div class="cap"><b>自由调风向（22 秒）</b><span class="own-tag">本机录屏</span><br><span>关闭 CFD 真值后把风向从 0° 依次改到 35°、90°、180°，每次都重新推理风场、重新规划航线，入流箭头随风向转动。</span></div></div>
+</div>
+
+<div class="grid">
+  <figure><a class="imglink" href="assets/webdemo/webdemo_d_slice_h_ours.jpg" target="_blank"><img src="assets/webdemo/webdemo_d_slice_h_ours.jpg" alt="predicted wind slice at 75 m" loading="lazy"></a>
+  <figcaption>75 m 水平切片，<b>浏览器内预测的风场</b>（色标 0–6.4 m/s）。</figcaption></figure>
+  <figure><a class="imglink" href="assets/webdemo/webdemo_e_slice_h_cfd.jpg" target="_blank"><img src="assets/webdemo/webdemo_e_slice_h_cfd.jpg" alt="CFD wind slice at 75 m" loading="lazy"></a>
+  <figcaption>同一位置的 <b>CFD 真值</b>，色标相同。两者的高速带和建筑背风侧低速区分布相近，细节有差异。</figcaption></figure>
+</div>
+
 <table>
-  <tr><th>场景</th><th>v57（当前 demo）IoU</th><th>V63 native IoU</th><th>外溢 v57 → V63</th><th>状态</th></tr>
-  <tr><td>camel</td><td class="num">0.881</td><td class="num ok">0.911</td><td class="num">0.047 → 0.044</td><td class="doing">🔄 视觉待确认</td></tr>
-  <tr><td>horsejump-high</td><td class="num">0.791</td><td class="num ok">0.815</td><td class="num">0.067 → 0.070</td><td class="doing">🔄 环绕视角腿偏厚</td></tr>
-  <tr><td>horsejump-low</td><td class="num">0.813</td><td class="num ok">0.826</td><td class="num">0.093 → 0.088</td><td class="doing">🔄 视觉待确认</td></tr>
+  <tr><th colspan="6">自由风向（没有 CFD 真值，能耗在预测风场中评估，不是独立评估）</th></tr>
+  <tr><th>风向</th><th>风场推理</th><th>预测风航线（Wh/km）</th><th>高度剖面</th><th>不用风</th><th>预测风 vs 不用风</th></tr>
+  <tr><td>35°</td><td class="num">2.4 s</td><td class="num">13.50</td><td class="num">14.14</td><td class="num">14.33</td><td class="num">−5.8%</td></tr>
+  <tr><td>90°</td><td class="num">1.9 s</td><td class="num">10.70</td><td class="num">10.92</td><td class="num">11.12</td><td class="num">−3.8%</td></tr>
+  <tr><td>180°</td><td class="num">1.9 s</td><td class="num">10.76</td><td class="num">10.97</td><td class="num">11.21</td><td class="num">−4.0%</td></tr>
 </table>
-<div class="vgrid two"><div class="vcard"><video data-src="assets/demo4d/v63_horsejump-high_native.mp4" poster="assets/demo4d/v63_horsejump-high_native.jpg" muted loop playsinline preload="none" controls style="aspect-ratio:1280/972;background:#e6e9ee"></video>
-  <div class="cap"><b>horsejump-high · V63 native 对比</b><span class="own-tag">进行中</span><br><span>第 1 行：源视角下的 输入（掩码）｜ v57 ｜ V62 ｜ V63；第 2–4 行：v57 / V62 / V63 在方位 90° / 180° / 270°。0.5× 速度预览。尾巴和身体不变，白袜恢复；环绕视角下腿看起来偏厚。</span></div></div>
-  <div class="vcard"><video data-src="assets/demo4d/v63_camel_native.mp4" poster="assets/demo4d/v63_camel_native.jpg" muted loop playsinline preload="none" controls style="aspect-ratio:1280/972;background:#e6e9ee"></video>
-  <div class="cap"><b>camel · V63 native 对比</b><span class="own-tag">进行中</span><br><span>版式同左。IoU 0.881 → 0.911，外溢 0.047 → 0.044；源视角下腿更完整，环绕视角（第 4 行）腿部周围的碎点比 V62 多。</span></div></div></div>
-<p class="muted">V63 在官方 Lift4D 模型内部只微调腿部高斯（身体逐位不变，有断言检查），三个场景的 IoU 都最高；不足是环绕视角斑点比 V62 多。指标来自同一掩码、同一光栅器（<code>HANDOFF_20261029.md</code>）。确认视觉后再决定是否替换线上 demo。</p>
+
+<div class="callout amber">
+<b>边界：</b>
+<ul>
+<li>网页版计算链（逐层 2D FNO + Dijkstra + 阻尼 Newton）和论文的 Python 版（3D FNO + RRT + IPOPT）不同，本节数字不能和 §5 的矩阵混比。</li>
+<li>默认任务是上游挑选的演示任务，不代表随机任务的平均水平；只附带 4 m/s、0° 这一个 CFD 工况。</li>
+<li>净空检查是 0.25 m 采样下的下界，不是连续碰撞证明，也不是飞行安全认证。</li>
+<li>计时来自本机多次运行（Apple M4，headless Chrome），换设备会变化。</li>
+<li>代码、模型和数据沿用上游的 CC BY-NC 4.0，录屏只用于非商业展示。交互版依赖跨源隔离响应头，GitHub Pages 不支持，所以本页只放录屏；需要在线交互可以用作者的官方演示 <a href="https://geowind2plan.com/" target="_blank" rel="noopener">geowind2plan.com</a>。</li>
+</ul>
+</div>
 
 <!-- ================================================================ -->
 <h2 id="s7">7 · 数据集清单 <span class="en">datasets inventory</span></h2>
 <div class="tbl-scroll">
 <table>
   <tr><th>层</th><th>数据集</th><th>规模 / 内容</th><th>位置 / 获取</th><th>许可</th><th>校验</th><th>注意点</th></tr>
-  <tr><td rowspan="6"><b>已在手</b></td>
-      <td>GeoWind2Plan</td><td>5 个街区 3D3C 平均风 + 几何 + SDF；A 另有 2 / 8 m/s；23 个数组 1.64 GiB</td><td>服务器 <code>GeoWind2Plan/data/block_{A..E}</code></td><td>CC BY-NC 4.0</td><td class="ok">✅</td><td>独立工况太少，不能单独支撑泛化结论</td></tr>
-  <tr><td><b>WindSeer（ETH）</b></td><td>train 5,373 流场（96×91×91）、val 6,708 / test 4,764 个 64³ 样本（各 1,118 / 794 个流场 × 6 次重采样）；8 个场通道（terrain, ux, uy, uz, turb, p, epsilon, nut）+ 网格间距 ds；Askervein / Bolund / Perdigão 测风塔；UAV 飞行数据；论文补充视频</td><td>服务器 <code>datasets/windseer/</code>，235.5 GB；<a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">doi:10.3929/ethz-b-000658323</a></td><td>CC BY 4.0</td><td class="ok">✅ MD5 + SHA1 10/10，HDF5 6/6</td><td>自然地形，不是建筑城市；只能做跨域迁移和稀疏观测预训练</td></tr>
+  <tr><td rowspan="5"><b>已在手</b></td>
+      <td>GeoWind2Plan</td><td>5 个街区 3D3C 平均风 + 几何 + SDF；A 另有 2 / 8 m/s；23 个数组 1.64 GiB</td><td>实验服务器</td><td>CC BY-NC 4.0</td><td class="ok">✅</td><td>独立工况太少，不能单独支撑泛化结论</td></tr>
+  <tr><td><b>WindSeer（ETH）</b></td><td>train 5,373 流场（96×91×91）、val 6,708 / test 4,764 个 64³ 样本（各 1,118 / 794 个流场 × 6 次重采样）；8 个场通道（terrain, ux, uy, uz, turb, p, epsilon, nut）+ 网格间距 ds；Askervein / Bolund / Perdigão 测风塔；UAV 飞行数据；论文补充视频</td><td>实验服务器，235.5 GB；<a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">doi:10.3929/ethz-b-000658323</a></td><td>CC BY 4.0</td><td class="ok">✅ MD5 + SHA1 10/10，HDF5 6/6</td><td>自然地形，不是建筑城市；只能做跨域迁移和稀疏观测预训练</td></tr>
   <tr><td>AIJ Case D</td><td>风洞稀疏速度 / TKE，5 个文件</td><td>已下载（10-28 调研）</td><td>CC BY 4.0</td><td class="ok">✅ MD5</td><td>行人高度，小型物理观测验证</td></tr>
   <tr><td>urbanFlowGen 自生成</td><td>20 个场景 STL + 60 个 TOML 配置（4 族）</td><td>已生成（10-28）</td><td>MIT（工具）</td><td class="ok">✅ 重跑哈希一致</td><td>还没有 CFD 解；主线 ④ 的几何来源</td></tr>
   <tr><td>WinDiNet 作者样例</td><td>5 个 NPZ，每个 [112, 256, 256] 的 u、v + 建筑 mask</td><td>已下载（10-28）</td><td>Apache-2.0</td><td class="ok">✅</td><td>2D 时变，只作可视化对照</td></tr>
-  <tr><td>DAVIS（4D demo）</td><td>8 个序列（bear … rhino）</td><td>服务器 <code>/data/wyx/datasets/DAVIS</code></td><td>DAVIS 许可</td><td class="ok">✅</td><td>4D 部分使用</td></tr>
   <tr><td rowspan="4"><b>可申请 / 待下载</b></td>
       <td>U3DWind</td><td>5 座城市 720 个 GPU LBM-LES 算例，10 m 分辨率 3D3C + TKE</td><td>20 m 版承诺审稿后开放；10 m 版 &gt;50 TB 需申请</td><td>待定</td><td class="no">❌</td><td>最理想的第二套城市 3D 数据</td></tr>
   <tr><td>UrbanTALES</td><td>538 个布局 LES（224 理想 + 314 真实，62 座城市）</td><td>门户 metadata 已取，3D 速度数组未拿到</td><td>CC BY-NC 4.0</td><td class="doing">🔄</td><td>真实城市形态泛化</td></tr>
-  <tr><td>Rotterdam（4TU）</td><td>城市 CFD，results.zip 约 86 GB</td><td>直连超时</td><td>—</td><td class="no">❌</td><td>独立城市外部测试候选</td></tr>
+  <tr><td>Rotterdam（4TU）</td><td>城市 CFD 结果压缩包，约 86 GB</td><td>直连超时</td><td>—</td><td class="no">❌</td><td>独立城市外部测试候选</td></tr>
   <tr><td>PhySense / Senseiver 原基准</td><td>各论文自带数据</td><td>Senseiver 在 Zenodo；PhySense 见仓库说明</td><td>—</td><td class="muted">未下载</td><td>只在需要复现原文数字时下载</td></tr>
   <tr><td rowspan="2"><b>暂不可得</b></td>
       <td>Feilian-3D 数据</td><td>539 个 CFD 样本，约 40 GB（3D 标量风速）</td><td>Zenodo 归档未包含</td><td>—</td><td class="no">❌</td><td>缺三分量</td></tr>
@@ -1006,7 +964,7 @@
 <li>同一重建方法下，沿候选路线均匀放探针是唯一稳定有效的选点策略（A–E，K=32，regret −37%；A / 8 m/s −57%）；按最大误差选点有害（+44%）。</li>
 <li>街区 A、8 m/s 时，GeoWind2Plan 规划的 640 个候选修复后有 293 个（46%）在 CFD 风下超出空速或推力限制，CFD 规划为 0 个；通过严格检查的分别是 343 和 612 个。</li>
 <li>WindSeer 官方数据完整：10 / 10 个文件的 MD5 + SHA1 与 ETH 发布值一致，7,285 个流场与官方说明一致。</li>
-<li>TemDef4D 在 DAVIS 上 CLIP / CLIP-T 为 7 种方法第一（0.7585 / 0.3037）；相对 Lift4D 底座，前景 EPE −22.1%，8 / 8 个序列改善。</li>
+<li>4D 风场航线 demo 在浏览器里完成一次风场推理约 1.9 s（Apple M4）；默认任务四条航线都通过独立净空检查，预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%（网页版计算链）。</li>
 </ul>
 </div>
 <div class="callout red">
@@ -1021,7 +979,7 @@
 <li>每街区 64 个任务（官方 256 个）；E 的稀疏实验只有 16 个任务且结果不稳定；没有做显著性检验，结论是描述性的。</li>
 <li>GPU smoke 只验证安装和前向 / 反向，不代表任何精度。</li>
 <li>“作者声明”的会议（GeoWind2Plan NeurIPS 2026 Spotlight、WESPR IROS 2026）没有在出版方页面核实。</li>
-<li>4D：相对 Lift4D 底座外观指标基本持平（CLIP +0.07%），不能写“外观明显超过底座”；Consistent4D 子集上外观指标处于中游；V63 补腿还没替换线上 demo。</li>
+<li>4D demo 的数字来自网页版计算链（逐层 2D FNO + Dijkstra + 阻尼 Newton），不能和 §5 的 IPOPT 矩阵混比；默认任务是上游挑选的演示任务；自由风向下的能耗在预测风场中评估，不是独立评估。</li>
 </ul>
 </div>
 <div class="callout blue">
@@ -1083,14 +1041,13 @@
   <tr><th>#</th><th>行动</th><th>依赖</th><th>粗估</th><th>完成标准</th></tr>
   <tr><td>1</td><td><b>验证 IPOPT 不收敛的原因</b>：把风和 SDF 换成平滑插值，在 A / 4 m/s 的 64 个任务上重跑</td><td>无（CPU 即可）</td><td>1–2 天</td><td>预测风下收敛率明显上升，或排除这个原因</td></tr>
   <tr><td>2</td><td><b>GPU 批量规划器</b>：建 JAX + cuDSS 环境，接 jaxipm，与 CPU 版逐任务对齐</td><td>1</td><td>1–2 周</td><td>收敛 ≥ 80%，能耗 ≤ IPOPT + 修复，吞吐 ≥ 10×</td></tr>
-  <tr><td>3</td><td><b>WindSeer 官方完整训练</b> + ETH 测试集和三个测风塔复现</td><td>一张空闲 GPU（约 13 GB）</td><td>先用 <code>smoke_train.sh</code> 计时再定</td><td>CFD 测试误差接近论文（作者视频约 14.1–16.2%）</td></tr>
+  <tr><td>3</td><td><b>WindSeer 官方完整训练</b> + ETH 测试集和三个测风塔复现</td><td>一张空闲 GPU（约 13 GB）</td><td>先做一次计时测试再定</td><td>CFD 测试误差接近论文（作者视频约 14.1–16.2%）</td></tr>
   <tr><td>4</td><td>PhySense、Senseiver 按 §3.2 协议接入表 2</td><td>空闲 GPU；数据适配</td><td>各 2–3 天</td><td>进表，并与沿路线均匀比较</td></tr>
   <tr><td>5</td><td>Transolver、GINO 按留一街区接入表 1</td><td>空闲 GPU</td><td>各 1–2 天</td><td>进表（场 RMSE + 重规划回收率）</td></tr>
   <tr><td>6</td><td>第二套数据：GPU LBM 跑 urbanFlowGen 前 8 个工况；申请 U3DWind</td><td>求解器许可核对</td><td>1–2 周</td><td>质量守恒、统计收敛、与一个对照算例吻合</td></tr>
   <tr><td>7</td><td>主线 ①：决策损失训练</td><td>2、6</td><td>—</td><td>留出街区回收率 +3 个百分点</td></tr>
   <tr><td>8</td><td>主线 ② / LLM 方向 A：OpenEvolve + 本地 Qwen 进化选点程序</td><td>4</td><td>—</td><td>留出工况比沿路线均匀再降 ≥ 20%</td></tr>
   <tr><td>9</td><td>主线 ③：风险约束规划</td><td>6</td><td>—</td><td>违例率下降，能耗代价可控</td></tr>
-  <tr><td>10</td><td>4D：V63 三个场景的视觉确认，决定是否更新线上 demo</td><td>无</td><td>—</td><td>腿完整、不新增闪烁、纹理不劣化</td></tr>
 </table>
 </div>
 <p class="muted">“粗估”是计划用的人工估计，不是测量值；GPU 与他人共享，启动前需要确认空卡。</p>
@@ -1121,20 +1078,17 @@
 <div>
 <table>
   <tr><th colspan="2">代码 / 数据 / Demo</th></tr>
-  <tr><td>4D Demo（TemDef4D）</td><td><a href="https://yaoxingwang.github.io/demo/" target="_blank">yaoxingwang.github.io/demo</a>（参数 <code>?scene=&lt;名称&gt;&amp;mode=full_scene|foreground</code>）</td></tr>
+  <tr><td>4D 风场航线 demo</td><td>本页 §6 为录屏；在线交互可用作者的官方演示 <a href="https://geowind2plan.com/" target="_blank">geowind2plan.com</a>（CC BY-NC 4.0）</td></tr>
   <tr><td>风场与规划代码</td><td><a href="https://github.com/DUAL-Xiao/GeoWind2Plan" target="_blank">GeoWind2Plan</a> · <a href="https://github.com/ethz-asl/WindSeer" target="_blank">WindSeer</a> · <a href="https://github.com/thuml/PhySense" target="_blank">PhySense</a> · <a href="https://github.com/OrchardLANL/Senseiver" target="_blank">Senseiver</a> · <a href="https://github.com/thuml/Transolver" target="_blank">Transolver</a> · <a href="https://github.com/neuraloperator/neuraloperator" target="_blank">neuraloperator</a> · <a href="https://github.com/fgiral000/genda_urban_flows" target="_blank">GenDA</a> · <a href="https://github.com/martenlienen/generative-turbulence" target="_blank">TurbDiff</a> · <a href="https://github.com/vivekoommen/Gen4Turbulence" target="_blank">Gen4Turbulence</a> · <a href="https://github.com/VinuesaLAB-AI/Diff-SPORT" target="_blank">Diff-SPORT</a> · <a href="https://github.com/rbischof/windinet" target="_blank">WinDiNet</a> · <a href="https://github.com/spencerfolk/wind_aware_ros" target="_blank">wind_aware_ros</a> · <a href="https://github.com/johnviljoen/jaxipm" target="_blank">jaxipm</a> · <a href="https://github.com/johnviljoen/spineax" target="_blank">spineax</a> · <a href="https://github.com/MarioRuettgers/urbanFlowGen" target="_blank">urbanFlowGen</a></td></tr>
   <tr><td>LLM / 程序搜索代码</td><td><a href="https://github.com/google-deepmind/funsearch" target="_blank">FunSearch</a> · <a href="https://github.com/codelion/openevolve" target="_blank">OpenEvolve</a> · <a href="https://github.com/SakanaAI/ShinkaEvolve" target="_blank">ShinkaEvolve</a> · <a href="https://github.com/ai4co/reevo" target="_blank">ReEvo</a> · <a href="https://github.com/FeiLiu36/EoH" target="_blank">EoH</a> · <a href="https://github.com/eureka-research/Eureka" target="_blank">Eureka</a> · <a href="https://github.com/deep-symbolic-mathematics/LLM-SR" target="_blank">LLM-SR</a> · <a href="https://github.com/tennisonliu/LLAMBO" target="_blank">LLAMBO</a> · <a href="https://github.com/huangwl18/VoxPoser" target="_blank">VoxPoser</a> · <a href="https://github.com/Rose-STL-Lab/Zephyrus" target="_blank">Zephyrus</a></td></tr>
   <tr><td>数据</td><td><a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">WindSeer（ETH，CC BY 4.0）</a> · <a href="https://zenodo.org/records/18252581" target="_blank">Feilian-3D（Zenodo）</a> · <a href="https://arxiv.org/abs/2607.04495" target="_blank">U3DWind（论文）</a></td></tr>
-  <tr><td>本地报告（未公开）</td><td>论文与 demo 调研（10-28）· baseline 全量结果（10-28）· WindSeer 复现脚本说明（<code>windseer-repro-scripts-20261029/USAGE.md</code>）</td></tr>
-  <tr><td>4D 本地结果</td><td><code>~/workspace/results/temdef4d_vs_sharp4dlift_davis_20261003/</code>（<code>index.html</code>、<code>SUMMARY_REPORT.md</code>）· 补腿：<code>~/workspace/output/tmp/temdef4d_leg_preservation_20261025/review_v41/index.html</code></td></tr>
-  <tr><td>服务器（4090-server）</td><td><code>/data/wyx/26_code/ICCV/GeoWind2Plan/results/</code> · <code>/data/wyx/26_code/ICCV/wind_baselines/</code> · <code>/data/wyx/26_code/ICCV/datasets/windseer/</code> · 4D：<code>/data/wyx/26_code/CVPR/temdef4d/</code></td></tr>
 </table>
 </div>
 </div>
 
 <footer>
-生成于 2026-10-30。数字来自 4090-server 上的结果文件（索引见 §5 R8），本地副本为 baseline 全量报告的 <code>data/summary.json</code>（未公开）；论文结果都是作者报告，没有混进我们的表。制作本页时没有运行任何训练或规划。<br>
-图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet 论文为 CC BY 4.0，Caltech 论文为 CC BY-NC-ND 4.0；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可记录在 <code>assets/data/assets_manifest.json</code>。
+生成于 2026-10-30。数字来自我们的实验结果文件；论文结果都是作者报告，没有混进我们的表。制作本页时没有运行任何训练或规划。<br>
+图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet 论文为 CC BY 4.0，Caltech 论文为 CC BY-NC-ND 4.0；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；§6 的 demo 录屏来自 GeoWind2Plan 网页演示的非商业衍生版，沿用 CC BY-NC 4.0；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。
 </footer>
 </div>
 
@@ -1162,54 +1116,6 @@
     });
   }, { rootMargin: '200px 0px', threshold: 0.15 });
   vids.forEach(function (v) { io.observe(v); });
-})();
-
-(function () {
-  // Interactive 4D viewer: the iframe is created only on click, because each scene downloads 27-94 MB.
-  var INFO = {
-    'bear': [82, '73.8', '49.2'], 'camel': [90, '81.0', '54.0'], 'cows': [104, '93.6', '62.4'],
-    'dog': [60, '54.0', '36.0'], 'horsejump-high': [50, '45.0', '30.0'], 'horsejump-low': [60, '54.0', '36.0'],
-    'libby': [49, '44.1', '26.6'], 'rhino': [90, '81.0', '54.0']
-  };
-  var BASE = 'https://yaoxingwang.github.io/demo/';
-  var stage = document.getElementById('demo-stage');
-  var loadBtn = document.getElementById('demo-load');
-  var poster = document.getElementById('demo-poster');
-  var sizeEl = document.getElementById('demo-size');
-  var openEl = document.getElementById('demo-open');
-  var scene = 'horsejump-low', mode = 'full_scene', frame = null;
-
-  function url() { return BASE + '?scene=' + encodeURIComponent(scene) + '&mode=' + mode; }
-  function refresh() {
-    var i = INFO[scene];
-    openEl.href = url();
-    sizeEl.textContent = scene + ' · ' + (mode === 'full_scene' ? '完整场景' : '仅前景') + ' · ' + i[0] +
-      ' 帧 · ' + (mode === 'full_scene' ? i[1] : i[2]) + ' MB · 需联网';
-    document.querySelectorAll('#demo-bar [data-scene]').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.dataset.scene === scene));
-    });
-    document.querySelectorAll('#demo-bar [data-viewmode]').forEach(function (b) {
-      b.setAttribute('aria-pressed', String(b.dataset.viewmode === mode));
-    });
-    if (frame) { frame.src = url(); } else { poster.src = 'assets/demo4d/' + scene + '.jpg'; }
-  }
-  loadBtn.addEventListener('click', function () {
-    frame = document.createElement('iframe');
-    frame.title = 'TemDef4D interactive 4D viewer';
-    frame.setAttribute('allow', 'fullscreen');
-    frame.setAttribute('allowfullscreen', '');
-    frame.src = url();
-    stage.innerHTML = '';
-    stage.classList.add('live');
-    stage.appendChild(frame);
-  });
-  document.querySelectorAll('#demo-bar [data-scene]').forEach(function (b) {
-    b.addEventListener('click', function () { scene = b.dataset.scene; refresh(); });
-  });
-  document.querySelectorAll('#demo-bar [data-viewmode]').forEach(function (b) {
-    b.addEventListener('click', function () { mode = b.dataset.viewmode; refresh(); });
-  });
-  refresh();
 })();
 </script>
 </body>
