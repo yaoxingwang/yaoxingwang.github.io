@@ -918,7 +918,7 @@
 <h2 id="s6">6 · 我们的 4D Demo：城市风场 + 无人机航线 <span class="en">GeoWind Web Lab · in-browser wind prediction and route planning</span></h2>
 <div class="lab-open">
   <a class="lab-btn" href="lab/" target="_blank" rel="noopener">在新窗口打开交互版 ↗</a>
-  <div class="lab-note">用桌面版 Chrome / Edge 打开（需要 WebGPU，并开启硬件加速）。首次打开会自动刷新一次，然后下载约 12 MB 数据；风场预测和航线规划都在你自己的电脑上运行。可以拖动起终点、改风向和风速、切换风场粒子和切片、让无人机沿航线飞。只含街区 A，只有 4 m/s、0° 有 CFD 对照。</div>
+  <div class="lab-note">用桌面版 Chrome / Edge 打开（需要 WebGPU，并开启硬件加速）。首次打开会自动刷新一次，然后下载约 12 MB 数据（网络慢时可能要几分钟，页面会提示下载状态）；风场预测和航线规划都在你自己的电脑上运行。可以拖动起终点、改风向和风速、切换风场粒子和切片、让无人机沿航线飞。只含街区 A，只有 4 m/s、0° 有 CFD 对照。</div>
 </div>
 <div class="callout blue">
 <b>是什么：</b>GeoWind Web Lab 是我们在 GeoWind2Plan 官方网页演示基础上改的非商业衍生版。它在浏览器里用本机 GPU（WebGPU）实时预测城市三维风场，再用 CPU 后台线程同时规划四条节能航线，并在三维城市里显示风场粒子、风场切片和无人机飞行动画。场景是街区 A（香港，1.2 × 1.2 km）。
@@ -981,7 +981,7 @@
 <li>计时来自本机多次运行（Apple M4，headless Chrome），换设备会变化。</li>
 <li>代码、模型和数据沿用上游的 CC BY-NC 4.0，录屏和交互版只用于非商业展示。作者的官方演示在 <a href="https://geowind2plan.com/" target="_blank" rel="noopener">geowind2plan.com</a>，含 5 个街区。</li>
 <li>规划器的多线程需要跨源隔离（COOP / COEP 响应头），GitHub Pages 不能设置这些响应头。交互版先注册一个 service worker（coi-serviceworker，MIT）补上，所以首次打开会刷新一次；浏览器不允许 service worker 时也能运行，只是规划改为单线程。</li>
-<li>交互版在本机 Chrome 上按 GitHub Pages 的条件测过（静态服务器，不带这些响应头）：刷新一次后进入跨源隔离，默认任务四条航线都通过独立净空检查，能耗与录屏相同，预测加规划约 2.3 s。</li>
+<li>交互版在本机 Chrome 上测过两种条件：不带这些响应头的静态服务器（与 GitHub Pages 相同）和上线后的本站。两种条件下都在刷新一次后进入跨源隔离，默认任务四条航线都通过独立净空检查，能耗与录屏相同，预测加规划 2.2–2.6 s。网络慢或有文件没下载成功时，页面会提示刷新。</li>
 </ul>
 </div>
 
