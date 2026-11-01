@@ -12,6 +12,24 @@
     "license": "data: CC BY-NC 4.0 (GeoWind2Plan)"
   },
   {
+    "file": "assets/figures/fig_exceed_margin_8ms.png",
+    "bytes": 125841,
+    "origin": "our analysis of the repaired candidate pools (GeoWind2Plan data)",
+    "license": "data: CC BY-NC 4.0 (GeoWind2Plan)"
+  },
+  {
+    "file": "assets/figures/fig_mission_8ms.png",
+    "bytes": 712587,
+    "origin": "our render of candidate routes and CFD wind for block A, 8 m/s (GeoWind2Plan data)",
+    "license": "data: CC BY-NC 4.0 (GeoWind2Plan)"
+  },
+  {
+    "file": "assets/figures/fig_safety_vs_energy.png",
+    "bytes": 205304,
+    "origin": "our analysis of the repaired candidate pools and R6 results (GeoWind2Plan data)",
+    "license": "data: CC BY-NC 4.0 (GeoWind2Plan)"
+  },
+  {
     "file": "assets/figures/official_matrix_summary.png",
     "bytes": 64921,
     "origin": "our baseline-suite figures (GeoWind2Plan data)",
@@ -54,6 +72,12 @@
     "license": "CC BY-NC-ND 4.0 (unmodified, resized)"
   },
   {
+    "file": "assets/papers/crmi_iter_k15.jpg",
+    "bytes": 137676,
+    "origin": "arXiv:2502.00185 Fig. 3(d) (CRMI / CSCP)",
+    "license": "CC BY-NC-ND 4.0 (unmodified, resized)"
+  },
+  {
     "file": "assets/papers/diffsport_overview.jpg",
     "bytes": 319092,
     "origin": "Diff-SPORT repository figure (github.com/VinuesaLAB-AI/Diff-SPORT)",
@@ -75,6 +99,12 @@
     "file": "assets/papers/geowind2plan_overview.jpg",
     "bytes": 156883,
     "origin": "arXiv:2609.36056 Fig.1 (GeoWind2Plan)",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "assets/papers/ipp_rl_path.jpg",
+    "bytes": 92873,
+    "origin": "arXiv:2109.13570 Fig. 1, right (RL-based adaptive informative path planning)",
     "license": "CC BY 4.0"
   },
   {
@@ -102,9 +132,27 @@
     "license": "MIT"
   },
   {
+    "file": "assets/papers/raem_diag.jpg",
+    "bytes": 88547,
+    "origin": "arXiv:2403.11396 Fig. 1 (risk-aware active view acquisition with FisherRF)",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "assets/papers/rooftop_sensors.jpg",
+    "bytes": 236927,
+    "origin": "arXiv:2603.13077 Fig. 7 (rooftop wind reconstruction from sparse sensors)",
+    "license": "CC BY 4.0"
+  },
+  {
     "file": "assets/papers/sculpt_motivation.jpg",
     "bytes": 188843,
     "origin": "arXiv:2610.07033 Fig.1 (Sculpt)",
+    "license": "CC BY 4.0"
+  },
+  {
+    "file": "assets/papers/seeing_wind_teaser.jpg",
+    "bytes": 216487,
+    "origin": "arXiv:2512.00762 Fig. 1 (Seeing the Wind from a Falling Leaf, NeurIPS 2025)",
     "license": "CC BY 4.0"
   },
   {
@@ -120,6 +168,12 @@
     "license": "Apache-2.0"
   },
   {
+    "file": "assets/papers/tndp_workflow.jpg",
+    "bytes": 119968,
+    "origin": "arXiv:2411.02064 Fig. 1 (TNDP, NeurIPS 2024)",
+    "license": "CC BY 4.0"
+  },
+  {
     "file": "assets/papers/transolver_overview.jpg",
     "bytes": 91574,
     "origin": "Transolver repository figure (github.com/thuml/Transolver)",
@@ -130,6 +184,12 @@
     "bytes": 121042,
     "origin": "generative-turbulence repository figure (github.com/martenlienen/generative-turbulence)",
     "license": "MIT"
+  },
+  {
+    "file": "assets/papers/u3dwind_shanghai.jpg",
+    "bytes": 227260,
+    "origin": "arXiv:2607.04495 Fig. 1 (U3DWind)",
+    "license": "CC BY 4.0"
   },
   {
     "file": "assets/papers/windinet_pipeline.jpg",

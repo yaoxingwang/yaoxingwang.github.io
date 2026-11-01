@@ -182,8 +182,9 @@
   <a href="#s7">7 数据集清单</a>
   <a href="#s8">8 引用边界</a>
   <a href="#s9">9 创新点与行动清单</a>
-  <a href="#s10">10 东京与自由探索（调研）</a>
-  <a href="#s11">11 链接总表</a>
+  <a href="#s10">10 为决策而测风</a>
+  <a href="#s11">11 东京与自由探索（调研）</a>
+  <a href="#s12">12 链接总表</a>
 </nav>
 
 <!-- ================================================================ -->
@@ -258,7 +259,8 @@
   <tr><td>LLM / 程序搜索方向</td><td class="doing">🔄 调研完成，代码就位</td><td>FunSearch、OpenEvolve、ShinkaEvolve、ReEvo、EoH、Eureka、LLM-SR、LLAMBO、VoxPoser、Zephyrus 共 10 个框架。定位：Qwen 做决策层或进化程序，不直接出轨迹（§4 表 4、§9.2）</td></tr>
   <tr><td>4D 风场航线 demo（GeoWind Web Lab）</td><td class="ok">✅ 交互版已上线</td><td>浏览器内 WebGPU 风场推理约 1.9 s，四条航线全部通过独立净空检查；默认任务预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%。交互版放在本站，打开后在自己的电脑上运行（§6）</td></tr>
   <tr><td>下游任务与数据核实</td><td class="ok">✅ 完成（10-30）</td><td>下游任务是“已知起终点的单次节能航线规划”，能耗在 CFD 风里按 Wh/km 计算（两套代码核实，§3）。数据只有 7 个独立 CFD 工况、来流方向相同，5 个街区的任务方向也相同（§7.1）。按顺风 / 逆风 / 侧风分组时 GW2P 回收率 86.6 / 86.3 / 80.0%，论文 87.9 / 85.7 / 75.0%（§5 R4b）</td></tr>
-  <tr><td>真实城市（东京）+ 自由探索 agent</td><td class="doing">🔄 调研完成，待讨论</td><td>东京建筑模型（PLATEAU）免费可商用，但公开数据里没有东京飞行高度的风场真值，需要自己算；列了现有数据能做的 5 个下游任务和到东京的 4 步路线（§10）</td></tr>
+  <tr><td>真实城市（东京）+ 自由探索 agent</td><td class="doing">🔄 调研完成，待讨论</td><td>东京建筑模型（PLATEAU）免费可商用，但公开数据里没有东京飞行高度的风场真值，需要自己算；列了现有数据能做的 5 个下游任务和到东京的 4 步路线（§11）</td></tr>
+  <tr><td>为决策而测风（任务再思考）</td><td class="doing">🔄 调研和实验设计完成，判定实验待做</td><td>补查了选点、面向决策的学习与实验设计、风感知规划、城市具身 agent 等相关工作，最接近的是 CRMI。用已有候选池核对：街区 A 在 8 m/s 时 35% 的 GW2P 候选途中超出空速限制；2–4 m/s 的超限几乎都在起点（§10）</td></tr>
 </table>
 
 <div class="callout green">
@@ -473,7 +475,7 @@
   <tr><td>分组与指标</td><td>按任务方向与来流的夹角 ψ 分组：顺风 ψ ≤ 45° 或 ≥ 315°，逆风 135–225°，其余为侧风。节能率 = (A − O) / A，回收率 = (A − O) / (A − G)；A、O、G 分别是不用风、方法、CFD 规划航线的能耗</td><td>有效率、归一化执行代价</td></tr>
 </table>
 </div>
-<p class="muted">我们的可信评测（3.1）只在这个任务上加了 GPU 修复和严格检查，任务定义不变。WindSeer 的规划基准是地形上的时间最优问题，和节能任务不同，只作参考。闭环测风、可飞空域判定、多点巡检等任务目前都没有现成协议，候选见 §10.1。</p>
+<p class="muted">我们的可信评测（3.1）只在这个任务上加了 GPU 修复和严格检查，任务定义不变。WindSeer 的规划基准是地形上的时间最优问题，和节能任务不同，只作参考。闭环测风、可飞空域判定、多点巡检等任务目前都没有现成协议，候选见 §11.1。</p>
 
 
 <h3>3.1 协议 A：官方规划矩阵 + 我们加的可信评测（主协议）</h3>
@@ -500,7 +502,7 @@
   <text x="10" y="213" fill="#0e7a4a" font-size="12">每种规划风在 A–E 共 3,199 个候选。</text>
   <text x="10" y="241" font-size="11.5" fill="#0e7a4a" font-weight="bold">修复后严格通过（A–E 合计）：</text>
   <text x="10" y="258" font-size="11.5" fill="#1a2233">CFD 98.1% · GW2P 95.6% · UNet 92.7% · FNO 89.7%</text>
-  <text x="10" y="275" font-size="11.5" fill="#1a2233">剖面 61.5% · 不用风 53.2%（多数是 CFD 风下超限，真不可行）</text>
+  <text x="10" y="275" font-size="11.5" fill="#1a2233">剖面 61.5% · 不用风 53.2%（多数是起飞时在 CFD 风下空速超限，见 §10.1）</text>
   <text x="10" y="292" font-size="11.5" fill="#1a2233">规划能耗变化中位数 0.05–0.63%（4 m/s）</text>
   <text x="10" y="318" font-size="11" fill="#5a6478">之后所有方法间的比较都建立在修复后的候选上。</text>
   <path d="M665 110 C 665 152, 486 136, 486 172" fill="none" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a3)"/>
@@ -779,7 +781,7 @@
 <h3>R2 · 规划器可靠性（最先要解决的问题）</h3>
 <div class="grid">
   <figure><a class="imglink" href="assets/figures/planner_reliability.png" target="_blank"><img src="assets/figures/planner_reliability.png" alt="planner reliability" loading="lazy"></a>
-  <figcaption>A–E 合计。浅灰：IPOPT 报告收敛；深灰：IPOPT 原始输出通过严格检查；蓝：GPU 修复后通过严格检查。剖面和不用风修复后仍有 38–47% 不通过，主要原因是它们不知道真实风，在 CFD 风下超出空速或推力限制（街区 A 4 m/s：228 / 640 和 276 / 640 个候选），这是真实的不可行，不是修复失败。</figcaption></figure>
+  <figcaption>A–E 合计。浅灰：IPOPT 报告收敛；深灰：IPOPT 原始输出通过严格检查；蓝：GPU 修复后通过严格检查。剖面和不用风修复后仍有 38–47% 不通过，主要原因是它们不知道真实风，在 CFD 风下超出空速限制（街区 A 4 m/s：228 / 640 和 276 / 640 个候选，没有推力超限）。这些超限几乎都发生在起点：规划的轨迹以 17–19 m/s 起飞，遇到迎风或侧风时空速超过 20 m/s；途中超限只有 0–2 条（§10.1，在街区 A 上核对）。不是修复失败。</figcaption></figure>
   <div>
   <table>
     <tr><th>规划风</th><th>IPOPT 收敛</th><th>原始严格通过</th><th>修复后严格通过</th></tr>
@@ -849,7 +851,7 @@
 <b>读法：</b>
 <ul>
 <li>GW2P 回收率与论文的差：顺风 −1.3、逆风 +0.6、侧风 +5.0 个百分点。节能率三组都比论文高约 1 个百分点，可能来自 GPU 修复或任务子集（每街区 64 个，论文 256 个），没有单独验证。</li>
-<li>逆风组能省得最多（CFD 节能 16.0%），但只剩 31 / 85 个任务：不用风在另外 54 个逆风任务里没有一条航线通过严格检查，所以逆风组偏向较容易的任务（§7.1、§8）。</li>
+<li>逆风组能省得最多（CFD 节能 16.0%），但只剩 31 / 85 个任务：不用风在另外 54 个逆风任务里没有一条航线通过严格检查（街区 A 上核对过，这类不通过几乎都是起飞时的空速超限，§10.1），所以逆风组偏向较容易的任务（§7.1、§8）。</li>
 <li>口径与 R4 不同：R4 在每个街区内把共同任务的能耗（焦耳）直接相加，长任务权重大；本表按 Wh/km 在组内取平均，与论文表格一致。全页其余地方的回收率仍按 R4 的定义。</li>
 </ul>
 </div>
@@ -890,6 +892,7 @@
   <tr><td>GW2P 回收率</td><td class="num">90%</td><td class="num">84%</td><td class="num">84%</td></tr>
   <tr><td>修复后通过严格检查的候选：GW2P vs CFD 规划（/ 640）</td><td class="num">630 vs 631</td><td class="num">610 vs 616</td><td class="num no">343 vs 612</td></tr>
   <tr><td>其中在 CFD 风下超出空速或推力限制：GW2P vs CFD 规划</td><td class="num">2 vs 1</td><td class="num">21 vs 3</td><td class="num no">293 vs 0</td></tr>
+  <tr><td>其中途中超限（只看通过与风无关检查的候选，§10.1）：GW2P vs CFD 规划</td><td class="num">0 vs 0</td><td class="num">3 vs 0</td><td class="num no">223 vs 0</td></tr>
   <tr><td>有有效路线的任务（/ 64）：CFD · GW2P · 剖面 · 不用风</td><td class="num">64 · 64 · 64 · 63</td><td class="num">64 · 64 · 60 · 55</td><td class="num no">64 · 62 · 44 · 25</td></tr>
   <tr><td>稀疏观测 regret：IDW + 沿路线均匀，K = 32</td><td class="num">—</td><td class="num">A–E 汇总 0.477 → 0.299（−37%）</td><td class="num ok">0.438 → 0.187（−57%）</td></tr>
 </table>
@@ -999,7 +1002,7 @@
   <tr><td rowspan="5"><b>可申请 / 待下载</b></td>
       <td>U3DWind</td><td>5 座城市 720 个 GPU LBM-LES 算例，10 m 分辨率 3D3C + TKE</td><td>20 m 版承诺审稿后开放；10 m 版 &gt;50 TB 需申请</td><td>待定</td><td class="no">❌</td><td>最理想的第二套城市 3D 数据</td></tr>
   <tr><td>UrbanTALES</td><td>538 个布局 LES（224 理想 + 314 真实，62 座城市）</td><td>门户 metadata 已取；公开文件只有行人高度的 2D 场（东京 Kasumigaseki 样本已下载核实），3D 速度数组未拿到</td><td>CC BY-NC 4.0</td><td class="doing">🔄</td><td>真实城市形态泛化；含东京 5 个区域</td></tr>
-  <tr><td>PLATEAU 东京 23 区</td><td>国土交通省的城市建筑三维模型（CityGML v2，约 3.8 GB）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank" rel="noopener">G 空间信息中心</a>，可直接下载</td><td>免费，可商用</td><td class="muted">未下载</td><td>只有几何，没有风；到东京路线的第 1 步（§10.2）</td></tr>
+  <tr><td>PLATEAU 东京 23 区</td><td>国土交通省的城市建筑三维模型（CityGML v2，约 3.8 GB）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank" rel="noopener">G 空间信息中心</a>，可直接下载</td><td>免费，可商用</td><td class="muted">未下载</td><td>只有几何，没有风；到东京路线的第 1 步（§11.2）</td></tr>
   <tr><td>Rotterdam（4TU）</td><td>城市 CFD 结果压缩包，约 86 GB</td><td>直连超时</td><td>—</td><td class="no">❌</td><td>独立城市外部测试候选</td></tr>
   <tr><td>PhySense / Senseiver 原基准</td><td>各论文自带数据</td><td>Senseiver 在 Zenodo；PhySense 见仓库说明</td><td>—</td><td class="muted">未下载</td><td>只在需要复现原文数字时下载</td></tr>
   <tr><td rowspan="2"><b>暂不可得</b></td>
@@ -1024,7 +1027,7 @@
 <ul>
 <li><b>只有 7 个独立 CFD 工况，</b>来流方向全部沿 +axis2。任务与风的夹角只靠任务方向变化，这份数据检验不了对新来流方向的泛化。</li>
 <li><b>5 个街区的任务方向相同：</b>每个街区用同一个随机种子抽 64 个任务，B / C / D 与 A 的方向相差 0.00°，E 相差 0.11°。所以每个街区都是 12 个顺风、17 个逆风、35 个侧风（A–E 合计 60 / 85 / 175），320 个任务不是 320 个独立方向。</li>
-<li><b>逆风最容易丢样本：</b>严格检查后，85 个逆风任务里不用风只有 31 个有有效航线，剖面 62 个，CFD 和三个学习型风场都是 85 个。所有方法都有效的共同任务是顺风 60、逆风 31、侧风 140，合计 231，也就是 R4 的 A 55 + B 46 + C 41 + D 50 + E 39。</li>
+<li><b>逆风最容易丢样本：</b>严格检查后，85 个逆风任务里不用风只有 31 个有有效航线，剖面 62 个，CFD 和三个学习型风场都是 85 个。所有方法都有效的共同任务是顺风 60、逆风 31、侧风 140，合计 231，也就是 R4 的 A 55 + B 46 + C 41 + D 50 + E 39。在街区 A 上核对过：4 m/s 下不用风的超限几乎都发生在起点（§10.1），所以至少在 A 上，逆风组少掉的任务主要和规划的起飞速度有关。</li>
 <li><b>只有平均风：</b>没有湍动能和阵风，也没有时间变化。</li>
 </ul>
 </div>
@@ -1050,7 +1053,8 @@
 <li>在可信评测下，GeoWind2Plan 回收 CFD 规划节能的 76.8–86.0%（按街区，焦耳求和），与论文报告的范围 75.0–87.9% 相当；按论文的顺风 / 逆风 / 侧风分组、同口径计算是 86.6 / 86.3 / 80.0%，论文 87.9 / 85.7 / 75.0%（R4b）。</li>
 <li>只用 4 个街区训练（留一街区）的 UNet3D 场误差高 40–73%，完整重规划回收率 73.6–85.7%，与 GeoWind2Plan 大幅重叠：在这组数据上，场误差不足以预测决策质量。</li>
 <li>同一重建方法下，沿候选路线均匀放探针是唯一稳定有效的选点策略（A–E，K=32，regret −37%；A / 8 m/s −57%）；按最大误差选点有害（+44%）。</li>
-<li>街区 A、8 m/s 时，GeoWind2Plan 规划的 640 个候选修复后有 293 个（46%）在 CFD 风下超出空速或推力限制，CFD 规划为 0 个；通过严格检查的分别是 343 和 612 个。</li>
+<li>街区 A、8 m/s 时，GeoWind2Plan 规划的 640 个候选修复后有 293 个（46%）在 CFD 风下超出空速限制，CFD 规划为 0 个；通过严格检查的分别是 343 和 612 个。只看通过与风无关检查的 631 个候选，途中超限的是 223 个（35%），其余 65 个只在起终点超限（§10.1）。</li>
+<li>街区 A 的修复后候选里，2 和 4 m/s 时的空速超限几乎都发生在起终点（4 m/s 时途中超限 0–0.5%）；8 m/s 时途中超限的比例是不用风 57%、剖面 38%、GW2P 35%、CFD 规划 0%；所有超限都是空速超限，没有推力超限（§10.1）。</li>
 <li>WindSeer 官方数据完整：10 / 10 个文件的 MD5 + SHA1 与 ETH 发布值一致，7,285 个流场与官方说明一致。</li>
 <li>4D 风场航线 demo 在浏览器里完成一次风场推理约 1.9 s（Apple M4）；默认任务四条航线都通过独立净空检查，预测风航线比不用风省 6.3%，收回 CFD 节能的 77.9%（网页版计算链）。</li>
 </ul>
@@ -1071,7 +1075,9 @@
 <li>GeoWind2Plan 只有 7 个独立 CFD 工况、来流方向全部相同，5 个街区的 64 个任务方向也相同（§7.1）：不能写“对风向泛化”，统计时也不能按 320 个独立任务算。</li>
 <li>逆风组的共同任务只有 31 / 85 个（不用风在其余逆风任务里没有有效航线），逆风数字偏向较容易的任务。</li>
 <li>R4b 的分组数字（Wh/km 组内平均）和 R4 的 76.8–86.0%（焦耳求和）口径不同，不能放进同一列比较。</li>
-<li>§10 的东京部分只是调研，没有任何东京风场或航线的计算结果。</li>
+<li>不能把 2–4 m/s 下剖面和不用风的超限当成途中风险：在街区 A 上它们几乎都发生在起点，由规划的起飞速度造成（§10.1）。</li>
+<li>§10 的定位图是我们的判断；判定实验还没做，§10 的预测都是待验证的假设。</li>
+<li>§11 的东京部分只是调研，没有任何东京风场或航线的计算结果。</li>
 </ul>
 </div>
 <div class="callout blue">
@@ -1099,6 +1105,7 @@
     <p><b>对照：</b>沿路线均匀（当前最强）、PhySense（NeurIPS 2025 Oral 的选点方法）、Senseiver、决策 oracle。<b>主场景：</b>8 m/s、风向偏转、urbanFlowGen 新形态；4 m/s 只用来检验“先验好时不伤害”。</p>
     <p><b>停止条件：</b>同样 K 下不能比沿路线均匀再降 ≥ 20% 相对 regret，或者完整重规划下收益消失。</p>
     <p><span class="tag b">适合 CVPR / ICCV：主动感知 + 三维场重建</span></p>
+    <p class="muted">10-31 的深入分析把这条线列为主线候选：相关工作、任务定义和判定实验见 §10。</p>
   </div>
   <div class="card paper plan">
     <h4>主线 ③：高风速下的风险约束规划 <span class="tag a">P1</span></h4>
@@ -1145,13 +1152,324 @@
 <p class="muted">“粗估”是计划用的人工估计，不是测量值；GPU 与他人共享，启动前需要确认空卡。</p>
 
 <!-- ================================================================ -->
-<h2 id="s10">10 · 真实城市（东京）与自由探索 agent <span class="en">survey only · decisions pending</span></h2>
+<h2 id="s10">10 · 为决策而测风：相关工作与任务再思考 <span class="en">decision-aware wind sensing · related work · go/no-go experiment</span></h2>
+<div class="callout blue">
+<b>问题：</b>城市里的风看不见。无人机该去哪里测风、测多少，才能把“能不能飞、走哪条走廊、飞多高”做对？
+<ul>
+<li><b>风的信息主要关系到安全。</b>在街区 A 上，GW2P 和 CFD 规划的能耗只差 0.4–2.5%（2–8 m/s）；但 8 m/s 时，35% 的 GW2P 候选在途中超出空速限制（10.1）。</li>
+<li><b>该测的是候选之间的差异。</b>两条候选共享的航段，测了也不会改变谁更好；要测的是它们分开走的那几段，以及接近限值的那几段（10.2、10.3）。</li>
+<li><b>最接近的已有工作是 CRMI。</b>它按路径代价的不确定度放传感器。和它的对比，决定这条线能不能成立（10.4）。</li>
+</ul>
+<b>状态：</b>调研和实验设计已完成，判定实验还没做（10.6）。本节的预测都是待验证的假设；图中的统计来自已有的候选池，没有新跑规划或 CFD。
+</div>
+
+<h3>10.1 风越大，错在安全，而不在能耗</h3>
+<figure><a class="imglink" href="assets/figures/fig_safety_vs_energy.png" target="_blank"><img src="assets/figures/fig_safety_vs_energy.png" alt="energy gap and airspeed exceedance by wind speed" loading="lazy"></a>
+<figcaption>街区 A。(a) 完整重规划下，GW2P 比 CFD 规划多耗的能量（R6）。(b) 修复后的候选在 CFD 风下超出 20 m/s 空速限制的比例：实心是途中超限，斜线是只在起点或终点超限。没有一条候选超出推力限制。</figcaption></figure>
+<div class="grid">
+  <figure><a class="imglink" href="assets/figures/fig_exceed_margin_8ms.png" target="_blank"><img src="assets/figures/fig_exceed_margin_8ms.png" alt="how far en-route exceedances go past the limit" loading="lazy"></a>
+  <figcaption>8 m/s 时途中超限的程度。GW2P 的 223 条途中超限里，43% 超出不到 1 m/s，中位数 1.14 m/s，P90 3.6 m/s。</figcaption></figure>
+  <div class="callout amber" style="margin:12px 0">
+  <b>读法（含一处更正）：</b>
+  <ul>
+  <li><b>2 和 4 m/s 的超限几乎都在起点。</b>规划的轨迹以 17–19 m/s 的速度经过起终点，起飞时遇到迎风或侧风，空速就会超过 20 m/s。4 m/s 时途中超限只有 0–0.5%（不用风 2 条、剖面 0 条、GW2P 3 条）。R2 和 §3.1 原来把剖面和不用风的不通过写成“真实的不可行”，已按这里的结果改正：超限确实存在，但主要来自起终点的速度设定，不是航线本身的问题（目前只在街区 A 上核对过）。</li>
+  <li><b>8 m/s 才有真正的途中风险。</b>途中超限的比例：不用风 57%，剖面 38%，GW2P 35%，CFD 规划 0%。</li>
+  <li><b>不少超限只差一点。</b>GW2P 有 43% 的途中超限不到 1 m/s，加一点安全余量就能挡住；超出几 m/s 的那部分才需要测风来避开。所以判定实验必须带上“只用先验 + 安全余量”这一组对照。</li>
+  <li><b>原来的测风实验看不到这个问题。</b>那组实验的候选池只放通过严格检查的候选，而严格检查用的是 CFD 风，等于用真值提前剔掉了这些超限航线，所以只看到了能耗。</li>
+  </ul>
+  </div>
+</div>
+
+<h3>10.2 一个真实例子：决定可不可行的，是起飞后一小段的风</h3>
+<figure><a class="imglink" href="assets/figures/fig_mission_8ms.png" target="_blank"><img src="assets/figures/fig_mission_8ms.png" alt="candidate routes of mission 50 at 8 m/s" loading="lazy"></a>
+<figcaption>街区 A、8 m/s、任务 50（侧风）。30 条候选都由部署时能拿到的风（GW2P、剖面、不用风）规划，其中 15 条途中超限、2 条只在起终点超限。15 条途中超限里，13 条的最大空速点（×）都在起飞后 35–120 m 以内，那里还没进入楼群的尾流，75 m 高度的风速约 11 m/s。对这个任务来说，选对航线需要的是起点附近那一小片区域的风和起飞方向，而不是整张风场。</figcaption></figure>
+
+<h3>10.3 为什么要测候选之间的差</h3>
+<div class="svgbox">
+<svg viewBox="0 0 960 330" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="12">
+  <defs><marker id="a10" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#4a5672"/></marker></defs>
+  <text x="10" y="20" font-weight="bold" font-size="13.5">示意图（俯视）：两条候选共享首尾，中间绕楼两侧</text>
+  <rect x="10" y="32" width="560" height="288" rx="10" fill="#f7f9fc" stroke="#dde3ee"/>
+  <path d="M30 60 L100 60" stroke="#4a5672" stroke-width="1.6" marker-end="url(#a10)"/>
+  <text x="30" y="52" font-size="11" fill="#4a5672">来流</text>
+  <rect x="250" y="135" width="90" height="70" rx="4" fill="#c4cad6" stroke="#9aa3b5"/>
+  <text x="268" y="175" font-size="11" fill="#1a2233">高层建筑</text>
+  <path d="M345 148 C 368 150, 386 160, 404 166 L 404 176 C 386 182, 368 190, 345 194 Z" fill="#dfe6f5" opacity=".95"/>
+  <text x="352" y="210" font-size="10.5" fill="#5a6478">尾流</text>
+  <path d="M60 170 L180 170 C 215 170, 220 95, 260 95 L 330 95 C 380 95, 420 170, 470 170 L 520 170" fill="none" stroke="#2456d6" stroke-width="2.6"/>
+  <path d="M180 170 C 215 170, 220 250, 260 250 L 330 250 C 380 250, 420 170, 470 170" fill="none" stroke="#6d3fc0" stroke-width="2.6" stroke-dasharray="7 4"/>
+  <circle cx="60" cy="170" r="7" fill="#0e7a4a"/><text x="44" y="196" font-weight="bold" fill="#0e7a4a">S</text>
+  <circle cx="520" cy="170" r="7" fill="#b3261e"/><text x="530" y="166" font-weight="bold" fill="#b3261e">G</text>
+  <text x="270" y="86" font-size="11" fill="#2456d6">候选 1（北侧，开阔，风大）</text>
+  <text x="270" y="270" font-size="11" fill="#6d3fc0">候选 2（南侧，楼后风小）</text>
+  <circle cx="120" cy="170" r="7" fill="#9aa3b5" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="496" cy="170" r="7" fill="#9aa3b5" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="300" cy="250" r="7" fill="#e07b00" stroke="#fff" stroke-width="1.5"/>
+  <circle cx="300" cy="95" r="8" fill="#d62d20" stroke="#fff" stroke-width="1.5"/>
+  <g stroke="#7a0b05" stroke-width="2.4"><path d="M366 166 l10 10 M376 166 l-10 10"/></g>
+  <g font-size="11">
+    <circle cx="30" cy="292" r="6" fill="#9aa3b5"/><text x="42" y="296">共享航段：两条都受影响，谁更好不变</text>
+    <circle cx="300" cy="292" r="6" fill="#e07b00"/><text x="312" y="296">分开的航段：只影响一条，可能改变选择</text>
+    <circle cx="30" cy="312" r="6" fill="#d62d20"/><text x="42" y="316">接近空速限值：决定能不能飞</text>
+    <g stroke="#7a0b05" stroke-width="2"><path d="M295 306 l9 9 M304 306 l-9 9"/></g><text x="312" y="316">尾流里误差最大，但不在任何候选上</text>
+  </g>
+  <rect x="590" y="32" width="360" height="288" rx="10" fill="#fff" stroke="#dde3ee"/>
+  <text x="606" y="58" font-weight="bold" font-size="13">选哪条，看的是能耗差的不确定度</text>
+  <text x="606" y="90" font-size="14" fill="#1a2233">Var(E₁ − E₂) = Var(E₁) + Var(E₂) − 2 Cov(E₁, E₂)</text>
+  <text x="606" y="120" font-size="11.5" fill="#4a5672">共享航段越多，Cov 越大：各自的方差可以很大，</text>
+  <text x="606" y="138" font-size="11.5" fill="#4a5672">差值却几乎确定，这时测共享航段没有用。</text>
+  <text x="606" y="170" font-size="11.5" fill="#4a5672">能不能飞看的是最大空速离 20 m/s 有多近，</text>
+  <text x="606" y="188" font-size="11.5" fill="#4a5672">所以接近限值的航段也值得测。</text>
+  <text x="606" y="222" font-size="11.5" fill="#1a2233" font-weight="bold">和已有结果一致（§4 表 2，K = 32）：</text>
+  <text x="606" y="242" font-size="11.5" fill="#4a5672">沿路线均匀测：regret −37%</text>
+  <text x="606" y="260" font-size="11.5" fill="#4a5672">按不确定度测：−3%</text>
+  <text x="606" y="278" font-size="11.5" fill="#4a5672">按最大误差测：+44%（尾流残差被外推到航线上）</text>
+  <text x="606" y="306" font-size="11" fill="#5a6478">CRMI 降低的是 Var(E)；我们要降低的是选错的期望损失。</text>
+</svg>
+</div>
+
+<h3>10.4 相关工作：谁在测什么</h3>
+<div class="svgbox">
+<svg viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="11.5">
+  <defs><marker id="a11" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#4a5672"/></marker></defs>
+  <text x="10" y="20" font-weight="bold" font-size="13.5">定位图（示意，位置是我们的判断）：横轴是测量服务的目标，纵轴是场景有多接近真实城市的三维风</text>
+  <rect x="120" y="36" width="820" height="300" fill="#f7f9fc" stroke="#dde3ee"/>
+  <rect x="700" y="36" width="240" height="120" fill="#e2f4ea" opacity=".7"/>
+  <line x1="393" y1="36" x2="393" y2="336" stroke="#dde3ee" stroke-dasharray="4 4"/>
+  <line x1="666" y1="36" x2="666" y2="336" stroke="#dde3ee" stroke-dasharray="4 4"/>
+  <line x1="120" y1="186" x2="940" y2="186" stroke="#dde3ee" stroke-dasharray="4 4"/>
+  <path d="M120 350 L935 350" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a11)"/>
+  <text x="170" y="370" fill="#4a5672">把场测准（信息量、重建误差）</text>
+  <text x="440" y="370" fill="#4a5672">路径代价的不确定度</text>
+  <text x="712" y="370" fill="#4a5672">决策损失与可行性</text>
+  <path d="M100 336 L100 42" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a11)"/>
+  <text x="18" y="72" fill="#4a5672">真实城市</text><text x="18" y="88" fill="#4a5672">三维风</text>
+  <text x="18" y="196" fill="#4a5672">简化三维</text><text x="18" y="212" fill="#4a5672">或地形</text>
+  <text x="18" y="312" fill="#4a5672">二维 / 无场</text>
+  <g font-size="11">
+    <circle cx="200" cy="80" r="6" fill="#2456d6"/><text x="210" y="84">U3DWind 稀疏重建任务</text>
+    <circle cx="245" cy="122" r="6" fill="#2456d6"/><text x="255" y="126">屋顶风场稀疏重建（风洞城市模型）</text>
+    <circle cx="190" cy="160" r="6" fill="#2456d6"/><text x="200" y="164">WindSeer（山地）</text>
+    <circle cx="300" cy="206" r="6" fill="#2456d6"/><text x="310" y="210">聚类框架（三栋楼）</text>
+    <circle cx="180" cy="236" r="6" fill="#2456d6"/><text x="190" y="240">PhySense、Senseiver</text>
+    <circle cx="220" cy="272" r="6" fill="#2456d6"/><text x="230" y="276">多无人机风场 IPP</text>
+    <circle cx="160" cy="310" r="6" fill="#2456d6"/><text x="170" y="314">自适应 IPP（ICRA 2022）</text>
+    <circle cx="420" cy="296" r="6" fill="#6d3fc0"/><text x="430" y="300">面向目标的传感器布置</text>
+    <circle cx="560" cy="250" r="7" fill="#b3261e"/><text x="572" y="254" font-weight="bold">CRMI（二维标量场）</text>
+    <circle cx="540" cy="196" r="6" fill="#6d3fc0"/><text x="552" y="200">RaEM：围绕路径选视角（室内）</text>
+    <circle cx="790" cy="312" r="6" fill="#0e7a4a"/><text x="802" y="316">TNDP（非空间）</text>
+    <path d="M800 70 l6 14 l15 1 l-12 9 l4 15 l-13 -8 l-13 8 l4 -15 l-12 -9 l15 -1 z" fill="#e07b00" stroke="#9a4a00"/>
+    <text x="728" y="128" font-weight="bold" fill="#0e5e37">我们（计划）：真实城市三维风 +</text>
+    <text x="728" y="144" font-weight="bold" fill="#0e5e37">决策损失与可行性</text>
+  </g>
+</svg>
+</div>
+
+<div class="grid3">
+  <div class="card paper sense">
+    <h4>CRMI：耦合的传感器布置与路径规划 <span class="tag r">最接近</span></h4>
+    <a class="imglink" href="assets/papers/crmi_iter_k15.jpg" target="_blank"><img src="assets/papers/crmi_iter_k15.jpg" alt="CRMI iteration" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 3(d)：CSCP-CRMI 迭代到第 15 步，背景是估计的威胁场（CC BY-NC-ND 4.0，原图未改动，只缩放）</div>
+    <p><b>做了什么：</b>按路径代价的不确定度（而不是场的不确定度）选传感器位置，循环做“测量、更新、重规划”；证明了目标是次模函数，贪心选点近似最优。</p>
+    <p><b>差别：</b>它降低的是当前路径代价的方差；场是标量威胁场，代价对场线性。我们要降低选错的期望损失，场是三维风，能耗非线性，还有空速限值。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2502.00185" target="_blank">arXiv 2502.00185</a><a href="https://arxiv.org/abs/2501.10236" target="_blank">ACC 2025 版</a></div>
+  </div>
+  <div class="card paper core">
+    <h4>U3DWind：城市低空风场数据集与基准 <span class="tag a">数据未发布</span></h4>
+    <a class="imglink" href="assets/papers/u3dwind_shanghai.jpg" target="_blank"><img src="assets/papers/u3dwind_shanghai.jpg" alt="U3DWind Shanghai" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 1：上海参考区域的瞬时风速剖面（LBM-LES，CC BY 4.0）</div>
+    <p><b>做了什么：</b>中国 5 座城市，720 个工况（16 个来流方向 × 3 个风速 × 3 个季节），10 m 网格，带 TKE；定义了 5 个基准任务，其中有稀疏传感器重建和适航风合规评分。</p>
+    <p><b>差别：</b>任务按场或分数的精度打分，没有“测量 → 决策”的闭环。数据发布后，多来流方向正好能补我们最缺的部分。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2607.04495" target="_blank">arXiv 2607.04495</a></div>
+  </div>
+  <div class="card paper llm">
+    <h4>TNDP：面向决策的摊销实验设计 <span class="tag b">NeurIPS 2024</span></h4>
+    <a class="imglink" href="assets/papers/tndp_workflow.jpg" target="_blank"><img src="assets/papers/tndp_workflow.jpg" alt="TNDP workflow" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 1：(a) 传统实验设计，(b) 摊销实验设计，(c) 面向决策的摊销实验设计（CC BY 4.0）</div>
+    <p><b>做了什么：</b>用一个网络同时给出下一个实验和最终决策，训练目标是下游决策的效用，而不是参数的信息量。</p>
+    <p><b>用处：</b>摊销选点的模板，适合给 agent 用。它没有空间场，也没有规划约束。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2411.02064" target="_blank">arXiv 2411.02064</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>RaEM：为另一台机器人的路径选视角</h4>
+    <a class="imglink" href="assets/papers/raem_diag.jpg" target="_blank"><img src="assets/papers/raem_diag.jpg" alt="risk-aware view acquisition" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 1：相机机器人选下一个视角，目的是改进载货机器人路径上的风险评估（CC BY 4.0）</div>
+    <p><b>做了什么：</b>在 FisherRF 的信息增益上加一个路径附近的掩码，优先降低机器人路径周围的不确定度。</p>
+    <p><b>差别：</b>CV 里最接近“侦察机为任务机测风”的设定，但目标仍是路径附近的信息量，场景是室内几何，不是风。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2403.11396" target="_blank">arXiv 2403.11396</a><a href="https://arxiv.org/abs/2311.17874" target="_blank">FisherRF（ECCV 2024）</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>屋顶风场的稀疏重建 <span class="tag t">东京大学参与</span></h4>
+    <a class="imglink" href="assets/papers/rooftop_sensors.jpg" target="_blank"><img src="assets/papers/rooftop_sensors.jpg" alt="rooftop sensors" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 7：真值、均匀布点和扰动布点，白点是传感器（CC BY 4.0）</div>
+    <p><b>做了什么：</b>风洞城市模型上，从稀疏传感器重建屋顶高度的风速，比较确定性和生成式方法，也研究了传感器位置。</p>
+    <p><b>差别：</b>目标是重建精度。东京大学生产技术研究所参与，可能是东京数据的合作方。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2603.13077" target="_blank">arXiv 2603.13077</a></div>
+  </div>
+  <div class="card paper plan">
+    <h4>自适应信息路径规划（RL） <span class="tag b">ICRA 2022</span></h4>
+    <a class="imglink" href="assets/papers/ipp_rl_path.jpg" target="_blank"><img src="assets/papers/ipp_rl_path.jpg" alt="RL-based adaptive IPP" loading="lazy"></a>
+    <div class="figcap">论文 Fig. 1 右：RL 规划的无人机测量路径，地面是温度场（CC BY 4.0）</div>
+    <p><b>做了什么：</b>树搜索加离线学到的策略网络，实时决定无人机下一步去哪测。</p>
+    <p><b>用处：</b>目标是地图的信息量，但“树搜索 + 学到的策略”这套机制可以借来做非短视的选点。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2109.13570" target="_blank">arXiv 2109.13570</a></div>
+  </div>
+</div>
+<div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,2fr)">
+  <div class="card paper sense">
+    <h4>视觉测风（可选的第二种测量方式）</h4>
+    <a class="imglink" href="assets/papers/seeing_wind_teaser.jpg" target="_blank"><img src="assets/papers/seeing_wind_teaser.jpg" alt="Seeing the wind from a falling leaf" loading="lazy"></a>
+    <div class="figcap">Seeing the Wind from a Falling Leaf（NeurIPS 2025）Fig. 1：从视频里物体的运动反推看不见的力场（CC BY 4.0）</div>
+    <p>无人机的相机也许能从树、旗子的运动估计局部风，适合投 CV 会议时作为附加的测量方式，不是主线。<a href="https://arxiv.org/abs/2512.00762" target="_blank">arXiv 2512.00762</a></p>
+  </div>
+  <div class="tbl-scroll">
+  <table>
+    <tr><th colspan="3">其他相关工作（没有可公开转载的配图，只列要点）</th></tr>
+    <tr><th>工作</th><th>内容</th><th>和我们的关系</th></tr>
+    <tr><td><a href="https://openreview.net/forum?id=wfYXDYtoYV" target="_blank">机载风估计</a>（NeurIPS 2025）</td><td>只用 IMU 近实时估计局部三维风及其不确定度</td><td>测量噪声模型的来源</td></tr>
+    <tr><td><a href="https://groups.csail.mit.edu/rrg/papers/ware_icra16.pdf" target="_blank">Ware &amp; Roy</a>（ICRA 2016）</td><td>城市 CFD 风 + 功耗模型，风感知轨迹减少空速超限导致的失败</td><td>早期证据；没有主动测量</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2509.25222" target="_blank">聚类概率框架</a></td><td>多工况仿真 → 带不确定度的风估计，按最小不确定度选传感器位置</td><td>目标是不确定度；算例只有三栋楼</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2507.02500" target="_blank">面向目标的传感器布置</a></td><td>按一个连续目标量的预测不确定度布点（C-optimal）</td><td>连续目标，没有离散选择和约束</td></tr>
+    <tr><td>Knowledge gradient（<a href="https://epubs.siam.org/doi/10.1137/070693424" target="_blank">2008</a>、<a href="https://doi.org/10.1287/ijoc.1080.0314" target="_blank">相关信念版 2009</a>）</td><td>在若干备选中选最优时，单次测量带来的决策价值</td><td>选点公式的来源</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2307.13565" target="_blank">Decision-focused learning 综述</a>（JAIR 2024）、<a href="https://arxiv.org/abs/2309.00803" target="_blank">面向价值的功率预测</a></td><td>预测模型按下游决策的结果训练</td><td>主线 ① 的背景</td></tr>
+    <tr><td><a href="https://www.ijcai.org/Proceedings/09/Papers/080.pdf" target="_blank">带远程感知的 Canadian Traveler Problem</a>（IJCAI 2009）</td><td>边是否通行未知，可以花代价远程查看</td><td>边飞边测的经典离散版本</td></tr>
+    <tr><td>风不确定下的配送路由（<a href="https://arxiv.org/abs/2604.13441" target="_blank">2604.13441</a>、<a href="https://arxiv.org/abs/2608.11641" target="_blank">2608.11641</a>）</td><td>在线更新风的估计，按能量可行性和任务成功率路由</td><td>风是图上的边权；可借任务成功率指标</td></tr>
+    <tr><td>conformal（<a href="https://arxiv.org/abs/2607.22409" target="_blank">约束收紧</a>、<a href="https://arxiv.org/abs/2402.01960" target="_blank">算子学习</a>）</td><td>有覆盖率保证的不确定度带</td><td>安全余量和后验的工具</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2410.09604" target="_blank">EmbodiedCity</a>、<a href="https://arxiv.org/abs/2502.12532" target="_blank">CityEQA</a>、UAV-ON、TRAVEL、UAVBench</td><td>真实城市三维仿真里的具身导航和问答</td><td>没有建筑尺度的风场</td></tr>
+    <tr><td><a href="https://arxiv.org/abs/2506.08532" target="_blank">合规的 DRL + LLM 规划</a>、<a href="https://arxiv.org/abs/2606.00104" target="_blank">带约束执行层的 LLM 飞行</a></td><td>LLM 理解规则和任务，数值约束交给规划器</td><td>支持 Qwen 只做编排的定位</td></tr>
+    <tr><td><a href="https://doi.org/10.1038/s41586-018-0533-0" target="_blank">RL 滑翔机找上升气流</a>（Nature 2018）</td><td>agent 在看不见的气流里探索并利用它</td><td>“在看不见的风里探索”的先例</td></tr>
+    <tr><td>NASA <a href="https://ntrs.nasa.gov/citations/20260000139" target="_blank">AERoCAST</a>、<a href="https://techport.nasa.gov/view/113572" target="_blank">WHILS</a></td><td>先进空中交通的风和湍流感知；回答什么时候、在哪里飞是安全的</td><td>工业界关心安全和可飞性</td></tr>
+  </table>
+  </div>
+</div>
+<p class="muted">相关工作的描述是转述。论文配图只选了允许转载的：CRMI 为 CC BY-NC-ND 4.0（原图未改动，只缩放），其余为 CC BY 4.0。</p>
+
+<h3>10.5 任务的新定义</h3>
+<div class="svgbox">
+<svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="12">
+  <defs><marker id="a12" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#4a5672"/></marker>
+        <marker id="a13" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#e07b00"/></marker></defs>
+  <text x="10" y="20" font-weight="bold" font-size="13.5">一次任务的流程：先验 → 测风 → 更新 → 决策 → 在真实风里打分</text>
+  <g>
+    <rect x="10" y="36" width="140" height="78" rx="9" fill="#e0f2f4" stroke="#0f7c8c"/>
+    <text x="22" y="60" font-weight="bold">城市与背景风</text><text x="22" y="80" font-size="11" fill="#4a5672">建筑几何</text><text x="22" y="96" font-size="11" fill="#4a5672">来流方向、风速</text>
+    <rect x="172" y="36" width="140" height="78" rx="9" fill="#e5edff" stroke="#2456d6"/>
+    <text x="184" y="60" font-weight="bold">风场先验</text><text x="184" y="80" font-size="11" fill="#4a5672">GW2P 等预测</text><text x="184" y="96" font-size="11" fill="#4a5672">加上不确定度</text>
+    <rect x="334" y="36" width="160" height="78" rx="9" fill="#fdf2e3" stroke="#e07b00"/>
+    <text x="346" y="60" font-weight="bold">测风</text><text x="346" y="80" font-size="11" fill="#4a5672">去哪测、测几次</text><text x="346" y="96" font-size="11" fill="#4a5672">机载估计噪声；绕路代价</text>
+    <rect x="516" y="36" width="120" height="78" rx="9" fill="#efe7fb" stroke="#6d3fc0"/>
+    <text x="528" y="60" font-weight="bold">更新信念</text><text x="528" y="80" font-size="11" fill="#4a5672">IDW / GP</text><text x="528" y="96" font-size="11" fill="#4a5672">或学到的同化</text>
+    <rect x="658" y="36" width="140" height="78" rx="9" fill="#fbf1dc" stroke="#9a6b00"/>
+    <text x="670" y="60" font-weight="bold">决策</text><text x="670" y="80" font-size="11" fill="#4a5672">能不能飞、走哪条</text><text x="670" y="96" font-size="11" fill="#4a5672">飞多高、多点顺序</text>
+    <rect x="820" y="36" width="130" height="78" rx="9" fill="#e2f4ea" stroke="#0e7a4a"/>
+    <text x="832" y="60" font-weight="bold">真实风里打分</text><text x="832" y="80" font-size="11" fill="#4a5672">失败率、不飞率</text><text x="832" y="96" font-size="11" fill="#4a5672">regret、测风成本</text>
+  </g>
+  <path d="M152 75 L168 75" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a12)"/>
+  <path d="M314 75 L330 75" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a12)"/>
+  <path d="M496 75 L512 75" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a12)"/>
+  <path d="M638 75 L654 75" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a12)"/>
+  <path d="M800 75 L816 75" stroke="#4a5672" stroke-width="1.5" marker-end="url(#a12)"/>
+  <path d="M728 116 C 728 150, 414 150, 414 120" fill="none" stroke="#e07b00" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#a13)"/>
+  <text x="476" y="170" font-size="11" fill="#e07b00">第 ② 档：飞行中继续测、继续重规划</text>
+  <text x="10" y="186" font-weight="bold" font-size="13">三档难度</text>
+  <rect x="10" y="198" width="300" height="88" rx="9" fill="#fff" stroke="#dde3ee"/>
+  <text x="22" y="220" font-weight="bold">① 单个任务，起飞前测</text>
+  <text x="22" y="240" font-size="11" fill="#4a5672">预算 K 个测点；现有协议的扩展</text>
+  <text x="22" y="258" font-size="11" fill="#4a5672">用现有候选池就能做（10.6）</text>
+  <rect x="330" y="198" width="300" height="88" rx="9" fill="#fff" stroke="#dde3ee"/>
+  <text x="342" y="220" font-weight="bold">② 单个任务，边飞边测</text>
+  <text x="342" y="240" font-size="11" fill="#4a5672">已飞航段的测量免费，偏离航线去测有代价</text>
+  <text x="342" y="258" font-size="11" fill="#4a5672">需要快速、可靠的规划器（§9.3 第 1–2 项）</text>
+  <rect x="650" y="198" width="300" height="88" rx="9" fill="#e2f4ea" stroke="#0e7a4a"/>
+  <text x="662" y="220" font-weight="bold">③ 先探索，再服务一批任务</text>
+  <text x="662" y="240" font-size="11" fill="#4a5672">探索的目标是让以后的任务少出事、少耗电</text>
+  <text x="662" y="258" font-size="11" fill="#4a5672">“自由探索 agent”的建议定义（待确认）</text>
+</svg>
+</div>
+<div class="grid">
+<table>
+  <tr><th colspan="2">决策空间要扩大：现在只在约 10 条相似的候选里选</th></tr>
+  <tr><td>能不能飞、要不要等</td><td>5 m/s 规则、空速限值；选错就是事故或违规</td></tr>
+  <tr><td>走哪条走廊</td><td>开阔区风大，楼后风小（10.2 的例子）</td></tr>
+  <tr><td>飞多高</td><td>来流剖面里 30 m 和 120 m 的平均风速差 3 倍以上</td></tr>
+  <tr><td>多点任务和电量</td><td>估错风，电量可能不够返航</td></tr>
+</table>
+<table>
+  <tr><th colspan="2">指标（安全优先）</th></tr>
+  <tr><td>失败率</td><td>选中的航线在 CFD 风下途中超限的比例（主指标）</td></tr>
+  <tr><td>不飞率</td><td>判断为不可行、选择不飞的比例；和失败率一起画权衡曲线</td></tr>
+  <tr><td>regret</td><td>都可行时，比“知道真实风”的最优航线多耗的能量</td></tr>
+  <tr><td>测风成本</td><td>测点数、绕路能量；按风速、扇区、楼高分层报告</td></tr>
+</table>
+</div>
+
+<h3>10.6 判定实验：用现有数据决定这条线值不值得做</h3>
+<div class="svgbox">
+<svg viewBox="0 0 960 190" xmlns="http://www.w3.org/2000/svg" font-family="PingFang SC, Hiragino Sans GB, sans-serif" font-size="12">
+  <defs><marker id="a14" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#4a5672"/></marker></defs>
+  <text x="10" y="20" font-weight="bold" font-size="13.5">协议要改的地方</text>
+  <text x="10" y="48" font-weight="bold" fill="#b3261e">原来的测风实验</text>
+  <g font-size="11.5">
+    <rect x="130" y="32" width="150" height="28" rx="6" fill="#f3f5f9" stroke="#8a93a8"/><text x="142" y="51">候选池</text>
+    <rect x="300" y="32" width="210" height="28" rx="6" fill="#fdf0ee" stroke="#b3261e"/><text x="312" y="51" fill="#b3261e">用 CFD 风做严格检查后筛选</text>
+    <rect x="530" y="32" width="170" height="28" rx="6" fill="#f3f5f9" stroke="#8a93a8"/><text x="542" y="51">测风后重排</text>
+    <rect x="720" y="32" width="230" height="28" rx="6" fill="#f3f5f9" stroke="#8a93a8"/><text x="732" y="51">只看能耗 regret</text>
+  </g>
+  <path d="M282 46 L296 46" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <path d="M512 46 L526 46" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <path d="M702 46 L716 46" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <text x="300" y="80" font-size="11" fill="#b3261e">用真值剔掉了会超限的航线：错选的后果被藏了起来</text>
+  <text x="10" y="122" font-weight="bold" fill="#0e7a4a">新的判定实验</text>
+  <g font-size="11.5">
+    <rect x="130" y="106" width="150" height="44" rx="6" fill="#e2f4ea" stroke="#0e7a4a"/><text x="142" y="124">候选池：只用部署时</text><text x="142" y="140">拿得到的风规划</text>
+    <rect x="300" y="106" width="210" height="44" rx="6" fill="#e2f4ea" stroke="#0e7a4a"/><text x="312" y="124">只做与风无关的检查；</text><text x="312" y="140">空速超限按信念估计</text>
+    <rect x="530" y="106" width="170" height="44" rx="6" fill="#e2f4ea" stroke="#0e7a4a"/><text x="542" y="124">测风后选一条</text><text x="542" y="140">或选择不飞</text>
+    <rect x="720" y="106" width="230" height="44" rx="6" fill="#e2f4ea" stroke="#0e7a4a"/><text x="732" y="124">用 CFD 判定：失败率、</text><text x="732" y="140">不飞率、regret</text>
+  </g>
+  <path d="M282 128 L296 128" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <path d="M512 128 L526 128" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <path d="M702 128 L716 128" stroke="#4a5672" stroke-width="1.4" marker-end="url(#a14)"/>
+  <text x="130" y="176" font-size="11" fill="#5a6478">起终点的超限单独统计：它由起飞速度造成，可以靠限制起飞速度或在起飞点测一次风来处理。</text>
+</svg>
+</div>
+<div class="grid">
+<table class="kv">
+  <tr><th colspan="2">设置（只用 CPU，3–4 天，不需要新数据）</th></tr>
+  <tr><td>数据</td><td>街区 A / 8 m/s 为主，A–E / 4 m/s 作对照；候选池每个任务最多 30 条（GW2P、剖面、不用风）</td></tr>
+  <tr><td>决策规则</td><td>在估计可行的候选里选期望能耗最低的一条；没有可行的就不飞；扫描阈值画失败率和不飞率的曲线</td></tr>
+  <tr><td>选点方式</td><td>不测；只用先验 + 安全余量；沿候选航线均匀测；GP 方差；CRMI；按决策价值（knowledge gradient：候选能耗差 + 超限概率）；用 CFD 的 oracle</td></tr>
+  <tr><td>预算</td><td>K = 8 / 16 / 32；单任务和 64 个任务共享两种</td></tr>
+  <tr><td>缩放检验</td><td>A 同时有 4 和 8 m/s 的 CFD，先检验“8 m/s ≈ 4 m/s × 2”；成立的话，B–E 也能补成强风工况（候选要用新规划器生成）</td></tr>
+</table>
+<div>
+<div class="callout green" style="margin:10px 0">
+<b>继续的条件：</b>按决策价值选点在 A / 8 m/s 的失败率或 regret 上，比“沿候选航线均匀测”“只用先验 + 安全余量”和 CRMI 都低 20% 以上。
+</div>
+<div class="callout red" style="margin:10px 0">
+<b>停或转向：</b>
+<ul>
+<li>和沿航线均匀测相当：先加入走不同走廊的候选再判一次；仍然相当，主线改为“风险约束规划 + 东京 demo”。</li>
+<li>只用先验 + 安全余量时失败率已经很低：测风的价值也小，主线转向不确定度校准（主线 ③）。</li>
+</ul>
+</div>
+<table>
+  <tr><th>包装方向</th><th>主打</th><th>适合</th></tr>
+  <tr><td>方法 + 基准</td><td>问题定义、选点方法、带失败率的基准</td><td>NeurIPS / ICLR、D&amp;B</td></tr>
+  <tr><td>主动感知</td><td>看不见的三维场的主动感知；决策相关图和不确定度图对比</td><td>CVPR / ICCV</td></tr>
+  <tr><td>机器人</td><td>闭环测风重规划；噪声按实飞数据标定</td><td>CoRL / RSS / ICRA</td></tr>
+</table>
+</div>
+</div>
+<p class="muted">局限：缩放检验通过之前，强风只有街区 A 一个工况、64 个任务，判定实验只用来判断方向。新的来流方向要等 LBM 或 U3DWind 的数据。</p>
+
+<!-- ================================================================ -->
+<h2 id="s11">11 · 真实城市（东京）与自由探索 agent <span class="en">survey only · decisions pending</span></h2>
 <div class="callout blue">
 <b>目标：</b>把风场预测用到真实城市（先选东京），让一个 agent 在城市里自由探索：自己决定去哪测风、走哪条航线、什么时候飞。
 <br><b>现状：</b>只做了调研，没有做任何东京的计算。最关键的发现是：公开数据里没有东京飞行高度（30–150 m）的三维风场真值。UrbanTALES 的东京区域只公开行人高度的 2D 场，iCFD 的东京风速图也在 1.5 m 高度。要在东京给航线打分，必须自己算 CFD / LBM。
 </div>
 
-<h3>10.1 用现有数据能做的下游任务</h3>
+<h3>11.1 用现有数据能做的下游任务</h3>
 <div class="tbl-scroll">
 <table>
   <tr><th>#</th><th style="width:13%">任务</th><th>测什么</th><th>数据</th><th>指标</th><th style="width:16%">现在能做吗</th></tr>
@@ -1164,18 +1482,18 @@
 </div>
 <p class="muted">现有数据做不了：改变来流方向（7 个工况方向相同）、随时间变化的天气、湍动能和阵风风险（只有平均风）、在东京飞行高度上打分（没有真值）。</p>
 
-<h3>10.2 到东京的路线（建议，未开始）</h3>
+<h3>11.2 到东京的路线（建议，未开始）</h3>
 <div class="tbl-scroll">
 <table>
   <tr><th style="width:14%">步骤</th><th>做什么</th><th style="width:24%">产出</th><th style="width:18%">需要什么</th></tr>
   <tr><td>1 · 几何 + 零样本预测</td><td>PLATEAU 建筑模型 → 4 m 分辨率高度图（屋顶层数，每层 1.5 m，与 GeoWind2Plan 的编码一致）→ 用作者发布的 2D FNO 直接预测</td><td>东京飞行高度的预测风场；之后可以加进 §6 的交互版</td><td>不用训练；但没有真值，只能看图</td></tr>
   <tr><td>2 · 自己算真值</td><td>GPU LBM：先在 AIJ Case D（风洞）上验证求解器，再算 3 块东京区域：霞关 Kasumigaseki（与 UrbanTALES 的 JP-Tok-V1 重叠，可做行人高度对照）、西新宿（超高层）、一块密集低层区；每块 4–8 个来流方向</td><td>东京的 CFD 真值：能给步骤 1 打分，也能测对新来流方向的泛化</td><td>空闲 GPU；求解器许可核对</td></tr>
   <tr><td>3 · 加时间维度</td><td>接日本气象厅（JMA）逐小时的背景风：每小时取最近的来流方向，按风速缩放（与网页版的 U / 4 m/s 缩放同理）</td><td>随时间变化的城市风场</td><td>气象数据接入</td></tr>
-  <tr><td>4 · agent</td><td>把法规写成硬约束（150 m、机场周边、DID、5 m/s）；Qwen 做决策层（去哪测、何时飞、何时等），规划器出轨迹，检查器把关（与 §9.2 一致）</td><td>东京 demo：自然语言任务 → 测风 → 规划 → 飞行动画</td><td>步骤 1–3；“自由探索”的定义（10.5）</td></tr>
+  <tr><td>4 · agent</td><td>把法规写成硬约束（150 m、机场周边、DID、5 m/s）；Qwen 做决策层（去哪测、何时飞、何时等），规划器出轨迹，检查器把关（与 §9.2 一致）</td><td>东京 demo：自然语言任务 → 测风 → 规划 → 飞行动画</td><td>步骤 1–3；“自由探索”的定义（11.5）</td></tr>
 </table>
 </div>
 
-<h3>10.3 相关工作与资料</h3>
+<h3>11.3 相关工作与资料</h3>
 <div class="tbl-scroll">
 <table>
   <tr><th style="width:22%">工作</th><th>做了什么</th><th style="width:34%">和我们的差别 / 用处</th></tr>
@@ -1187,25 +1505,25 @@
 </table>
 </div>
 
-<h3>10.4 日本的飞行规则（国土交通省）</h3>
+<h3>11.4 日本的飞行规则（国土交通省）</h3>
 <ul style="font-size:14px">
 <li>在 150 m 以上、机场周边、人口集中地区（DID）上空飞行需要许可（<a href="https://www.mlit.go.jp/koku/koku_tk10_000003.html" target="_blank" rel="noopener">国土交通省说明</a>）。东京 23 区大部分属于 DID，在那里飞基本都要先申请许可。</li>
 <li>标准飞行手册（2025 年 3 月修订）：风速 5 m/s 以上不飞，除非机型的制造商手册允许（<a href="https://www.mlit.go.jp/common/001521378.pdf" target="_blank" rel="noopener">手册 PDF</a> · <a href="https://dronesekai.jp/archives/1307/" target="_blank" rel="noopener">修订摘要</a>）。</li>
 <li>对我们的意义：5 m/s 落在 GeoWind2Plan 的 2–8 m/s 范围内，所以任务 2（可飞空域判定）有直接的法规依据；agent 的硬约束也可以直接取这几条。</li>
 </ul>
 
-<h3>10.5 待讨论</h3>
+<h3>11.5 待讨论</h3>
 <div class="callout amber">
 <ul>
 <li><b>“自由探索”指什么：</b>(a) 有目标的任务，agent 自己决定航线、高度和何时测风；(b) 没有固定目标，agent 主动测风、补全城市风场地图；(c) 自然语言任务，agent 调用工具完成。三者的评测指标不同，要先定一个。</li>
 <li><b>决策层：</b>Qwen 调用工具（与 §9.2 一致），还是 RL 策略（如上面 OpenReview 那篇的 PPO）。</li>
-<li><b>东京区域：</b>10.2 的 3 块是建议，可以换成导师关心的区域。</li>
+<li><b>东京区域：</b>11.2 的 3 块是建议，可以换成导师关心的区域。</li>
 <li><b>GPU：</b>步骤 2 的 LBM 需要空闲 GPU，开始前要确认。</li>
 </ul>
 </div>
 
 <!-- ================================================================ -->
-<h2 id="s11">11 · 链接总表 <span class="en">links</span></h2>
+<h2 id="s12">12 · 链接总表 <span class="en">links</span></h2>
 <div class="grid">
 <div>
 <table>
@@ -1224,6 +1542,7 @@
   <tr><td>FunSearch · AlphaEvolve</td><td><a href="https://www.nature.com/articles/s41586-023-06924-6" target="_blank">Nature</a> · <a href="https://arxiv.org/abs/2506.13131" target="_blank">arXiv:2506.13131</a></td></tr>
   <tr><td>ShinkaEvolve · ReEvo · EoH</td><td><a href="https://arxiv.org/abs/2509.19349" target="_blank">2509.19349</a> · <a href="https://arxiv.org/abs/2402.01145" target="_blank">2402.01145</a> · <a href="https://arxiv.org/abs/2401.02051" target="_blank">2401.02051</a></td></tr>
   <tr><td>Eureka · LLM-SR · LLAMBO</td><td><a href="https://arxiv.org/abs/2310.12931" target="_blank">2310.12931</a> · <a href="https://arxiv.org/abs/2404.18400" target="_blank">2404.18400</a> · <a href="https://arxiv.org/abs/2402.03921" target="_blank">2402.03921</a></td></tr>
+  <tr><td>为决策而测风（§10）</td><td><a href="https://arxiv.org/abs/2502.00185" target="_blank">CRMI</a> · <a href="https://arxiv.org/abs/2607.04495" target="_blank">U3DWind</a> · <a href="https://arxiv.org/abs/2411.02064" target="_blank">TNDP</a> · <a href="https://arxiv.org/abs/2403.11396" target="_blank">RaEM</a> · <a href="https://arxiv.org/abs/2603.13077" target="_blank">屋顶风场重建</a> · <a href="https://arxiv.org/abs/2109.13570" target="_blank">自适应 IPP</a> · <a href="https://openreview.net/forum?id=wfYXDYtoYV" target="_blank">机载风估计</a> · <a href="https://doi.org/10.1287/ijoc.1080.0314" target="_blank">knowledge gradient</a></td></tr>
   <tr><td>城市风 × agent · 无人机基准</td><td><a href="https://openreview.net/pdf?id=PIZRXV3q6E" target="_blank">OpenReview PIZRXV3q6E</a> · <a href="https://arxiv.org/abs/2508.00288" target="_blank">UAV-ON</a> · <a href="https://arxiv.org/abs/2410.07087" target="_blank">TRAVEL</a> · <a href="https://arxiv.org/abs/2511.11252" target="_blank">UAVBench</a></td></tr>
   <tr><td>Zephyrus · VoxPoser · KnowNo</td><td><a href="https://arxiv.org/abs/2510.04017" target="_blank">2510.04017</a> · <a href="https://arxiv.org/abs/2307.05973" target="_blank">2307.05973</a> · <a href="https://arxiv.org/abs/2307.01928" target="_blank">2307.01928</a></td></tr>
 </table>
@@ -1235,14 +1554,14 @@
   <tr><td>风场与规划代码</td><td><a href="https://github.com/DUAL-Xiao/GeoWind2Plan" target="_blank">GeoWind2Plan</a> · <a href="https://github.com/ethz-asl/WindSeer" target="_blank">WindSeer</a> · <a href="https://github.com/thuml/PhySense" target="_blank">PhySense</a> · <a href="https://github.com/OrchardLANL/Senseiver" target="_blank">Senseiver</a> · <a href="https://github.com/thuml/Transolver" target="_blank">Transolver</a> · <a href="https://github.com/neuraloperator/neuraloperator" target="_blank">neuraloperator</a> · <a href="https://github.com/fgiral000/genda_urban_flows" target="_blank">GenDA</a> · <a href="https://github.com/martenlienen/generative-turbulence" target="_blank">TurbDiff</a> · <a href="https://github.com/vivekoommen/Gen4Turbulence" target="_blank">Gen4Turbulence</a> · <a href="https://github.com/VinuesaLAB-AI/Diff-SPORT" target="_blank">Diff-SPORT</a> · <a href="https://github.com/rbischof/windinet" target="_blank">WinDiNet</a> · <a href="https://github.com/spencerfolk/wind_aware_ros" target="_blank">wind_aware_ros</a> · <a href="https://github.com/johnviljoen/jaxipm" target="_blank">jaxipm</a> · <a href="https://github.com/johnviljoen/spineax" target="_blank">spineax</a> · <a href="https://github.com/MarioRuettgers/urbanFlowGen" target="_blank">urbanFlowGen</a></td></tr>
   <tr><td>LLM / 程序搜索代码</td><td><a href="https://github.com/google-deepmind/funsearch" target="_blank">FunSearch</a> · <a href="https://github.com/codelion/openevolve" target="_blank">OpenEvolve</a> · <a href="https://github.com/SakanaAI/ShinkaEvolve" target="_blank">ShinkaEvolve</a> · <a href="https://github.com/ai4co/reevo" target="_blank">ReEvo</a> · <a href="https://github.com/FeiLiu36/EoH" target="_blank">EoH</a> · <a href="https://github.com/eureka-research/Eureka" target="_blank">Eureka</a> · <a href="https://github.com/deep-symbolic-mathematics/LLM-SR" target="_blank">LLM-SR</a> · <a href="https://github.com/tennisonliu/LLAMBO" target="_blank">LLAMBO</a> · <a href="https://github.com/huangwl18/VoxPoser" target="_blank">VoxPoser</a> · <a href="https://github.com/Rose-STL-Lab/Zephyrus" target="_blank">Zephyrus</a></td></tr>
   <tr><td>数据</td><td><a href="https://doi.org/10.3929/ethz-b-000658323" target="_blank">WindSeer（ETH，CC BY 4.0）</a> · <a href="https://zenodo.org/records/18252581" target="_blank">Feilian-3D（Zenodo）</a> · <a href="https://arxiv.org/abs/2607.04495" target="_blank">U3DWind（论文）</a> · <a href="https://urbantales.vercel.app/" target="_blank">UrbanTALES</a></td></tr>
-  <tr><td>东京与法规（§10）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank">PLATEAU 东京 23 区</a> · <a href="https://www.mlit.go.jp/plateau/use-case/uc22-005/" target="_blank">PLATEAU UC22-005</a> · <a href="https://www.mlit.go.jp/koku/koku_tk10_000003.html" target="_blank">国土交通省飞行规则</a> · <a href="https://www.mlit.go.jp/common/001521378.pdf" target="_blank">标准飞行手册（PDF）</a> · <a href="https://icfd.co.jp/archives/1123" target="_blank">iCFD 东京风速图</a></td></tr>
+  <tr><td>东京与法规（§11）</td><td><a href="https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku" target="_blank">PLATEAU 东京 23 区</a> · <a href="https://www.mlit.go.jp/plateau/use-case/uc22-005/" target="_blank">PLATEAU UC22-005</a> · <a href="https://www.mlit.go.jp/koku/koku_tk10_000003.html" target="_blank">国土交通省飞行规则</a> · <a href="https://www.mlit.go.jp/common/001521378.pdf" target="_blank">标准飞行手册（PDF）</a> · <a href="https://icfd.co.jp/archives/1123" target="_blank">iCFD 东京风速图</a></td></tr>
 </table>
 </div>
 </div>
 
 <footer>
 生成于 2026-10-30（当晚更新：下游任务核实、数据收紧、东京调研、交互版上线）。数字来自我们的实验结果文件；论文结果都是作者报告，只在 R4b 里用括号并列以便对照。制作本页时没有运行任何训练或规划实验。<br>
-图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet 论文为 CC BY 4.0，Caltech 论文为 CC BY-NC-ND 4.0；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；§6 的 demo 录屏和交互版（lab/）来自 GeoWind2Plan 网页演示的非商业衍生版，沿用 CC BY-NC 4.0（交互版的第三方组件许可见 <a href="lab/LICENSE">lab/LICENSE</a>）；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。
+图片和视频版权归原作者，按各自许可引用：GeoWind2Plan、WindSeer（Nat. Commun.）、GenDA、Sculpt、WindINR、WinDiNet，以及 §10 的 U3DWind、TNDP、RaEM、屋顶风场重建、自适应 IPP、Seeing the Wind 论文为 CC BY 4.0，Caltech 和 CRMI 论文为 CC BY-NC-ND 4.0（原图未改动，只缩放）；WindSeer 论文视频与数据为 CC BY 4.0；GeoWind2Plan 数据为 CC BY-NC 4.0（本页的风场视频由该数据渲染）；§6 的 demo 录屏和交互版（lab/）来自 GeoWind2Plan 网页演示的非商业衍生版，沿用 CC BY-NC 4.0（交互版的第三方组件许可见 <a href="lab/LICENSE">lab/LICENSE</a>）；仓库配图按各仓库的 MIT / BSD-3 / Apache-2.0 许可引用。每个媒体文件的来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。
 </footer>
 </div>
 
