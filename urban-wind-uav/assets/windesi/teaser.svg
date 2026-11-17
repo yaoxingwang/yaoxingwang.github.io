@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img" aria-labelledby="title desc">
+  <title id="title">WindESI teaser: invisible urban wind to onboard decision</title>
+  <desc id="desc">An urban UAV sees building geometry, infers an invisible wind field, makes an active measurement, and chooses a safe route or waits.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8 Z" fill="#2456d6"/></marker>
+    <marker id="arrow-violet" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8 Z" fill="#6d3fc0"/></marker>
+    <marker id="arrow-red" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8 Z" fill="#b3261e"/></marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#17324a" flood-opacity=".12"/></filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#dce6f0" stroke-width="1"/></pattern>
+    <linearGradient id="wind-band" x1="0" x2="1"><stop offset="0" stop-color="#72c8df" stop-opacity=".16"/><stop offset="1" stop-color="#2456d6" stop-opacity=".04"/></linearGradient>
+  </defs>
+
+  <rect width="1400" height="720" fill="#f6f8fc"/>
+  <rect x="32" y="30" width="1336" height="660" rx="22" fill="#ffffff" stroke="#dde3ee" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="32" y="30" width="1336" height="86" rx="22" fill="#0f2a3d"/>
+  <rect x="32" y="92" width="1336" height="24" fill="#0f2a3d"/>
+  <text x="72" y="70" fill="#ffffff" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="26" font-weight="700">WindESI：看不见的风场，也要在机上做决定</text>
+  <text x="72" y="98" fill="#b9d8e4" font-family="Inter, sans-serif" font-size="13" letter-spacing="1.4">FROM GEOMETRY AND SPARSE MEASUREMENTS TO SAFE ACTION</text>
+  <text x="1312" y="72" text-anchor="end" fill="#c3e76c" font-family="ui-monospace, monospace" font-size="13">TEASER / 01</text>
+
+  <text x="80" y="160" fill="#0f7c8c" font-family="ui-monospace, monospace" font-size="12" font-weight="700">01 / PERCEIVE</text>
+  <text x="80" y="188" fill="#1a2233" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="24" font-weight="700">从建筑几何建立先验</text>
+  <text x="80" y="214" fill="#5a6478" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="14">地图 / 相机视图 + 背景风 → 不可见的城市风场</text>
+
+  <g transform="translate(80 250)">
+    <rect width="380" height="310" rx="16" fill="#eef7f8" stroke="#bfe1e5"/>
+    <rect x="22" y="22" width="336" height="266" rx="10" fill="url(#grid)" opacity=".78"/>
+    <path d="M26 218 C130 172 200 192 356 116 L356 288 L26 288 Z" fill="url(#wind-band)"/>
+    <g fill="#bfc7d2" stroke="#8f9aaa" stroke-width="2">
+      <path d="M55 230 L55 145 L105 128 L105 230 Z"/>
+      <path d="M126 230 L126 92 L188 110 L188 230 Z"/>
+      <path d="M215 230 L215 52 L264 67 L264 230 Z"/>
+      <path d="M287 230 L287 122 L338 104 L338 230 Z"/>
+    </g>
+    <g fill="none" stroke="#2456d6" stroke-width="4" stroke-linecap="round" opacity=".8" marker-end="url(#arrow-blue)">
+      <path d="M30 86 C105 54 150 70 220 86 C282 100 316 82 352 66"/>
+      <path d="M30 144 C94 118 154 128 220 150 C286 172 320 150 352 130"/>
+      <path d="M30 198 C92 176 140 184 202 208 C264 232 314 212 352 190"/>
+    </g>
+    <g fill="#5a6478" font-family="Inter, sans-serif" font-size="12">
+      <text x="28" y="48">BUILDING GEOMETRY</text>
+      <text x="250" y="274">BACKGROUND WIND →</text>
+    </g>
+  </g>
+
+  <path d="M486 405 C535 405 548 405 590 405" fill="none" stroke="#2456d6" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <text x="536" y="382" text-anchor="middle" fill="#2456d6" font-family="ui-monospace, monospace" font-size="12">PREDICT</text>
+
+  <g transform="translate(610 250)">
+    <rect width="330" height="310" rx="16" fill="#eef3fe" stroke="#c9d8f5"/>
+    <text x="26" y="42" fill="#2456d6" font-family="ui-monospace, monospace" font-size="12" font-weight="700">02 / BELIEF</text>
+    <text x="26" y="78" fill="#1a2233" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="22" font-weight="700">风场先验</text>
+    <text x="26" y="105" fill="#5a6478" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="13">轻量神经算子 + 稀疏观测</text>
+    <g opacity=".9">
+      <ellipse cx="164" cy="183" rx="112" ry="74" fill="#d9e7fb"/>
+      <ellipse cx="164" cy="183" rx="84" ry="55" fill="#b9d2f5"/>
+      <ellipse cx="164" cy="183" rx="54" ry="35" fill="#8fb6ee"/>
+      <path d="M62 188 C110 126 150 232 198 172 C230 132 258 176 282 154" fill="none" stroke="#2456d6" stroke-width="4"/>
+      <path d="M62 214 C104 166 142 260 192 202 C224 164 252 210 282 188" fill="none" stroke="#6d3fc0" stroke-width="3" opacity=".72"/>
+    </g>
+    <g fill="#ffffff" stroke="#6d3fc0" stroke-width="3">
+      <circle cx="91" cy="148" r="7"/><circle cx="226" cy="218" r="7"/><circle cx="246" cy="146" r="7"/>
+    </g>
+    <text x="26" y="276" fill="#5a6478" font-family="Inter, sans-serif" font-size="12">prior wind field + uncertainty</text>
+  </g>
+
+  <path d="M964 405 C1004 405 1016 405 1054 405" fill="none" stroke="#6d3fc0" stroke-width="3" marker-end="url(#arrow-violet)"/>
+  <text x="1008" y="382" text-anchor="middle" fill="#6d3fc0" font-family="ui-monospace, monospace" font-size="12">CHOOSE</text>
+
+  <g transform="translate(1074 250)">
+    <rect width="242" height="310" rx="16" fill="#ffffff" stroke="#c9d8f5"/>
+    <text x="24" y="42" fill="#6d3fc0" font-family="ui-monospace, monospace" font-size="12" font-weight="700">03 / ACT</text>
+    <text x="24" y="78" fill="#1a2233" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="21" font-weight="700">端侧决策</text>
+    <text x="24" y="104" fill="#5a6478" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="13">小模型调用工具</text>
+    <g font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="14" font-weight="700">
+      <rect x="24" y="136" width="194" height="38" rx="8" fill="#efe7fb"/><text x="42" y="161" fill="#5a2ca0">去哪里测？</text>
+      <rect x="24" y="184" width="194" height="38" rx="8" fill="#fbf1dc"/><text x="42" y="209" fill="#8a5a00">走哪条？</text>
+      <rect x="24" y="232" width="194" height="38" rx="8" fill="#e2f4ea"/><text x="42" y="257" fill="#0e6b41">飞 / 等待</text>
+    </g>
+    <path d="M121 276 L121 292" stroke="#b3261e" stroke-width="3" marker-end="url(#arrow-red)"/>
+    <text x="121" y="303" text-anchor="middle" fill="#b3261e" font-family="Inter, sans-serif" font-size="11">measure, fly, or wait</text>
+  </g>
+
+  <path d="M1040 620 C840 680 560 680 360 620 C260 590 224 570 224 540" fill="none" stroke="#b3261e" stroke-width="3" stroke-dasharray="9 8" marker-end="url(#arrow-red)"/>
+  <text x="702" y="676" text-anchor="middle" fill="#b3261e" font-family="PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif" font-size="14" font-weight="700">主动测风：只测会改变路线排序或安全判断的位置</text>
+</svg>

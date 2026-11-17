@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>端侧具身风场智能（WindESI）· 城市风场 × UAV</title>
+<style>
+  :root{
+    --ink:#1a2233; --muted:#5a6478; --line:#dde3ee; --bg:#f6f8fc; --card:#ffffff;
+    --blue:#2456d6; --violet:#6d3fc0; --green:#0e7a4a; --red:#b3261e; --amber:#9a6b00; --teal:#0f7c8c;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+       color:var(--ink); background:var(--bg); margin:0; line-height:1.65;}
+  a{color:var(--blue)}
+  .wrap{max-width:1320px; margin:0 auto; padding:24px 28px 80px;}
+  .topnav{display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; background:#fff; border:1px solid var(--line);
+       border-radius:12px; padding:10px 18px; margin-bottom:20px; font-size:14px}
+  .topnav b{color:var(--ink)}
+  .topnav a{color:var(--blue); text-decoration:none}
+  .topnav a.cur{font-weight:600}
+  .topnav a.ext{margin-left:auto; color:var(--violet); font-weight:600}
+  header.hero{background:linear-gradient(135deg,#0f2a3d,#14506b 55%,#2a7f8f); color:#fff;
+       border-radius:16px; padding:32px 40px; margin-bottom:18px;}
+  header.hero h1{margin:0 0 10px; font-size:28px; letter-spacing:0; line-height:1.25;}
+  header.hero p{margin:4px 0; opacity:.93; font-size:14.5px;}
+  header.hero a{color:#fff}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr); gap:24px; align-items:stretch}
+  .hero-side{border-left:1px solid rgba(255,255,255,.28); padding-left:22px; display:flex; flex-direction:column; justify-content:center}
+  .hero-side .label{font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:.72; margin-bottom:10px}
+  .hero-side strong{font-size:22px; line-height:1.3; display:block}
+  .hero-side span{display:block; margin-top:6px; font-size:13px; opacity:.82}
+  .hero-teaser{margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.24)}
+  .hero-teaser img{display:block; width:100%; max-width:1200px; margin-left:auto; margin-right:auto; border:1px solid rgba(255,255,255,.24); border-radius:12px; background:#f6f8fc}
+  .hero-teaser .figcap{color:rgba(255,255,255,.78); margin:8px 2px 0}
+  @media(min-width:1100px){header.hero{display:grid; grid-template-columns:minmax(0,.85fr) minmax(520px,1.15fr); column-gap:32px; align-items:center}.hero-grid{display:block}.hero-side{border-left:0; border-top:1px solid rgba(255,255,255,.28); padding:18px 0 0; margin-top:22px}.hero-teaser{margin-top:0; padding-top:0; border-top:0}}
+  .method-figure img{display:block; width:100%; max-width:1200px; margin-left:auto; margin-right:auto; border:0; border-radius:8px; background:#f6f8fc}
+  .badge{display:inline-block; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:2px 12px; font-size:12.5px; margin:2px 8px 2px 0;}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:0 0 22px}
+  .kpi{background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px}
+  .kpi b{font-size:19px; display:block; color:#0f3d52; font-variant-numeric:tabular-nums}
+  .kpi span{font-size:12px; color:var(--muted); line-height:1.45; display:block; margin-top:2px}
+  nav.toc{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 22px; margin-bottom:26px;}
+  nav.toc a{color:var(--blue); text-decoration:none; margin-right:16px; font-size:14px; white-space:nowrap; line-height:2}
+  nav.toc a:hover{text-decoration:underline}
+  h2{font-size:21px; margin:40px 0 6px; padding-bottom:8px; border-bottom:2px solid var(--line);}
+  h2 .en{color:var(--muted); font-size:13px; font-weight:normal; margin-left:10px;}
+  h3{font-size:16.5px; margin:24px 0 8px;}
+  h4{font-size:16px; margin:0 0 6px; line-height:1.45}
+  p{font-size:14.5px;}
+  .muted{color:var(--muted); font-size:13px;}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:start;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:start;}
+  @media(max-width:960px){.grid3{grid-template-columns:1fr 1fr}}
+  @media(max-width:860px){.wrap{padding:24px 20px 80px}.grid,.grid3,.hero-grid{grid-template-columns:1fr} header.hero{padding:28px 22px}}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin:14px 0;}
+  .grid > .card, .grid3 > .card{margin:0}
+  .card.small h4{font-size:15px}
+  .card.small p{font-size:13.5px; margin:6px 0}
+  .paper{border-left:4px solid var(--blue);}
+  .paper.core{border-left-color:var(--teal);}
+  .paper.sense{border-left-color:var(--violet);}
+  .paper.plan{border-left-color:var(--amber);}
+  .paper.llm{border-left-color:var(--green);}
+  .paper img, .paper video{width:100%; border:1px solid var(--line); border-radius:8px; margin:10px 0 4px; background:#fff; display:block}
+  a.imglink img{cursor:zoom-in}
+  .figcap{font-size:12px; color:var(--muted); margin:2px 0 10px; line-height:1.55}
+  .links{font-size:13px; margin-top:6px; line-height:1.9}
+  .links a{color:var(--blue); text-decoration:none; margin-right:12px; border-bottom:1px dotted #b9c6e8; white-space:nowrap}
+  .links a:hover{border-bottom-style:solid}
+  .tag{display:inline-block; font-size:11.5px; border-radius:6px; padding:1px 8px; margin-right:6px; vertical-align:2px; font-weight:500}
+  .tag.v{background:#efe7fb; color:#5a2ca0}
+  .tag.b{background:#e5edff; color:#1d4fc0}
+  .tag.g{background:#e2f4ea; color:#0e6b41}
+  .tag.r{background:#fbe9e7; color:#b3261e}
+  .tag.a{background:#fbf1dc; color:#8a5a00}
+  .tag.t{background:#e0f2f4; color:#0b6470}
+  table{border-collapse:collapse; width:100%; font-size:13.5px; margin:10px 0; background:var(--card)}
+  th{background:#eef2fb; text-align:left; font-weight:600}
+  th,td{border:1px solid var(--line); padding:7px 10px; vertical-align:top}
+  tr:nth-child(even) td{background:#fafbfe}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .ok{color:var(--green); font-weight:600}
+  .warn{color:var(--amber); font-weight:600}
+  .no{color:var(--red); font-weight:600}
+  .doing{color:var(--blue); font-weight:600}
+  .callout{border-radius:12px; padding:14px 18px; margin:14px 0; font-size:14px}
+  .callout.red{background:#fdf0ee; border:1px solid #f2c4be}
+  .callout.blue{background:#eef3fe; border:1px solid #c9d8f5}
+  .callout.green{background:#ecf7f1; border:1px solid #bfe3cf}
+  .callout.amber{background:#fdf7e8; border:1px solid #efdcaa}
+  .callout b{font-size:13.5px}
+  .callout ul{margin:6px 0 0; padding-left:20px}
+  .callout li{margin:3px 0}
+  code{background:#eef1f8; border-radius:5px; padding:1px 6px; font-size:12.5px; font-family:"SF Mono",Menlo,Consolas,monospace; overflow-wrap:anywhere}
+  .svgbox{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin:12px 0; overflow-x:auto}
+  .svgbox svg{display:block; min-width:860px; width:100%; height:auto}
+  .vgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin:12px 0; align-items:start}
+  .vgrid.two{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}
+  @media(max-width:560px){.vgrid.two{grid-template-columns:1fr}}
+  .vcard{background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px}
+  .vcard img{width:100%; border-radius:8px; background:#fff; display:block}
+  .vcard .cap{font-size:12.5px; margin-top:7px; line-height:1.55}
+  .vcard .cap span{color:var(--muted)}
+  .vcard .cap a{color:var(--blue); text-decoration:none; border-bottom:1px dotted #b9c6e8; margin-right:10px}
+  .method-map{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:12px 0 18px}
+  .method-map .item{background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px}
+  .method-map .item b{display:block; font-size:14px; margin-bottom:4px}
+  .method-map .item span{display:block; color:var(--muted); font-size:12px; line-height:1.5}
+  .method-map .item:nth-child(1){border-top:3px solid var(--teal)}
+  .method-map .item:nth-child(2){border-top:3px solid var(--violet)}
+  .method-map .item:nth-child(3){border-top:3px solid var(--amber)}
+  .method-map .item:nth-child(4){border-top:3px solid var(--green)}
+  @media(max-width:560px){.method-map{grid-template-columns:1fr}}
+  .source-note{font-size:12px; color:var(--muted); border-top:1px solid var(--line); margin-top:18px; padding-top:10px}
+  footer{margin-top:50px; color:var(--muted); font-size:12.5px; border-top:1px solid var(--line); padding-top:14px}
+  .totop{position:fixed; right:18px; bottom:18px; background:#fff; border:1px solid var(--line); border-radius:999px;
+       padding:6px 12px; font-size:12.5px; color:var(--blue); text-decoration:none; box-shadow:0 2px 10px rgba(20,30,60,.08)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topnav">
+  <b>端侧具身风场智能 · WindESI</b>
+  <a href="index.html">返回风场规划总览</a>
+  <a href="windesi.html" class="cur">主题页（本页）</a>
+  <a class="ext" href="index.html#s10">回到相关工作 §10 ↗</a>
+  <a href="lab/" target="_blank" rel="noopener">4D 交互版 ↗</a>
+</div>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>端侧具身风场智能（WindESI）</h1>
+      <p>把“看不见的城市风”变成无人机可以调用的现场知识：从建筑地图或相机视图建立风场先验，再决定是否测风、测哪里、走哪条，以及什么时候不飞。</p>
+      <p>这条线从原来的城市风场规划矩阵中单独拿出来，研究对象从“预测风场 → 单次路线”扩展为“部分可观测风场 → 主动测量 → 安全决策”。</p>
+      <p style="margin-top:12px">
+        <span class="badge">2026-11-16</span>
+        <span class="badge">v0 判定实验：500 题</span>
+        <span class="badge">单机 · 端侧 · 主动测风</span>
+      </p>
+    </div>
+    <div class="hero-side">
+      <div class="label">WindESI 的一句话</div>
+      <strong>小模型不出轨迹，只做判断和工具调用。</strong>
+      <span>轨迹交给规划器，安全交给检查器，最终回到 CFD 风里打分。</span>
+    </div>
+  </div>
+  <div class="hero-teaser">
+    <a class="imglink" href="assets/windesi/teaser.svg" target="_blank" rel="noopener"><img src="assets/windesi/teaser.svg" alt="WindESI teaser: from invisible urban wind to onboard decision"></a>
+    <div class="figcap">Teaser：建筑几何建立风场先验，主动测风纠偏，端侧决策层选择测量、飞行或等待。</div>
+  </div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><b>500</b><span>v0 自动生成判定题<br>T1 300 · T2 200</span></div>
+  <div class="kpi"><b>2–9B</b><span>计划覆盖的端侧小模型<br>部署目标优先看 4B</span></div>
+  <div class="kpi"><b>1.9 s</b><span>浏览器 WebGPU 风场先验推理<br>Apple M4 端侧代理</span></div>
+  <div class="kpi"><b>0.4 m/s</b><span>v0 主动测风噪声模拟<br>固定种子、同读数</span></div>
+  <div class="kpi"><b>0.755</b><span>T2 中“测先验最静的 2 点”基线<br>工具化模型需要超过它</span></div>
+</div>
+
+<nav class="toc">
+  <a href="#s1">1 问题定位</a>
+  <a href="#s2">2 机载闭环</a>
+  <a href="#s3">3 v0 判定实验</a>
+  <a href="#s4">4 相关工作图谱</a>
+  <a href="#s5">5 方法对照</a>
+  <a href="#s6">6 行动与边界</a>
+</nav>
+
+<h2 id="s1">1 · 问题定位：从“预测风场”到“决定能不能飞” <span class="en">problem statement &amp; separation from the planning line</span></h2>
+<div class="callout green">
+<b>核心问题：</b>城市风由建筑决定，但不能像建筑一样直接被看见。无人机面对的不是一张已经算好的风场图，而是一个需要在有限测量、噪声和行动代价下持续判断的部分可观测环境。
+<br><b>WindESI 的目标：</b>让端侧小模型调用风场先验、遮挡规则、探针测量、规划器和严格检查器，回答“要不要测、去哪测、走哪条、是否等待”。
+</div>
+<div class="grid">
+  <div class="card paper core">
+    <h4>与原有风场规划线的边界</h4>
+    <ul>
+      <li>原线：风场模型和规划器如何影响单次节能航线。</li>
+      <li>WindESI：在风场不完整时，智能体如何通过主动测量减少决策错误。</li>
+      <li>不做多机 scout-follower 的信息路径优化，主线是单机闭环。</li>
+      <li>不把 VLM 直接接到连续轨迹输出，连续轨迹仍由规划器和检查器负责。</li>
+    </ul>
+  </div>
+  <div class="card paper plan">
+    <h4>真正要优化的指标</h4>
+    <table class="kv">
+      <tr><td>失败率</td><td>选中的航线在 CFD 风下途中超限的比例，安全优先</td></tr>
+      <tr><td>不飞率</td><td>判断为不可行并选择等待 / 不飞的比例</td></tr>
+      <tr><td>regret</td><td>相对于知道真实风时的最优可行航线多耗的能量</td></tr>
+      <tr><td>测风成本</td><td>测点数量、绕路距离、额外能耗和时间</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<h2 id="s2">2 · 机载闭环：不是一个模型，而是五个职责 <span class="en">onboard loop</span></h2>
+<div class="grid3">
+  <div class="card paper core"><h4>① 感知</h4><p>建筑地图或相机视图 → 几何、遮挡和可见区域。v0 只用俯视建筑高度图，后续再接相机视角。</p></div>
+  <div class="card paper core"><h4>② 风场先验</h4><p>几何 + 背景风 → 走廊内三维风。网页 WebGPU 已经跑通逐层 2D FNO，作为端侧可行性的代理证据。</p></div>
+  <div class="card paper sense"><h4>③ 决策层</h4><p>判断先测还是直接飞、去哪里测、什么时候重规划、是否等待。不直接输出轨迹。</p></div>
+  <div class="card paper plan"><h4>④ 主动测风</h4><p>利用飞控状态估计风，测量带噪声且有移动成本。读数之后更新信念，而不是把测量当成免费真值。</p></div>
+  <div class="card paper plan"><h4>⑤ 规划与检查</h4><p>按当前信念生成候选路线，再严格检查净空、空速和推力限制，最终在 CFD 风里评估。</p></div>
+  <div class="card paper llm"><h4>与师弟方向的区分</h4><p>不做前机侦察、后机跟随和多机信息路径；我们聚焦单机端侧决策与主动测风。</p></div>
+</div>
+<div class="svgbox method-figure">
+  <a class="imglink" href="assets/windesi/method.svg" target="_blank" rel="noopener">
+    <img src="assets/windesi/method.svg" alt="WindESI method overview">
+  </a>
+  <div class="figcap">Method：风场先验、端侧决策、主动测量、规划检查与 CFD 回放组成闭环。</div>
+</div>
+
+<h2 id="s3">3 · 第一轮判定实验：小模型还不会“看风” <span class="en">v0 benchmark · 11-16</span></h2>
+<div class="callout blue">
+<b>设置：</b>GeoWind2Plan 五个街区、4 m/s CFD。从 CFD 自动出题，图是俯视建筑高度图，只显示高于 30 m 的建筑；点都在 SDF ≥ 10 m 的开阔空间，离窗口边界 ≥ 100 m。共 500 题，判分只用 CFD。
+<ul>
+  <li><b>T1 两点比风（300 题）：</b>同一高度 45 / 75 / 105 m 的两个点，判断哪里风大，保留 CFD 风速比 ≥ 1.3 的点对。</li>
+  <li><b>T2 六选一找最静点（200 题）：</b>六个点里找风最小的位置；主动条件可以先测两个点，读数 = CFD + 0.4 m/s 噪声。</li>
+  <li><b>模型：</b>Qwen3-VL-8B-Instruct，bf16、greedy；对照为只给坐标、看图、看图后主动选测点。</li>
+</ul>
+</div>
+<div class="grid">
+  <div class="card paper core">
+    <a class="imglink" href="assets/windesi/example_T1_A_75_00.jpg" target="_blank" rel="noopener"><img src="assets/windesi/example_T1_A_75_00.jpg" alt="T1 两点比风示例" loading="lazy"></a>
+    <div class="figcap">T1 例题（街区 A，75 m）：CFD 风速 A 0.83、B 2.34 m/s，答案 B。Qwen 看图答对，只给坐标时答错。</div>
+  </div>
+  <div class="card paper sense">
+    <a class="imglink" href="assets/windesi/example_T2_C_01.jpg" target="_blank" rel="noopener"><img src="assets/windesi/example_T2_C_01.jpg" alt="T2 找最静点示例" loading="lazy"></a>
+    <div class="figcap">T2 例题（街区 C，75 m）：真实最静点是 3 号；GW2P 先验认为 4 号最静。Qwen 主动测了 1、4 号，仍然选错。</div>
+  </div>
+</div>
+<div class="tbl-scroll">
+<table>
+  <tr><th>方法</th><th>T1 两点比风</th><th>T2 找最静点</th><th>说明</th></tr>
+  <tr><td>随机</td><td>0.507</td><td>0.170</td><td></td></tr>
+  <tr><td>几何规则：离建筑越远风越大</td><td>0.587</td><td>0.280</td><td>CPU，十几行代码</td></tr>
+  <tr><td>几何规则：上风向遮挡越少风越大</td><td>0.693</td><td>0.485</td><td>CPU，十几行代码</td></tr>
+  <tr><td>GW2P 风场先验</td><td class="ok">0.890</td><td>0.655</td><td>作者预计算的预测</td></tr>
+  <tr><td>Qwen3-VL-8B · 只给坐标</td><td>0.527 [0.47, 0.58]</td><td>0.185 [0.14, 0.25]</td><td>约等于随机</td></tr>
+  <tr><td>Qwen3-VL-8B · 看图</td><td class="no">0.417 [0.36, 0.47]</td><td class="no">0.205 [0.16, 0.27]</td><td>T1 低于随机</td></tr>
+  <tr><td colspan="4" class="warn">T2 主动条件：先测 2 个点再答</td></tr>
+  <tr><td>随机测 2 点</td><td>—</td><td>0.300</td><td></td></tr>
+  <tr><td>测遮挡最多的 2 点</td><td>—</td><td>0.600</td><td>CPU</td></tr>
+  <tr><td>测先验最静的 2 点</td><td>—</td><td class="ok">0.755</td><td>先验 + 测量</td></tr>
+  <tr><td>Qwen3-VL-8B · 主动</td><td>—</td><td class="warn">0.415 [0.35, 0.48]</td><td></td></tr>
+  <tr><td>6 点全测</td><td>—</td><td>0.825</td><td>噪声 0.4 m/s 下的本题上限</td></tr>
+</table>
+</div>
+<div class="callout amber">
+<b>读法：</b>模型拿到读数后会用，主动条件里“选择最低读数的点”准确率达到 0.895；失败主要发生在看图和选测点之前。简单 CPU 规则目前比未训练的 8B 模型强，但这正好说明下一步要测“模型 + 工具 + 训练”，而不是继续和固定规则做单点比较。
+</div>
+
+<h2 id="s4">4 · 相关工作图谱：WindESI 接在哪里 <span class="en">related papers and methods</span></h2>
+<p class="muted">下面的图不是装饰性画廊，而是按 WindESI 的闭环分工组织：风场先验解决“我对风有什么信念”，主动测量解决“下一次测哪里”，决策与 agent 解决“测量是否值得、什么时候飞”。图片均来自本地 `assets/`，来源和许可记录在<a href="assets/data/assets_manifest.json" target="_blank" rel="noopener">媒体清单</a>。</p>
+
+<div class="method-map">
+  <div class="item"><b>风场先验 / 重建</b><span>GeoWind2Plan · WindSeer · U3DWind · Seeing the Wind</span></div>
+  <div class="item"><b>稀疏观测 / 选点</b><span>PhySense · Senseiver · CRMI · TNDP · RaEM</span></div>
+  <div class="item"><b>风险 / 路线决策</b><span>U3DWind 风险任务 · rooftop sensing · WindESI v0</span></div>
+  <div class="item"><b>工具调用 / agent</b><span>Zephyrus · VoxPoser · 规划器与严格检查器</span></div>
+</div>
+
+<h3>4.1 风场先验：从几何、稀疏测量或视觉反推不可见的风</h3>
+<div class="grid">
+  <div class="card paper core">
+    <h4>GeoWind2Plan <span class="tag t">城市 3D 风场 + UAV 规划</span></h4>
+    <a class="imglink" href="assets/papers/geowind2plan_overview.jpg" target="_blank"><img src="assets/papers/geowind2plan_overview.jpg" alt="GeoWind2Plan overview" loading="lazy"></a>
+    <div class="figcap">Fig.1：建筑几何 + 背景风 → 局部 3D FNO → RRT 初值 + 连续轨迹优化。</div>
+    <p><b>对 WindESI：</b>提供“从几何得到风场先验”的起点。差别是原工作默认先验可以直接拿来规划，WindESI 还要判断先验何时不可信、是否值得主动测量。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2609.36056" target="_blank">arXiv</a><a href="https://github.com/DUAL-Xiao/GeoWind2Plan" target="_blank">代码</a><span class="tag g">本项目主数据</span></div>
+  </div>
+  <div class="card paper core">
+    <h4>WindSeer <span class="tag t">机载稀疏测风 → 体积风场</span></h4>
+    <a class="imglink" href="assets/papers/windseer_overview.jpg" target="_blank"><img src="assets/papers/windseer_overview.jpg" alt="WindSeer overview" loading="lazy"></a>
+    <div class="figcap">Fig.1：CFD 标签 + 沿轨迹稀疏测量 → 机载实时预测体积风场。</div>
+    <a class="imglink" href="assets/papers/windseer_campaign_scatter.jpg" target="_blank"><img src="assets/papers/windseer_campaign_scatter.jpg" alt="WindSeer campaigns" loading="lazy"></a>
+    <div class="figcap">Fig.4：三个自然地形试验场的测风塔 / 预测对照。</div>
+    <p><b>对 WindESI：</b>说明“机载测风 + 小型网络 + 实时预测”可以成为先验工具；限制是自然地形，不是城市建筑。</p>
+    <div class="links"><a href="https://doi.org/10.1038/s41467-024-47778-4" target="_blank">论文</a><a href="https://github.com/ethz-asl/WindSeer" target="_blank">代码</a><span class="tag b">数据已校验</span></div>
+  </div>
+  <div class="card paper core">
+    <h4>U3DWind <span class="tag t">城市低空风场数据集与任务</span></h4>
+    <a class="imglink" href="assets/papers/u3dwind_shanghai.jpg" target="_blank"><img src="assets/papers/u3dwind_shanghai.jpg" alt="U3DWind Shanghai" loading="lazy"></a>
+    <div class="figcap">Fig.1：建筑解析的城市三维风场与低空 UAM 风险场景。</div>
+    <p><b>对 WindESI：</b>它把稀疏重建、暴露排序、适航风险评分等任务放在同一个城市基准里，适合补齐 GeoWind2Plan 只有单一来流方向的限制。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2607.04495" target="_blank">arXiv</a><span class="tag a">待接入</span></div>
+  </div>
+  <div class="card paper core">
+    <h4>Seeing the Wind from a Falling Leaf <span class="tag t">视觉 → 不可见力场</span></h4>
+    <a class="imglink" href="assets/papers/seeing_wind_teaser.jpg" target="_blank"><img src="assets/papers/seeing_wind_teaser.jpg" alt="Seeing the Wind from a Falling Leaf" loading="lazy"></a>
+    <div class="figcap">论文 teaser：从视频中的物体运动反推不可见的风力表示。</div>
+    <p><b>对 WindESI：</b>提供另一条“看见风”的路线：不是直接渲染建筑到风，而是从运动 / 视觉证据反推物理场。未来相机视角和飞行日志可以接到这条线。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2512.00762" target="_blank">arXiv</a><a href="https://chaoren2357.github.io/seeingthewind/" target="_blank">项目页</a></div>
+  </div>
+
+<h3>4.2 稀疏观测与主动测量：测哪里，才会改变决策</h3>
+<div class="grid3">
+  <div class="card paper sense">
+    <h4>PhySense <span class="tag v">重建 + 选点联合优化</span></h4>
+    <a class="imglink" href="assets/papers/physense_overview.jpg" target="_blank"><img src="assets/papers/physense_overview.jpg" alt="PhySense overview" loading="lazy"></a>
+    <div class="figcap">flow-based 生成式重建器和传感器布置优化器协同训练。</div>
+    <a class="imglink" href="assets/papers/physense_placement.jpg" target="_blank"><img src="assets/papers/physense_placement.jpg" alt="PhySense sensor placement" loading="lazy"></a>
+    <p>最直接的选点 baseline。它优化物理场重建误差，WindESI 要把目标换成路线排序、失败率和测量成本。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2505.18190" target="_blank">arXiv</a><a href="https://github.com/thuml/PhySense" target="_blank">代码</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>CRMI / CSCP <span class="tag v">路径代价相关信息</span></h4>
+    <a class="imglink" href="assets/papers/crmi_iter_k15.jpg" target="_blank"><img src="assets/papers/crmi_iter_k15.jpg" alt="CRMI sensor placement" loading="lazy"></a>
+    <div class="figcap">CRMI 迭代中的传感器配置和路径代价不确定度。</div>
+    <p>不是降低整张场的方差，而是降低路径代价的方差；这正是 WindESI 最接近的决策导向工作。差别在于 WindESI 还要处理空速 / 推力硬约束和“选择不飞”。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2502.00185" target="_blank">arXiv</a><span class="tag r">关键对照</span></div>
+  </div>
+  <div class="card paper sense">
+    <h4>TNDP <span class="tag v">观测点与路径的耦合</span></h4>
+    <a class="imglink" href="assets/papers/tndp_workflow.jpg" target="_blank"><img src="assets/papers/tndp_workflow.jpg" alt="TNDP workflow" loading="lazy"></a>
+    <div class="figcap">任务驱动的观测点 / 路径工作流。</div>
+    <p>帮助把“测风任务”从单纯场重建扩展到任务代价；可作为 WindESI 的实验协议和任务定义参考。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2411.02064" target="_blank">arXiv</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>RaEM / FisherRF <span class="tag v">风险感知主动观测</span></h4>
+    <a class="imglink" href="assets/papers/raem_diag.jpg" target="_blank"><img src="assets/papers/raem_diag.jpg" alt="RaEM diagnostic" loading="lazy"></a>
+    <div class="figcap">风险感知的主动视角获取：不确定度和任务风险共同决定下一次观测。</div>
+    <p>与 WindESI 的“不要只测最大误差，而要测会改变决策的位置”一致。WindESI 的风场版本需要把风险换成空速超限和候选路线差异。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2403.11396" target="_blank">arXiv</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>屋顶稀疏测风重建 <span class="tag v">城市风观测</span></h4>
+    <a class="imglink" href="assets/papers/rooftop_sensors.jpg" target="_blank"><img src="assets/papers/rooftop_sensors.jpg" alt="rooftop wind sensors" loading="lazy"></a>
+    <div class="figcap">屋顶传感器和城市风场重建：真实布点与空间覆盖。</div>
+    <p>提醒 WindESI：建筑尺度的传感器分布、测量高度和城市几何是独立问题，不能只把任意点读数塞进一个重建网络。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2603.13077" target="_blank">arXiv</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>Senseiver <span class="tag v">任意位置稀疏场重建</span></h4>
+    <a class="imglink" href="assets/papers/senseiver_arch.jpg" target="_blank"><img src="assets/papers/senseiver_arch.jpg" alt="Senseiver architecture" loading="lazy"></a>
+    <div class="figcap">任意数量、任意位置的稀疏观测编码，再按坐标查询全场。</div>
+    <p>接口很适合“沿候选路线查询风”；可以作为低参数的重建 / belief update baseline。</p>
+    <div class="links"><a href="https://www.nature.com/articles/s42256-023-00746-x" target="_blank">Nat. Mach. Intell.</a><a href="https://github.com/OrchardLANL/Senseiver" target="_blank">代码</a></div>
+  </div>
+</div>
+
+<h3>4.3 决策、规划与 agent：把先验变成一次行动</h3>
+<div class="grid3">
+  <div class="card paper plan">
+    <h4>WindESI 现有风险证据</h4>
+    <a class="imglink" href="assets/figures/fig_safety_vs_energy.png" target="_blank"><img src="assets/figures/fig_safety_vs_energy.png" alt="safety versus energy" loading="lazy"></a>
+    <div class="figcap">街区 A：能耗差距和空速超限随风速变化。8 m/s 时安全风险比能耗差距更关键。</div>
+    <p>这张图是 WindESI 任务定义的依据：测量价值应该由“是否改变可飞性 / 路线排序”决定，而不是只看场 RMSE。</p>
+  </div>
+  <div class="card paper plan">
+    <h4>起飞后一小段决定可行性</h4>
+    <a class="imglink" href="assets/figures/fig_mission_8ms.png" target="_blank"><img src="assets/figures/fig_mission_8ms.png" alt="mission routes at 8 m/s" loading="lazy"></a>
+    <div class="figcap">街区 A、8 m/s、任务 50：多条候选在起飞后 35–120 m 处出现最大空速风险。</div>
+    <p>这说明主动测风不一定要全场覆盖，应该优先测候选之间分开的航段和接近限制的位置。</p>
+  </div>
+  <div class="card paper llm">
+    <h4>Zephyrus <span class="tag g">LLM agent + 工具环境</span></h4>
+    <a class="imglink" href="assets/papers/zephyrus_overview.jpg" target="_blank"><img src="assets/papers/zephyrus_overview.jpg" alt="Zephyrus overview" loading="lazy"></a>
+    <div class="figcap">LLM agent 写代码、执行气象工具、观察反馈并迭代。</div>
+    <p>给 WindESI 的启发是工具调用闭环，而不是让 LLM 直接生成轨迹。Qwen 可以选择 `predict_wind`、`measure_probe`、`plan_route`、`check_safety`。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2510.04017" target="_blank">arXiv</a><a href="https://github.com/Rose-STL-Lab/Zephyrus" target="_blank">代码</a></div>
+  </div>
+  <div class="card paper plan">
+    <h4>主动测风 / 路径规划的落地参考</h4>
+    <table>
+      <tr><th>参考</th><th>可借鉴接口</th></tr>
+      <tr><td>wind_aware_ros</td><td>机载测风 → 局部风场 → MPPI 实时规划</td></tr>
+      <tr><td>VoxPoser</td><td>自然语言约束 → 价值 / 代价场 → 运动规划器</td></tr>
+      <tr><td>jaxipm</td><td>批量小 NLP，支撑测量后快速重规划</td></tr>
+    </table>
+    <p class="muted">这些不是 WindESI 的直接 baseline，而是“工具如何接到规划器”的工程参照。</p>
+  </div>
+  <div class="card paper core">
+    <h4>风场重建 backbone 候选</h4>
+    <a class="imglink" href="assets/papers/transolver_overview.jpg" target="_blank"><img src="assets/papers/transolver_overview.jpg" alt="Transolver overview" loading="lazy"></a>
+    <div class="figcap">Transolver：Physics-Attention 在一般几何上的 PDE 求解器。</div>
+    <p>如果 WindESI 的先验工具需要更强的几何泛化，可以把 FNO 替换为 Transolver / GINO / WindINR，但它们仍然只是先验组件，不等于完整的端侧 agent。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2402.02366" target="_blank">Transolver</a><a href="https://arxiv.org/abs/2605.09511" target="_blank">WindINR</a></div>
+  </div>
+  <div class="card paper sense">
+    <h4>WindINR：稀疏观测下更新潜变量</h4>
+    <a class="imglink" href="assets/papers/windinr_overview.jpg" target="_blank"><img src="assets/papers/windinr_overview.jpg" alt="WindINR overview" loading="lazy"></a>
+    <div class="figcap">隐式神经场 + 推理时只更新低维潜变量，吸收稀疏观测。</div>
+    <p>可作为 belief update 的另一条路线：测量之后不必重训整张场，只更新任务局部的低维状态。</p>
+    <div class="links"><a href="https://arxiv.org/abs/2605.09511" target="_blank">arXiv</a></div>
+  </div>
+</div>
+
+<p class="source-note">图像来源说明：论文与官方仓库图片均保留原图，仅按页面宽度缩放；具体 origin / license 见 <a href="assets/data/assets_manifest.json" target="_blank" rel="noopener">assets/data/assets_manifest.json</a>。本页不把相关方法的论文结果当成 WindESI 的实验结果。</p>
+
+<h2 id="s5">5 · 方法对照：WindESI 的新接口在哪里 <span class="en">comparison matrix</span></h2>
+<div class="tbl-scroll">
+<table>
+  <tr><th>方法 / 系统</th><th>输入</th><th>优化目标</th><th>输出</th><th>和 WindESI 的关系</th></tr>
+  <tr><td><b>GeoWind2Plan</b></td><td>建筑几何 + 背景风 + 起终点</td><td>预测风下的节能路线</td><td>风场先验 + 路线</td><td>WindESI 的城市风先验和规划基座</td></tr>
+  <tr><td><b>WindSeer</b></td><td>地形 + 稀疏机载测风</td><td>体积风场重建误差</td><td>3D 风 / TKE</td><td>端侧稀疏测风重建参考，域从山地转到城市</td></tr>
+  <tr><td><b>PhySense</b></td><td>稀疏场观测 + 传感器位置</td><td>场重建误差</td><td>重建场 + 选点</td><td>选点 baseline；WindESI 把目标换成路线决策和安全</td></tr>
+  <tr><td><b>CRMI</b></td><td>路径、威胁场估计、传感器读数</td><td>路径代价方差</td><td>传感器配置 + 路径</td><td>最接近的决策导向主动测量对照</td></tr>
+  <tr><td><b>U3DWind</b></td><td>城市几何 + 多方向 / 多风速数据</td><td>预测、重建、暴露和风险任务</td><td>数据集 + benchmark</td><td>补齐 WindESI 的新城市、新风向和风险评测</td></tr>
+  <tr><td><b>Zephyrus / VoxPoser</b></td><td>自然语言、环境状态、工具</td><td>任务完成 / 反馈改进</td><td>程序、代价场或工具调用</td><td>端侧决策层的 agent 结构参考</td></tr>
+  <tr><td><b>WindESI</b></td><td>地图 / 相机 + 风场先验 + 主动测量</td><td>失败率、不飞率、regret、测量成本</td><td>离散决策 + 工具调用</td><td class="doing">目标：在真实风场回放下少出错</td></tr>
+</table>
+</div>
+
+<h2 id="s6">6 · 下一步、停止条件与引用边界 <span class="en">next experiments &amp; claim boundary</span></h2>
+<div class="grid">
+  <div class="card paper core">
+    <h4>下一步只做能改变判断的实验</h4>
+    <table>
+      <tr><th>#</th><th>行动</th><th>完成标准</th></tr>
+      <tr><td>1</td><td>扩展模型筛选：通用小模型、具身模型，各跑坐标 / 看图 / 主动</td><td>准确率 + Wilson 置信区间</td></tr>
+      <tr><td>2</td><td>L0 / L1 / L2 分层诊断</td><td>区分读图、物理推理、选测点错误</td></tr>
+      <tr><td>3</td><td>工具化小模型，不训练</td><td>T2 主动 ≥ 0.755</td></tr>
+      <tr><td>4</td><td>加入混合目标、自然语言约束、多步决策</td><td>固定 CPU 规则无法覆盖</td></tr>
+      <tr><td>5</td><td>2B / 4B SFT + GRPO</td><td>留出街区超过工具化未训练版本</td></tr>
+    </table>
+  </div>
+  <div class="card paper plan">
+    <h4>当前不能写成的结论</h4>
+    <ul>
+      <li>没有 Jetson 或无人机实机实时结果，不能写“已机载部署”。</li>
+      <li>v0 只有一个模型、一个来流方向和合成俯视图，只能用于方向判断。</li>
+      <li>GeoWind2Plan 只有有限 CFD 工况，不能据此宣称对新风向泛化。</li>
+      <li>U3DWind、CRMI、PhySense 等方法的论文结果不能直接当 WindESI 结果。</li>
+      <li>最终必须在 CFD 风里同时报告安全、能耗和测量成本，不能只报图片问答准确率。</li>
+    </ul>
+  </div>
+</div>
+<div class="callout amber">
+<b>停止条件：</b>如果工具化小模型在留出街区上不能超过“先验最静点 + 简单几何规则”，或者主动测量在失败率 / regret 上不优于沿路线均匀测，就先停掉“大模型看图直接决策”的叙事，转向风险约束规划和决策导向的选点方法。
+</div>
+<div class="callout red">
+<b>一句话总结：</b>WindESI 不是再做一个风场预测器，而是研究端侧智能体能否利用风场先验和有限测量，在真实风场回放下决定“测不测、飞不飞、走哪条”，并把安全代价纳入行动。
+</div>
+
+<footer>
+本页为城市风场 × UAV 项目的独立 WindESI 主题页。v0 数字来自 <code>results/windesi_v0_20261116</code>；当前所有飞行与测风均为 CFD / 噪声模拟，未声称已在无人机实机上实时运行。图片和视频版权归各论文、仓库或数据集作者，具体来源和许可见<a href="assets/data/assets_manifest.json">媒体清单</a>。<br>
+<a href="index.html">返回风场规划与评测总览</a> · <a href="index.html#s10">返回 §10 相关工作与任务再思考</a> · 本页更新于 2026-11-17。
+</footer>
+</div>
+<a class="totop" href="#">↑ 顶部</a>
+</body>
+</html>
