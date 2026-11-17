@@ -199,6 +199,29 @@
   </div>
 </div>
 
+<h3>1.1 已有证据：为什么要“为决策而测风”</h3>
+<p class="muted">下面三张图都来自原风场规划线的可信评测（GeoWind2Plan 五个街区，GPU 修复 + 严格检查），详细口径见<a href="index.html#s5">总览页 §5</a>。它们是 WindESI 问题定义的直接依据。</p>
+<div class="grid3">
+  <div class="card paper core">
+    <h4>场误差 ≠ 决策质量</h4>
+    <a class="imglink" href="assets/figures/field_vs_decision.png" target="_blank"><img src="assets/figures/field_vs_decision.png" alt="field error versus decision quality" loading="lazy"></a>
+    <div class="figcap">左：固定候选池重排的 regret 随场误差变差；右：完整重规划时，场误差高 40–73% 的 UNet3D 与 GW2P 的回收率（73.6–85.7% vs 76.8–86.0%）大幅重叠。</div>
+    <p><b>对 WindESI：</b>把场测得更准，不一定让决策更好；智能体要关心的是“这次测量会不会改变选择”。</p>
+  </div>
+  <div class="card paper sense">
+    <h4>测哪里比测多少更重要</h4>
+    <a class="imglink" href="assets/figures/sparse_sensing.png" target="_blank"><img src="assets/figures/sparse_sensing.png" alt="sparse sensing regret" loading="lazy"></a>
+    <div class="figcap">A–E 汇总，K = 32 个探针，虚线为不加探针的先验（regret 0.477%）。沿候选路线均匀测：0.299%（−37%）；按集合方差测：−3%；按最大误差测：+44%。</div>
+    <p><b>对 WindESI：</b>这是 action blindness 在固定规则上的先例：按“哪里最不确定 / 误差最大”去测，反而选错路线。</p>
+  </div>
+  <div class="card paper plan">
+    <h4>强风下错在安全，不在能耗</h4>
+    <a class="imglink" href="assets/figures/fig_exceed_margin_8ms.png" target="_blank"><img src="assets/figures/fig_exceed_margin_8ms.png" alt="airspeed exceedance margin at 8 m/s" loading="lazy"></a>
+    <div class="figcap">街区 A、8 m/s：GW2P 的 223 条途中空速超限里，43% 超出不到 1 m/s，中位数 1.14 m/s，P90 3.6 m/s；同条件下 GW2P 与 CFD 规划的能耗只差 2.48%。</div>
+    <p><b>对 WindESI：</b>评测主指标用失败率和不飞率，不能只看能耗或问答准确率。</p>
+  </div>
+</div>
+
 
 <h2 id="s2">2 · 机载闭环：不是一个模型，而是五个职责 <span class="en">onboard loop</span></h2>
 <div class="grid3">
@@ -214,6 +237,25 @@
     <img src="assets/windesi/method.svg" alt="WindESI method overview">
   </a>
   <div class="figcap">Method：风场先验、端侧决策、主动测量、规划检查与 CFD 回放组成闭环。</div>
+</div>
+
+<h3>2.1 没有机载实机时，怎么证明“端侧”</h3>
+<div class="grid">
+  <div class="card paper core">
+    <h4>只写三类可复现的证据</h4>
+    <table>
+      <tr><th>证据</th><th>怎么得到</th><th>状态</th></tr>
+      <tr><td>① 模型规模与量化后内存</td><td>2B / 4B / 9B 在 4-bit 下实测显存或内存占用</td><td class="warn">待测</td></tr>
+      <tr><td>② 端侧代理延迟</td><td>笔记本级设备（Apple M4，统一内存）上用量化模型实测单步决策延迟；明确写成代理，不等同 Jetson</td><td class="warn">待测</td></tr>
+      <tr><td>③ 风场先验计时</td><td>浏览器 WebGPU 跑逐层 2D FNO（权重约 431 KiB），一次推理约 1.9 s（Apple M4）</td><td class="ok">已有</td></tr>
+    </table>
+    <p class="muted">不写“已在无人机上实时运行”。所有飞行与测风在 CFD 里仿真；测风噪声先取文献仿真值 0.4 m/s，再做噪声大小的敏感性分析。</p>
+  </div>
+  <div class="card paper core">
+    <h4>证据 ③：浏览器里的风场先验</h4>
+    <video controls preload="none" playsinline poster="assets/webdemo/webdemo_views_poster.jpg" style="width:100%; border:1px solid var(--line); border-radius:8px; background:#fff"><source src="assets/webdemo/webdemo_views.mp4" type="video/mp4"></video>
+    <div class="figcap">本机录屏（21 秒）：75 m 高度风场粒子 → 水平切片（预测风 / CFD 对照）→ 切片高度从 40 m 扫到 110 m → 竖直切片 → 走廊内三维粒子。风场推理和航线规划都在浏览器所在的设备上完成。<a href="lab/" target="_blank" rel="noopener">打开交互版 ↗</a></div>
+  </div>
 </div>
 
 <h2 id="s3">3 · 第一轮判定实验：小模型还不会“看风” <span class="en">v0 benchmark · 11-16</span></h2>
@@ -255,6 +297,52 @@
 <div class="callout amber">
 <b>读法：</b>模型拿到读数后会用，主动条件里“选择最低读数的点”准确率达到 0.895；失败主要发生在看图和选测点之前。简单 CPU 规则目前比未训练的 8B 模型强，但这正好说明下一步要测“模型 + 工具 + 训练”，而不是继续和固定规则做单点比较。
 </div>
+
+<h3>3.1 错在哪一步</h3>
+<div class="grid">
+  <div class="card paper sense">
+    <h4>T2 主动条件：选测点几乎随机</h4>
+    <table>
+      <tr><th>指标</th><th>Qwen3-VL-8B</th><th>随机测</th><th>测先验最静的 2 点</th></tr>
+      <tr><td>真正最静的点在 2 个测点里的比例</td><td class="no">0.395</td><td>0.333</td><td class="ok">0.830</td></tr>
+      <tr><td>拿到读数后，选读数最低的点</td><td class="ok">0.895</td><td>—</td><td>—</td></tr>
+    </table>
+    <p class="muted">200 题；读数对所有方法相同（固定随机种子）。</p>
+  </div>
+  <div class="card paper plan">
+    <h4>读图和位置偏好</h4>
+    <ul>
+      <li>T1 看图条件下 56 / 300 条回答把风向说成“从右往左”，图上画的是从左往右。</li>
+      <li>T1 只给坐标时 245 / 300 题答 B（真值 B 为 153 / 300），接近随机的 0.527 主要来自答案偏置。</li>
+      <li>T2 主动条件下 113 / 200 题的测点里都有 1 号点。</li>
+    </ul>
+    <p class="muted">下一步用 L0（读图）/ L1（直接给出几何事实后的推理）/ L2（选测点）分层诊断，区分“看不懂图”和“不会推理风”。</p>
+  </div>
+</div>
+
+<h3>3.2 待评测的端侧小模型（11-17 下载状态）</h3>
+<div class="tbl-scroll"><table>
+  <tr><th>组</th><th>模型</th><th>规模</th><th>发布</th><th>状态</th></tr>
+  <tr><td rowspan="5">A 通用小模型</td><td>Qwen3-VL-8B-Instruct</td><td>8B</td><td>2025-10</td><td class="ok">已测（本节）</td></tr>
+  <tr><td>Qwen3.5 2B / 4B / 9B</td><td>2–9B</td><td>2026-02</td><td class="ok">已下载 · 主线，部署目标 4B</td></tr>
+  <tr><td>Gemma 4 E2B / E4B</td><td>2.3B / 4.5B 有效</td><td>2026-03</td><td class="ok">已下载</td></tr>
+  <tr><td>MiniCPM-V 4.6 / 4.7-1B</td><td>1–1.3B</td><td>2026-04 / 10</td><td class="ok">已下载</td></tr>
+  <tr><td>LFM3-VL-2B</td><td>1.9B</td><td>2026-10</td><td class="ok">已下载</td></tr>
+  <tr><td rowspan="6">B 具身 / 空间推理</td><td>RoboBrain 2.5-4B</td><td>4B</td><td>2026-02</td><td class="ok">已下载</td></tr>
+  <tr><td>Spatial-SSRL-Qwen3VL-4B</td><td>4B</td><td>2025-11</td><td class="doing">下载中</td></tr>
+  <tr><td>Embodied-R1-3B · HY-Embodied-0.5 · MiMo-Embodied-7B</td><td>3–7B</td><td>2025-06 – 2026-04</td><td class="doing">排队</td></tr>
+  <tr><td>Cosmos-Reason2 2B / 8B</td><td>2 / 8B</td><td>2025-12</td><td class="no">HF 需要同意许可（403），暂缺</td></tr>
+  <tr><td colspan="4" class="muted">InternVL3.5 2B / 8B 作为跨系列对照，待定</td></tr>
+</table></div>
+<p class="muted">筛选方案：固定抽 200 题（T1、T2 各 100），每个模型跑看图 / 只给坐标 / 主动三种条件；最好的通用模型和具身模型再跑全量 500 题和分层诊断。</p>
+
+<h3>3.3 “不如 CPU 规则”怎么回答</h3>
+<div class="tbl-scroll"><table>
+  <tr><th>层</th><th>论点</th><th>需要的证据</th></tr>
+  <tr><td>评测发现</td><td>通用和具身小模型在看不见的风场上都不如简单规则：现有具身空间智能还不懂物理场</td><td>3.2 的模型全部跑完，并用分层诊断说明错在读图、物理直觉还是选点</td></tr>
+  <tr><td>方法</td><td>遮挡规则、GW2P 先验、决策价值选点不是对手，而是小模型的<b>工具</b>；比的是“小模型 + 工具 + 训练”对“任何单一固定算法”</td><td>训练后的 4B：T2 不低于“测先验最静的 2 点”（0.755）；混合任务上明显超过每一条单一规则；留出街区上成立</td></tr>
+  <tr><td>任务</td><td>加入单一规则解决不了的题：混合目标（能耗 + 安全余量 + 日本 5 m/s 规则）、自然语言任务、多步决策（先测还是先飞、测完改道还是等）</td><td>每条 CPU 规则只能写死一种题；小模型的价值是一个模型处理所有题型</td></tr>
+</table></div>
 
 <h2 id="s4">4 · 相关工作图谱：WindESI 接在哪里 <span class="en">related papers and methods</span></h2>
 <p class="muted">下面的图不是装饰性画廊，而是按 WindESI 的闭环分工组织：风场先验解决“我对风有什么信念”，主动测量解决“下一次测哪里”，决策与 agent 解决“测量是否值得、什么时候飞”。图片均来自本地 `assets/`，来源和许可记录在<a href="assets/data/assets_manifest.json" target="_blank" rel="noopener">媒体清单</a>。</p>
@@ -298,6 +386,7 @@
     <p><b>对 WindESI：</b>提供另一条“看见风”的路线：不是直接渲染建筑到风，而是从运动 / 视觉证据反推物理场。未来相机视角和飞行日志可以接到这条线。</p>
     <div class="links"><a href="https://arxiv.org/abs/2512.00762" target="_blank">arXiv</a><a href="https://chaoren2357.github.io/seeingthewind/" target="_blank">项目页</a></div>
   </div>
+</div>
 
 <h3>4.2 稀疏观测与主动测量：测哪里，才会改变决策</h3>
 <div class="grid3">
